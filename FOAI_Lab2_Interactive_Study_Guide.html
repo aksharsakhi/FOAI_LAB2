@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SWI-Prolog Lab 2 Master Study Guide & Question Drill</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="dark"] {
+      --bg-dark: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.7);
+      --bg-card-hover: rgba(30, 41, 59, 0.95);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(99, 102, 241, 0.3);
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --secondary: #06b6d4;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #070b13;
+      --hero-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.3) 100%);
+      --hero-title-gradient: linear-gradient(135deg, #ffffff 20%, #94a3b8 100%);
+      --header-bg: rgba(15, 23, 42, 0.85);
+      --card-body-bg: rgba(10, 15, 29, 0.4);
+      --chip-bg: rgba(255, 255, 255, 0.05);
+      --input-bg: rgba(15, 23, 42, 0.8);
+      --category-title-color: #e2e8f0;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: #ffffff;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --border-accent: rgba(99, 102, 241, 0.35);
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --primary-glow: rgba(79, 70, 229, 0.15);
+      --secondary: #0891b2;
+      --accent-green: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --accent-purple: #9333ea;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --code-bg: #0f172a;
+      --hero-bg: linear-gradient(180deg, rgba(241, 245, 249, 0.95) 0%, rgba(226, 232, 240, 0.6) 100%);
+      --hero-title-gradient: linear-gradient(135deg, #0f172a 20%, #334155 100%);
+      --header-bg: rgba(255, 255, 255, 0.92);
+      --card-body-bg: rgba(248, 250, 252, 0.7);
+      --chip-bg: rgba(15, 23, 42, 0.05);
+      --input-bg: #ffffff;
+      --category-title-color: #0f172a;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    }
+
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+    }
+
+    [data-theme="light"] .theme-toggle-btn {
+      background: rgba(15, 23, 42, 0.05);
+      border-color: rgba(15, 23, 42, 0.15);
+    }
+
+    .theme-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary-light);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header & Hero */
+    header {
+      background: var(--header-bg);
+      transition: background 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+    }
+
+    .header-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge-course {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .progress-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .progress-bar-inline {
+      width: 70px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--accent-green));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding: 2.5rem 1.5rem;
+      background: var(--hero-bg); transition: background 0.3s ease;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 200px;
+      background: var(--primary-glow);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: var(--hero-title-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 750px;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    .warning-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: #fda4af;
+      padding: 0.5rem 1.2rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* Search & Filter Nav */
+    .controls-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input-wrapper input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input-wrapper input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+    }
+
+    /* Tab Filter Pills */
+    .tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.55rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    /* Layout Grid */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Question Cards List */
+    .questions-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .category-section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--category-title-color);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+    }
+
+    .category-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Single Question Card */
+    .q-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .q-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .q-card.completed {
+      border-left: 4px solid var(--accent-green);
+    }
+
+    .q-header {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      user-select: none;
+    }
+
+    .q-number-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary-light);
+      margin-bottom: 0.35rem;
+    }
+
+    .q-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .q-status-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .check-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .check-btn:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    .check-btn.done {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      color: white;
+    }
+
+    .chevron {
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+    }
+
+    .q-card.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    .q-body {
+      display: none;
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--card-body-bg);
+    }
+
+    .q-card.open .q-body {
+      display: block;
+    }
+
+    .socratic-prompt {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 3px solid var(--accent-amber);
+      padding: 0.85rem 1rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 1.25rem 0 1rem 0;
+      font-size: 0.92rem;
+      color: #fde68a;
+    }
+
+    .socratic-prompt strong {
+      color: #fbbf24;
+    }
+
+    .explanation-text {
+      color: #cbd5e1;
+      font-size: 0.96rem;
+      margin-bottom: 1rem;
+    }
+
+    .trap-box {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: #fca5a5;
+    }
+
+    .trap-box strong {
+      color: #f43f5e;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Code Snippet Styles */
+    .code-container {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-header {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.4rem 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .copy-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    pre code {
+      display: block;
+      padding: 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    .token-comment { color: #64748b; font-style: italic; }
+    .token-atom { color: #38bdf8; }
+    .token-var { color: #f472b6; font-weight: 600; }
+    .token-rule { color: #a78bfa; font-weight: 700; }
+    .token-query { color: #34d399; font-weight: 600; }
+    .token-num { color: #fbbf24; }
+
+    /* Interactive Simulator Box */
+    .query-sim-box {
+      background: rgba(6, 182, 212, 0.05);
+      border: 1px dashed rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin: 1.25rem 0 0.5rem 0;
+    }
+
+    .sim-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .sim-queries-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sim-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sim-chip:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--secondary);
+      color: white;
+    }
+
+    .sim-output-box {
+      background: #040811;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #a7f3d0;
+      min-height: 40px;
+      white-space: pre-wrap;
+    }
+
+    /* Sidebar Panels */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 5rem;
+      height: fit-content;
+    }
+
+    .side-widget {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .side-widget-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Quick Checklist */
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+    }
+
+    .check-item input {
+      margin-top: 0.2rem;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    /* Syntax Quick Reference Card */
+    .syntax-mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .syntax-mini-table td {
+      padding: 0.4rem 0.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .syntax-mini-table code {
+      font-family: 'Fira Code', monospace;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+    }
+
+    /* Interactive Quiz Section */
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .quiz-question {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #f8fafc;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-opt-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      color: #cbd5e1;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .quiz-opt-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .quiz-opt-btn.correct {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--accent-green);
+      color: #a7f3d0;
+      font-weight: 600;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: rgba(244, 63, 94, 0.2);
+      border-color: var(--accent-rose);
+      color: #fecdd3;
+    }
+
+    .quiz-explanation {
+      display: none;
+      padding: 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+    }
+
+    /* Floating Action / Back to Top */
+    .floating-tools {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 99;
+    }
+
+    .float-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: 1px solid var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .float-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px var(--primary-glow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="badge-course">23CSE401 FoAI</span>
+        <h2 class="brand-title">Lab 2: Prolog & FOL Question Drill</h2>
+      </div>
+
+      <div class="header-actions">
+        <div class="progress-pill">
+          <span>Readiness:</span>
+          <div class="progress-bar-inline">
+            <div class="progress-fill" id="topProgressFill"></div>
+          </div>
+          <strong id="topProgressText">0%</strong>
+        </div>
+        <button class="tab-btn" onclick="expandAll()" title="Expand All Questions">Expand All</button>
+        <button class="tab-btn" onclick="collapseAll()" title="Collapse All Questions">Collapse All</button>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+          <span id="themeIcon">☀️</span>
+          <span id="themeText">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Hero Banner -->
+    <section class="hero">
+      <span class="warning-banner">⚠️ STRICT EXAM RULE: NO CHEAT SHEETS ALLOWED</span>
+      <h1>Understand Prolog Through Direct Questions</h1>
+      <p>Instead of memorizing long code, walk through these 20 progressive questions. Each explains <em>why</em> Prolog thinks the way it does, shows the exact exam code, and warns you about syntax traps.</p>
+      
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <span style="font-size: 0.85rem; color: #94a3b8; display: flex; align-items: center; gap: 0.35rem;">
+          <span style="color: var(--accent-green);">●</span> 5 Lab Core Scenarios Included
+        </span>
+        <span style="font-size: 0.85rem; color: #94a3b8; display: flex; align-items: center; gap: 0.35rem;">
+          <span style="color: var(--secondary);">●</span> Interactive Query Outputs
+        </span>
+        <span style="font-size: 0.85rem; color: #94a3b8; display: flex; align-items: center; gap: 0.35rem;">
+          <span style="color: var(--accent-amber);">●</span> Practice Self-Check Quiz
+        </span>
+      </div>
+    </section>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search questions (e.g. 'sibling', 'math', 'is', 'prereq', 'trace', 'colonel')..." oninput="filterQuestions()">
+      </div>
+
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="setTab('all', this)">⚡ All Questions (20)</button>
+        <button class="tab-btn" onclick="setTab('syntax', this)">⚠️ Syntax Traps (Q1 - Q5)</button>
+        <button class="tab-btn" onclick="setTab('family', this)">👨‍👩‍👧 Family Tree (Q6 - Q10)</button>
+        <button class="tab-btn" onclick="setTab('cafe', this)">☕ Cafe & Math (Q11 - Q13)</button>
+        <button class="tab-btn" onclick="setTab('recursion', this)">🔁 Recursion & Prereqs (Q14 - Q17)</button>
+        <button class="tab-btn" onclick="setTab('west', this)">🎖️ Colonel West FOL (Q18 - Q20)</button>
+        <button class="tab-btn" onclick="setTab('quiz', this)" style="border-color: var(--primary);">🎯 Exam Simulator Quiz</button>
+      </div>
+    </div>
+
+    <!-- Main Grid Content -->
+    <div class="main-grid">
+      
+      <!-- Left Column: Question Feed -->
+      <main class="questions-feed" id="questionsContainer">
+
+        <!-- ==========================================
+             SECTION 1: SYNTAX TRAPS & MENTAL MODEL
+             ========================================== -->
+        <div class="section-group" data-category="syntax">
+          <h2 class="category-section-title">⚠️ Section 1: The Core Mental Model & Syntax Traps</h2>
+          <p class="category-desc">Get these 5 rules in your head first so you don't lose marks on silly typing mistakes.</p>
+
+          <!-- Q1 -->
+          <article class="q-card open" id="q1">
+            <div class="q-header" onclick="toggleCard('q1')">
+              <div>
+                <span class="q-number-badge">QUESTION 1 • THE #1 RULE</span>
+                <h3 class="q-title">Why does Prolog care if I capitalize a word? What is the difference between <code>john</code> and <code>John</code>?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q1', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="socratic-prompt">
+                <strong>💡 Think about this:</strong> In Python, <code>x = "john"</code> assigns a string to a variable. In Prolog, there is no assignment statement! How does Prolog distinguish between a concrete entity and an unknown search variable?
+              </div>
+              <p class="explanation-text">
+                Prolog uses **capitalization** to distinguish between data and variables:
+              </p>
+              <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; font-size: 0.95rem;">
+                <li><strong>Lowercase (`john`, `pizza`, `cs101`) = Constant / Atom:</strong> This is a fixed value (concrete object, person, or relationship name).</li>
+                <li><strong>UPPERCASE (`John`, `X`, `Person`, `Child`) = Variable:</strong> This is an unknown value that Prolog will try to solve for!</li>
+              </ul>
+              <div class="trap-box">
+                <strong>🚨 Fatal Exam Trap:</strong>
+                If you write <code>likes(John, Pizza).</code> in your database, Prolog thinks you said <em>"Anybody likes Anything"</em>! Always write names in lowercase: <code>likes(john, pizza).</code>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q2 -->
+          <article class="q-card" id="q2">
+            <div class="q-header" onclick="toggleCard('q2')">
+              <div>
+                <span class="q-number-badge">QUESTION 2 • RULE OPERATORS</span>
+                <h3 class="q-title">What does <code>:-</code> mean, and what is the difference between a Comma <code>,</code> and a Semicolon <code>;</code>?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q2', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                In Prolog, rules are written as <strong>Horn Clauses</strong>: <code>Head :- Body.</code>
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>PROLOG RULE SYNTAX</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-atom">father</span>(<span class="token-var">F</span>, <span class="token-var">C</span>) <span class="token-rule">:-</span> <span class="token-atom">parent</span>(<span class="token-var">F</span>, <span class="token-var">C</span>)<span class="token-atom">,</span> <span class="token-atom">male</span>(<span class="token-var">F</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+              <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; font-size: 0.95rem;">
+                <li><code>:-</code> means <strong>"IF"</strong> (The Head is true <em>if</em> the Body conditions are satisfied).</li>
+                <li><code>,</code> (comma) means <strong>AND</strong> (Both conditions must be true).</li>
+                <li><code>;</code> (semicolon) means <strong>OR</strong> (Either condition is true). <em>Tip: Instead of writing semicolons inside a rule, it is much cleaner to write two separate rules with the same name!</em></li>
+                <li><code>.</code> (period) <strong>MUST end every fact, rule, and query.</strong></li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Q3 -->
+          <article class="q-card" id="q3">
+            <div class="q-header" onclick="toggleCard('q3')">
+              <div>
+                <span class="q-number-badge">QUESTION 3 • ARITHMETIC TRAP</span>
+                <h3 class="q-title">Why does <code>Total = Price1 + Price2</code> fail to calculate numbers, and why did <code>Price &lt;= 10</code> throw a syntax error?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q3', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="socratic-prompt">
+                <strong>💡 Think about this:</strong> In Prolog, <code>=</code> does NOT mean "compute and assign". It means <strong>Unification</strong> (literal pattern matching).
+              </div>
+              <p class="explanation-text">
+                If you write <code>Total = 3 + 4</code>, Prolog binds <code>Total</code> to the literal symbolic expression <code>3 + 4</code>, NOT the number <code>7</code>!
+              </p>
+              <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; font-size: 0.95rem;">
+                <li><strong>To calculate math:</strong> You MUST use the keyword <code>is</code>.<br>
+                Example: <code>TotalCost is FoodPrice + DrinkPrice.</code></li>
+                <li><strong>Less than or equal:</strong> In Prolog, it is written as <code>=&lt;</code> (Arrow head on the right), <strong>NEVER <code>&lt;=</code></strong>.<br>
+                Example: <code>Price =&lt; Budget.</code></li>
+              </ul>
+              <div class="trap-box">
+                <strong>🚨 Fatal Exam Trap:</strong>
+                Typing <code>&lt;=</code> is the single most common error in student lab exams. SWI-Prolog will complain: <code>Syntax error: Operator expected</code>. Always type <code>=&lt;</code>!
+              </div>
+            </div>
+          </article>
+
+          <!-- Q4 -->
+          <article class="q-card" id="q4">
+            <div class="q-header" onclick="toggleCard('q4')">
+              <div>
+                <span class="q-number-badge">QUESTION 4 • NEGATION & MISSING INFO</span>
+                <h3 class="q-title">What does <code>\+</code> mean, and what is "Negation as Failure"?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q4', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                In First-Order Logic, something might be <em>unknown</em>. But Prolog operates under the **Closed World Assumption (CWA)**:
+              </p>
+              <blockquote style="background: rgba(255,255,255,0.03); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; margin-bottom: 1rem; color: #e2e8f0; font-size: 0.92rem;">
+                "If a statement cannot be proved true from the facts and rules in the knowledge base, Prolog assumes it is <strong>false</strong>."
+              </blockquote>
+              <p class="explanation-text">
+                The operator <code>\+</code> means <strong>NOT</strong> (Negation as Failure).
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>EXAMPLE: FIND PARENTS WITH NO GRANDCHILDREN</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% Find anyone X who is a parent of Y, but Y has NO children (_)</span>
+<span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-rule">\+</span> <span class="token-atom">parent_of</span>(<span class="token-var">Y</span>, <span class="token-var">_</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q5 -->
+          <article class="q-card" id="q5">
+            <div class="q-header" onclick="toggleCard('q5')">
+              <div>
+                <span class="q-number-badge">QUESTION 5 • CONSOLE BASICS</span>
+                <h3 class="q-title">What do I do after typing a query? How do I get more answers or stop?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q5', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                When you run a query like <code>?- parent(john, Child).</code>, Prolog will find the first match and pause:
+              </p>
+              <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; font-size: 0.95rem;">
+                <li>Press <strong><code>;</code> (Semicolon)</strong> or <strong><code>Space</code></strong>: "Give me the next solution" (Prolog backtracks to search for more).</li>
+                <li>Press <strong><code>Enter</code></strong>: "I am satisfied, stop searching" (Returns you to the prompt <code>?-</code>).</li>
+                <li>If your program gets stuck in an infinite loop: press <strong><code>Ctrl + C</code></strong> and then type <strong><code>a</code></strong> (abort).</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+
+        <!-- ==========================================
+             SECTION 2: FAMILY TREE PROBLEMS
+             ========================================== -->
+        <div class="section-group" data-category="family">
+          <h2 class="category-section-title">👨‍👩‍👧 Section 2: Family Tree Knowledge Base (`family.pl`)</h2>
+          <p class="category-desc">The classic exam problem: John & Sarah have Mary & Tom. Mary has Ann.</p>
+
+          <!-- Q6 -->
+          <article class="q-card" id="q6">
+            <div class="q-header" onclick="toggleCard('q6')">
+              <div>
+                <span class="q-number-badge">QUESTION 6 • FACTS DEFINITION</span>
+                <h3 class="q-title">How do I correctly write the facts for parents and genders?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q6', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                Remember the convention: <code>parent(Parent, Child)</code>. Parent is the first argument, child is the second!
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>FAMILY FACTS (SAVE AS family.pl)</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% Facts: parent(Parent, Child)</span>
+<span class="token-atom">parent</span>(<span class="token-atom">john</span>, <span class="token-atom">mary</span>)<span class="token-atom">.</span>
+<span class="token-atom">parent</span>(<span class="token-atom">john</span>, <span class="token-atom">tom</span>)<span class="token-atom">.</span>
+<span class="token-atom">parent</span>(<span class="token-atom">sarah</span>, <span class="token-atom">mary</span>)<span class="token-atom">.</span>
+<span class="token-atom">parent</span>(<span class="token-atom">sarah</span>, <span class="token-atom">tom</span>)<span class="token-atom">.</span>
+<span class="token-atom">parent</span>(<span class="token-atom">mary</span>, <span class="token-atom">ann</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Facts: Genders</span>
+<span class="token-atom">male</span>(<span class="token-atom">john</span>)<span class="token-atom">.</span>
+<span class="token-atom">male</span>(<span class="token-atom">tom</span>)<span class="token-atom">.</span>
+<span class="token-atom">female</span>(<span class="token-atom">sarah</span>)<span class="token-atom">.</span>
+<span class="token-atom">female</span>(<span class="token-atom">mary</span>)<span class="token-atom">.</span>
+<span class="token-atom">female</span>(<span class="token-atom">ann</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q7 -->
+          <article class="q-card" id="q7">
+            <div class="q-header" onclick="toggleCard('q7')">
+              <div>
+                <span class="q-number-badge">QUESTION 7 • FATHER & MOTHER RULES</span>
+                <h3 class="q-title">How do I write general rules for <code>father(F, C)</code> and <code>mother(M, C)</code>?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q7', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                Break it into logic: <em>F is the father of C IF F is a parent of C AND F is male.</em>
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>RULES FOR FATHER AND MOTHER</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-atom">father</span>(<span class="token-var">F</span>, <span class="token-var">C</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">parent</span>(<span class="token-var">F</span>, <span class="token-var">C</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">male</span>(<span class="token-var">F</span>)<span class="token-atom">.</span>
+
+<span class="token-atom">mother</span>(<span class="token-var">M</span>, <span class="token-var">C</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">parent</span>(<span class="token-var">M</span>, <span class="token-var">C</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">female</span>(<span class="token-var">M</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q8 -->
+          <article class="q-card" id="q8">
+            <div class="q-header" onclick="toggleCard('q8')">
+              <div>
+                <span class="q-number-badge">QUESTION 8 • THE SIBLING TRAP</span>
+                <h3 class="q-title">Why did Mary show up as her own sibling? How do I write the sibling rule correctly?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q8', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="socratic-prompt">
+                <strong>💡 The Trap:</strong> If you write <code>sibling(X, Y) :- parent(P, X), parent(P, Y).</code>, what happens when <code>X = mary</code> and <code>P = john</code>? Well, John is the parent of Mary, and John is also the parent of Mary! So Prolog happily concludes Mary is her own sibling!
+              </div>
+              <p class="explanation-text">
+                To prevent this, you **must explicitly add** <code>X \= Y</code> (X is not equal to Y):
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>CORRECT SIBLING RULE</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-atom">sibling</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">parent</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">parent</span>(<span class="token-var">P</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> 
+    <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q9 -->
+          <article class="q-card" id="q9">
+            <div class="q-header" onclick="toggleCard('q9')">
+              <div>
+                <span class="q-number-badge">QUESTION 9 • GRANDPARENT RULE</span>
+                <h3 class="q-title">How do I write the rule for <code>grandparent(GP, GC)</code>?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q9', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                A grandparent is the parent of an intermediate parent <code>P</code>:
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>GRANDPARENT RULE</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-atom">grandparent</span>(<span class="token-var">GP</span>, <span class="token-var">GC</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">parent</span>(<span class="token-var">GP</span>, <span class="token-var">P</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">parent</span>(<span class="token-var">P</span>, <span class="token-var">GC</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+
+              <!-- Interactive Simulator Box -->
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Test (Click to simulate):</div>
+                <div class="sim-queries-list">
+                  <span class="sim-chip" onclick="simulateQuery('?- father(john, mary).', 'true.')">?- father(john, mary).</span>
+                  <span class="sim-chip" onclick="simulateQuery('?- mother(M, ann).', 'M = mary.')">?- mother(M, ann).</span>
+                  <span class="sim-chip" onclick="simulateQuery('?- sibling(mary, X).', 'X = tom ;\nX = tom.')">?- sibling(mary, X).</span>
+                  <span class="sim-chip" onclick="simulateQuery('?- grandparent(GP, ann).', 'GP = john ;\nGP = sarah.')">?- grandparent(GP, ann).</span>
+                </div>
+                <div class="sim-output-box" id="simOutputBox1">// Click a query chip above to see SWI-Prolog output</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q10 -->
+          <article class="q-card" id="q10">
+            <div class="q-header" onclick="toggleCard('q10')">
+              <div>
+                <span class="q-number-badge">QUESTION 10 • AGGREGATION</span>
+                <h3 class="q-title">How do I collect all answers into a single list using <code>findall/3</code>?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q10', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                In Prolog, if you want a complete list of results instead of pressing <code>;</code>, use the built-in predicate <code>findall(Template, Goal, Bag)</code>:
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>FINDALL QUERY</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% Find all grandparents of Ann into a list:</span>
+<span class="token-query">?-</span> <span class="token-atom">findall</span>(<span class="token-var">GP</span>, <span class="token-atom">grandparent</span>(<span class="token-var">GP</span>, <span class="token-atom">ann</span>), <span class="token-var">List</span>)<span class="token-atom">.</span>
+<span class="token-comment">% Output: List = [john, sarah].</span></code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+
+
+        <!-- ==========================================
+             SECTION 3: CAFE & ARITHMETIC
+             ========================================== -->
+        <div class="section-group" data-category="cafe">
+          <h2 class="category-section-title">☕ Section 3: Campus Cafe Database & Budget Math (`cafe.pl`)</h2>
+          <p class="category-desc">Drinks: espresso ($3), latte ($5). Food: croissant ($4), sandwich ($8), muffin ($3).</p>
+
+          <!-- Q11 -->
+          <article class="q-card" id="q11">
+            <div class="q-header" onclick="toggleCard('q11')">
+              <div>
+                <span class="q-number-badge">QUESTION 11 • MULTI-ARGUMENT FACTS</span>
+                <h3 class="q-title">How do I store item name, category, and price as Prolog facts?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q11', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="code-container">
+                <div class="code-header"><span>CAFE FACTS (SAVE AS cafe.pl)</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% item(Name, Category, PriceInUSD)</span>
+<span class="token-atom">item</span>(<span class="token-atom">espresso</span>, <span class="token-atom">drink</span>, <span class="token-num">3</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">latte</span>, <span class="token-atom">drink</span>, <span class="token-num">5</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">croissant</span>, <span class="token-atom">food</span>, <span class="token-num">4</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">sandwich</span>, <span class="token-atom">food</span>, <span class="token-num">8</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">muffin</span>, <span class="token-atom">food</span>, <span class="token-num">3</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q12 -->
+          <article class="q-card" id="q12">
+            <div class="q-header" onclick="toggleCard('q12')">
+              <div>
+                <span class="q-number-badge">QUESTION 12 • AFFORDABLE RULE</span>
+                <h3 class="q-title">How do I write <code>affordable(Item, Budget)</code> using the underscore <code>_</code>?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q12', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                When checking affordability, we only care about the item's name and price. We don't care about whether it's food or drink. Use the anonymous variable <code>_</code>!
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>AFFORDABLE RULE</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-atom">affordable</span>(<span class="token-var">Item</span>, <span class="token-var">Budget</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">item</span>(<span class="token-var">Item</span>, <span class="token-var">_</span>, <span class="token-var">Price</span>)<span class="token-atom">,</span> 
+    <span class="token-var">Price</span> <span class="token-rule">=&lt;</span> <span class="token-var">Budget</span><span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q13 -->
+          <article class="q-card" id="q13">
+            <div class="q-header" onclick="toggleCard('q13')">
+              <div>
+                <span class="q-number-badge">QUESTION 13 • MEAL DEAL COMBO</span>
+                <h3 class="q-title">How do I write <code>meal_deal(Food, Drink, TotalCost)</code> and find all combos &le; $10?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q13', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="code-container">
+                <div class="code-header"><span>MEAL DEAL RULE</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-atom">meal_deal</span>(<span class="token-var">Food</span>, <span class="token-var">Drink</span>, <span class="token-var">TotalCost</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">item</span>(<span class="token-var">Food</span>, <span class="token-atom">food</span>, <span class="token-var">FoodPrice</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">item</span>(<span class="token-var">Drink</span>, <span class="token-atom">drink</span>, <span class="token-var">DrinkPrice</span>)<span class="token-atom">,</span> 
+    <span class="token-var">TotalCost</span> <span class="token-rule">is</span> <span class="token-var">FoodPrice</span> <span class="token-atom">+</span> <span class="token-var">DrinkPrice</span><span class="token-atom">.</span></code></pre>
+              </div>
+
+              <!-- Interactive Simulator Box -->
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Test:</div>
+                <div class="sim-queries-list">
+                  <span class="sim-chip" onclick="simulateQuery('?- affordable(X, 4).', 'X = espresso ;\nX = croissant ;\nX = muffin.')">?- affordable(X, 4).</span>
+                  <span class="sim-chip" onclick="simulateQuery('?- meal_deal(F, D, C), C =< 10.', 'F = croissant, D = espresso, C = 7 ;\nF = croissant, D = latte,    C = 9 ;\nF = muffin,    D = espresso, C = 6 ;\nF = muffin,    D = latte,    C = 8.')">?- meal_deal(F, D, C), C =< 10.</span>
+                </div>
+                <div class="sim-output-box" id="simOutputBox2">// Click a query chip above to see SWI-Prolog output</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+
+        <!-- ==========================================
+             SECTION 4: RECURSION & PREREQUISITES
+             ========================================== -->
+        <div class="section-group" data-category="recursion">
+          <h2 class="category-section-title">🔁 Section 4: Recursion & Course Prerequisites (`courses.pl`)</h2>
+          <p class="category-desc">CS101 &rarr; CS102 &rarr; CS201 (plus Math101) &rarr; CS301.</p>
+
+          <!-- Q14 -->
+          <article class="q-card" id="q14">
+            <div class="q-header" onclick="toggleCard('q14')">
+              <div>
+                <span class="q-number-badge">QUESTION 14 • THE RECURSION FORMULA</span>
+                <h3 class="q-title">What is the Universal 2-Clause Formula for all reachability and recursion in Prolog?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q14', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="socratic-prompt">
+                <strong>💡 Memorize this single pattern:</strong> Every recursion question in this lab (Course Prereqs, Flight Paths, Ancestors) uses the EXACT same structure:
+              </div>
+              <div class="code-container">
+                <div class="code-header"><span>UNIVERSAL RECURSION FORMULA</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% 1. BASE CASE: Direct 1-step connection</span>
+<span class="token-atom">reach</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">direct_step</span>(<span class="token-var">From</span>, <span class="token-var">To</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 2. RECURSIVE CASE: Step to an Intermediate node, then recurse from there</span>
+<span class="token-atom">reach</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">direct_step</span>(<span class="token-var">From</span>, <span class="token-var">Intermediate</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">reach</span>(<span class="token-var">Intermediate</span>, <span class="token-var">To</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q15 -->
+          <article class="q-card" id="q15">
+            <div class="q-header" onclick="toggleCard('q15')">
+              <div>
+                <span class="q-number-badge">QUESTION 15 • COURSES CODE</span>
+                <h3 class="q-title">How do I write the facts and rules for course prerequisites?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q15', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="code-container">
+                <div class="code-header"><span>COURSES CODE (SAVE AS courses.pl)</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% Facts: prereq(CourseNeeded, TargetCourse)</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">cs101</span>, <span class="token-atom">cs102</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">cs102</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">math101</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">cs201</span>, <span class="token-atom">cs301</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Direct check rule:</span>
+<span class="token-atom">can_take</span>(<span class="token-var">StudentCourse</span>, <span class="token-var">TargetCourse</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">prereq</span>(<span class="token-var">StudentCourse</span>, <span class="token-var">TargetCourse</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Transitive closure rule:</span>
+<span class="token-comment">% Base Case</span>
+<span class="token-atom">requires_eventually</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">prereq</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Recursive Case</span>
+<span class="token-atom">requires_eventually</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">prereq</span>(<span class="token-var">Prereq</span>, <span class="token-var">Intermediate</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">requires_eventually</span>(<span class="token-var">Intermediate</span>, <span class="token-var">Target</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+
+              <!-- Interactive Simulator Box -->
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Test:</div>
+                <div class="sim-queries-list">
+                  <span class="sim-chip" onclick="simulateQuery('?- prereq(Req, cs201).', 'Req = cs102 ;\nReq = math101.')">?- prereq(Req, cs201).</span>
+                  <span class="sim-chip" onclick="simulateQuery('?- can_take(cs101, cs301).', 'false.')">?- can_take(cs101, cs301).</span>
+                  <span class="sim-chip" onclick="simulateQuery('?- requires_eventually(Course, cs301).', 'Course = cs201 ;\nCourse = cs101 ;\nCourse = cs102 ;\nCourse = math101.')">?- requires_eventually(Course, cs301).</span>
+                </div>
+                <div class="sim-output-box" id="simOutputBox3">// Click a query chip above to see SWI-Prolog output</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q16 -->
+          <article class="q-card" id="q16">
+            <div class="q-header" onclick="toggleCard('q16')">
+              <div>
+                <span class="q-number-badge">QUESTION 16 • AIRPORT FLIGHTS</span>
+                <h3 class="q-title">How does the Airport Flights problem use the exact same logic?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q16', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                Look at the code below: notice how <code>has_route/2</code> is literally identical to <code>requires_eventually/2</code>!
+              </p>
+              <div class="code-container">
+                <div class="code-header"><span>AIRPORT FLIGHT RECURSION</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% Direct route</span>
+<span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span> <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">_</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Multi-stop route (Recursion)</span>
+<span class="token-atom">has_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>)<span class="token-atom">.</span>
+
+<span class="token-atom">has_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">Via</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">has_route</span>(<span class="token-var">Via</span>, <span class="token-var">To</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q17 -->
+          <article class="q-card" id="q17">
+            <div class="q-header" onclick="toggleCard('q17')">
+              <div>
+                <span class="q-number-badge">QUESTION 17 • INFINITE LOOPS</span>
+                <h3 class="q-title">Why would <code>requires_eventually(P, T) :- requires_eventually(P, I), prereq(I, T).</code> crash?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q17', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="trap-box">
+                <strong>🚨 The "Left Recursion" Death Trap:</strong>
+                Prolog evaluates subgoals strictly <strong>left-to-right</strong>. If the recursive call appears before taking a concrete step, Prolog calls itself with unbound variables forever without ever making progress! Always put the concrete fact/step <code>prereq(Prereq, Intermediate)</code> <strong>FIRST</strong> on the left.
+              </div>
+            </div>
+          </article>
+        </div>
+
+
+        <!-- ==========================================
+             SECTION 5: COLONEL WEST (FOL INFERENCE)
+             ========================================== -->
+        <div class="section-group" data-category="west">
+          <h2 class="category-section-title">🎖️ Section 5: Colonel West - Criminal Problem (`criminal.pl`)</h2>
+          <p class="category-desc">Russell & Norvig's classic First-Order Logic to Horn clause inference proof.</p>
+
+          <!-- Q18 -->
+          <article class="q-card" id="q18">
+            <div class="q-header" onclick="toggleCard('q18')">
+              <div>
+                <span class="q-number-badge">QUESTION 18 • TRANSLATION TABLE</span>
+                <h3 class="q-title">How do I translate the English narrative into First-Order Logic and Horn Clauses?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q18', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                This table shows the exact conversion from the textbook narrative into Prolog:
+              </p>
+              <div style="overflow-x: auto;">
+                <table class="syntax-mini-table" style="font-size: 0.88rem; margin-bottom: 1rem;">
+                  <thead>
+                    <tr style="color: #f1f5f9; text-align: left; border-bottom: 2px solid var(--border-subtle);">
+                      <th style="padding: 0.5rem;">English Sentence</th>
+                      <th style="padding: 0.5rem;">First-Order Logic (FOL)</th>
+                      <th style="padding: 0.5rem;">Prolog Horn Clause</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Colonel West is American</td>
+                      <td>American(West)</td>
+                      <td><code>american(west).</code></td>
+                    </tr>
+                    <tr>
+                      <td>Nono is an enemy of America</td>
+                      <td>Enemy(Nono, America)</td>
+                      <td><code>enemy(nono, america).</code></td>
+                    </tr>
+                    <tr>
+                      <td>Nono has missile m1</td>
+                      <td>Missile(m1) &and; Owns(Nono, m1)</td>
+                      <td><code>missile(m1). owns(nono, m1).</code></td>
+                    </tr>
+                    <tr>
+                      <td>Missiles are weapons</td>
+                      <td>&forall;x (Missile(x) &rArr; Weapon(x))</td>
+                      <td><code>weapon(X) :- missile(X).</code></td>
+                    </tr>
+                    <tr>
+                      <td>Enemy of America is hostile</td>
+                      <td>&forall;x (Enemy(x, America) &rArr; Hostile(x))</td>
+                      <td><code>hostile(X) :- enemy(X, america).</code></td>
+                    </tr>
+                    <tr>
+                      <td>West sold all Nono's missiles</td>
+                      <td>&forall;x (Missile(x) &and; Owns(Nono, x) &rArr; Sells(West, x, Nono))</td>
+                      <td><code>sells(west, X, nono) :- missile(X), owns(nono, X).</code></td>
+                    </tr>
+                    <tr>
+                      <td>Selling weapons to hostile nation is a crime</td>
+                      <td>&forall;x,y,z (American(x) &and; Weapon(y) &and; Sells(x,y,z) &and; Hostile(z) &rArr; Criminal(x))</td>
+                      <td><code>criminal(X) :- american(X), weapon(Y), sells(X, Y, Z), hostile(Z).</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q19 -->
+          <article class="q-card" id="q19">
+            <div class="q-header" onclick="toggleCard('q19')">
+              <div>
+                <span class="q-number-badge">QUESTION 19 • COMPLETE CODE</span>
+                <h3 class="q-title">What is the complete code for Colonel West?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q19', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <div class="code-container">
+                <div class="code-header"><span>CRIMINAL PROBLEM (SAVE AS criminal.pl)</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code><span class="token-comment">% Facts</span>
+<span class="token-atom">american</span>(<span class="token-atom">west</span>)<span class="token-atom">.</span>
+<span class="token-atom">enemy</span>(<span class="token-atom">nono</span>, <span class="token-atom">america</span>)<span class="token-atom">.</span>
+<span class="token-atom">missile</span>(<span class="token-atom">m1</span>)<span class="token-atom">.</span>
+<span class="token-atom">owns</span>(<span class="token-atom">nono</span>, <span class="token-atom">m1</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Rules</span>
+<span class="token-atom">weapon</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">missile</span>(<span class="token-var">X</span>)<span class="token-atom">.</span>
+<span class="token-atom">hostile</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">enemy</span>(<span class="token-var">X</span>, <span class="token-atom">america</span>)<span class="token-atom">.</span>
+<span class="token-atom">sells</span>(<span class="token-atom">west</span>, <span class="token-var">X</span>, <span class="token-atom">nono</span>) <span class="token-rule">:-</span> <span class="token-atom">missile</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">owns</span>(<span class="token-atom">nono</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
+
+<span class="token-atom">criminal</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">american</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">weapon</span>(<span class="token-var">Y</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">sells</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">hostile</span>(<span class="token-var">Z</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- Q20 -->
+          <article class="q-card" id="q20">
+            <div class="q-header" onclick="toggleCard('q20')">
+              <div>
+                <span class="q-number-badge">QUESTION 20 • TRACING INFERENCE</span>
+                <h3 class="q-title">How does <code>trace.</code> work, and what do the 4 ports (Call, Exit, Redo, Fail) mean?</h3>
+              </div>
+              <div class="q-status-toggle">
+                <button class="check-btn" onclick="toggleDone('q20', event)" title="Mark as Mastered">✓</button>
+                <span class="chevron">▼</span>
+              </div>
+            </div>
+            <div class="q-body">
+              <p class="explanation-text">
+                When you activate <code>?- trace.</code> and run <code>?- criminal(west).</code>, Prolog steps through the 4-Port Box Model:
+              </p>
+              <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: #cbd5e1; font-size: 0.95rem;">
+                <li><strong>Call:</strong> Prolog begins trying to satisfy a goal (e.g., <code>Call: criminal(west)</code>).</li>
+                <li><strong>Exit:</strong> The goal was successfully proven and variables bound (e.g., <code>Exit: weapon(m1)</code>).</li>
+                <li><strong>Redo:</strong> Prolog backtracks to search for an alternative solution.</li>
+                <li><strong>Fail:</strong> No rule or fact could satisfy the goal.</li>
+              </ul>
+              
+              <div class="code-container">
+                <div class="code-header"><span>EXACT TRACE OUTPUT FOR COLONEL WEST</span><button class="copy-btn" onclick="copySnippet(this)">Copy</button></div>
+                <pre><code>1. Call: criminal(west)
+2. Call: american(west)    --> Exit: true
+3. Call: weapon(Y)         --> Exit: Y = m1
+4. Call: sells(west, m1, Z) --> Exit: Z = nono
+5. Call: hostile(nono)     --> Exit: true
+6. Exit: criminal(west)    --> Returns: true.</code></pre>
+              </div>
+            </div>
+          </article>
+        </div>
+
+
+        <!-- ==========================================
+             SECTION 6: EXAM SIMULATOR QUIZ
+             ========================================== -->
+        <div class="section-group" data-category="quiz" id="quizSection">
+          <h2 class="category-section-title">🎯 Section 6: Interactive Exam Simulator Quiz</h2>
+          <p class="category-desc">Test your understanding right now with these 5 rapid-fire questions.</p>
+
+          <!-- Quiz Q1 -->
+          <div class="quiz-card" id="quizQ1">
+            <h4 class="quiz-question">1. In SWI-Prolog, which of the following is a valid variable?</h4>
+            <div class="quiz-options">
+              <button class="quiz-opt-btn" onclick="checkQuiz(1, 0, false, this)">A) <code>person</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(1, 1, false, this)">B) <code>'Student'</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(1, 2, true, this)">C) <code>Student</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(1, 3, false, this)">D) <code>student_name</code></button>
+            </div>
+            <div class="quiz-explanation" id="quizExp1">
+              <strong>Correct!</strong> Variables in Prolog MUST start with an uppercase letter or an underscore. Option C begins with capital <code>S</code>.
+            </div>
+          </div>
+
+          <!-- Quiz Q2 -->
+          <div class="quiz-card" id="quizQ2">
+            <h4 class="quiz-question">2. What operator correctly tests if a price is less than or equal to a budget?</h4>
+            <div class="quiz-options">
+              <button class="quiz-opt-btn" onclick="checkQuiz(2, 0, false, this)">A) <code>Price &lt;= Budget</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(2, 1, true, this)">B) <code>Price =&lt; Budget</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(2, 2, false, this)">C) <code>Price :=&lt; Budget</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(2, 3, false, this)">D) <code>le(Price, Budget)</code></button>
+            </div>
+            <div class="quiz-explanation" id="quizExp2">
+              <strong>Correct!</strong> In Prolog, less-than-or-equal is written as <code>=&lt;</code> (NOT <code>&lt;=</code>).
+            </div>
+          </div>
+
+          <!-- Quiz Q3 -->
+          <div class="quiz-card" id="quizQ3">
+            <h4 class="quiz-question">3. Why do we include <code>X \= Y</code> in the sibling rule?</h4>
+            <div class="quiz-options">
+              <button class="quiz-opt-btn" onclick="checkQuiz(3, 0, false, this)">A) To ensure both siblings have different genders.</button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(3, 1, true, this)">B) To prevent a person from being deduced as their own sibling.</button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(3, 2, false, this)">C) To stop infinite recursion.</button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(3, 3, false, this)">D) It is an optional comment.</button>
+            </div>
+            <div class="quiz-explanation" id="quizExp3">
+              <strong>Correct!</strong> Without <code>X \= Y</code>, any person who has a parent would unify with themselves and be marked as their own sibling!
+            </div>
+          </div>
+
+          <!-- Quiz Q4 -->
+          <div class="quiz-card" id="quizQ4">
+            <h4 class="quiz-question">4. Which keyword is required to perform arithmetic computation like addition?</h4>
+            <div class="quiz-options">
+              <button class="quiz-opt-btn" onclick="checkQuiz(4, 0, false, this)">A) <code>=</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(4, 1, false, this)">B) <code>:=</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(4, 2, true, this)">C) <code>is</code></button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(4, 3, false, this)">D) <code>eval</code></button>
+            </div>
+            <div class="quiz-explanation" id="quizExp4">
+              <strong>Correct!</strong> In Prolog, <code>is</code> evaluates mathematical expressions: <code>Total is P1 + P2.</code>
+            </div>
+          </div>
+
+          <!-- Quiz Q5 -->
+          <div class="quiz-card" id="quizQ5">
+            <h4 class="quiz-question">5. In the SWI-Prolog console, what key do you press to see the NEXT alternative solution?</h4>
+            <div class="quiz-options">
+              <button class="quiz-opt-btn" onclick="checkQuiz(5, 0, false, this)">A) Enter</button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(5, 1, true, this)">B) <code>;</code> (Semicolon)</button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(5, 2, false, this)">C) Space then Escape</button>
+              <button class="quiz-opt-btn" onclick="checkQuiz(5, 3, false, this)">D) Tab</button>
+            </div>
+            <div class="quiz-explanation" id="quizExp5">
+              <strong>Correct!</strong> Semicolon <code>;</code> triggers backtracking to find the next matching solution.
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Right Column: Sticky Sidebar Checklist -->
+      <aside class="sidebar">
+        
+        <!-- Checklist Widget -->
+        <div class="side-widget">
+          <h3 class="side-widget-title">📋 5-Minute Lab Checklist</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">Check these off as you practice:</p>
+          
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I start all constants with lowercase?</label>
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I start all variables with UPPERCASE?</label>
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I put a period <code>.</code> at the end of every line?</label>
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I write <code>=&lt;</code> instead of <code>&lt;=</code>?</label>
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I use <code>is</code> for arithmetic calculation?</label>
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I add <code>X \= Y</code> to the sibling rule?</label>
+          <label class="check-item"><input type="checkbox" onchange="updateSidebarProgress()"> Did I write Base Case before Recursive Case?</label>
+        </div>
+
+        <!-- Quick Syntax Cheat Box -->
+        <div class="side-widget">
+          <h3 class="side-widget-title">⚡ Syntax Memory Anchor</h3>
+          <table class="syntax-mini-table">
+            <tr><td>If</td><td><code>:-</code></td></tr>
+            <tr><td>And</td><td><code>,</code></td></tr>
+            <tr><td>Or</td><td><code>;</code> or new clause</td></tr>
+            <tr><td>Not</td><td><code>\+</code></td></tr>
+            <tr><td>Not Equal</td><td><code>\=</code></td></tr>
+            <tr><td>Less/Equal</td><td><code>=&lt;</code></td></tr>
+            <tr><td>Greater/Equal</td><td><code>&gt;=</code></td></tr>
+            <tr><td>Math Eval</td><td><code>is</code></td></tr>
+            <tr><td>Load File</td><td><code>['file.pl'].</code></td></tr>
+            <tr><td>Clear Screen</td><td><code>write('\33\[2J').</code></td></tr>
+          </table>
+        </div>
+
+        <!-- Theory Viva Reminder -->
+        <div class="side-widget" style="background: rgba(99, 102, 241, 0.08); border-color: var(--border-accent);">
+          <h3 class="side-widget-title" style="color: var(--primary-light);">🧠 Top Viva Answers</h3>
+          <div style="font-size: 0.82rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.5rem;">
+            <div><strong>Paradigm:</strong> Declarative (Say <em>what</em>, not <em>how</em>).</div>
+            <div><strong>Inference:</strong> Backward chaining, SLD-resolution, Unification.</div>
+            <div><strong>Search:</strong> Depth-First Search (DFS) with backtracking.</div>
+            <div><strong>Horn Clause:</strong> Clause with &le; 1 positive literal.</div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Floating Back to Top Button -->
+  <div class="floating-tools">
+    <button class="float-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to Top">▲</button>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    
+    // Theme Management (Dark / Light)
+    function initTheme() {
+      const saved = localStorage.getItem('prolog_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'dark');
+      applyTheme(theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('prolog_theme', next);
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const icon = document.getElementById('themeIcon');
+      const text = document.getElementById('themeText');
+      if (theme === 'dark') {
+        if (icon) icon.innerText = '☀️';
+        if (text) text.innerText = 'Light';
+      } else {
+        if (icon) icon.innerText = '🌙';
+        if (text) text.innerText = 'Dark';
+      }
+    }
+    initTheme();
+
+    // State Tracking
+    const masteredQuestions = new Set();
+    const totalQuestions = 20;
+
+    function toggleCard(id) {
+      const card = document.getElementById(id);
+      if (card) {
+        card.classList.toggle('open');
+      }
+    }
+
+    function toggleDone(id, event) {
+      event.stopPropagation();
+      const card = document.getElementById(id);
+      const btn = event.currentTarget;
+      
+      if (masteredQuestions.has(id)) {
+        masteredQuestions.delete(id);
+        card.classList.remove('completed');
+        btn.classList.remove('done');
+      } else {
+        masteredQuestions.add(id);
+        card.classList.add('completed');
+        btn.classList.add('done');
+      }
+      updateReadinessScore();
+    }
+
+    function expandAll() {
+      document.querySelectorAll('.q-card').forEach(c => c.classList.add('open'));
+    }
+
+    function collapseAll() {
+      document.querySelectorAll('.q-card').forEach(c => c.classList.remove('open'));
+    }
+
+    function updateReadinessScore() {
+      const pct = Math.round((masteredQuestions.size / totalQuestions) * 100);
+      document.getElementById('topProgressFill').style.width = pct + '%';
+      document.getElementById('topProgressText').innerText = pct + '%';
+    }
+
+    function updateSidebarProgress() {
+      const checkboxes = document.querySelectorAll('.sidebar input[type="checkbox"]');
+      let checked = 0;
+      checkboxes.forEach(cb => { if (cb.checked) checked++; });
+      // Can tie into visual feedback if desired
+    }
+
+    // Tab Filtering
+    function setTab(cat, btn) {
+      document.querySelectorAll('.tabs-nav .tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const sections = document.querySelectorAll('.section-group');
+      sections.forEach(sec => {
+        if (cat === 'all') {
+          sec.style.display = 'block';
+        } else if (sec.dataset.category === cat) {
+          sec.style.display = 'block';
+        } else {
+          sec.style.display = 'none';
+        }
+      });
+    }
+
+    // Search Filtering
+    function filterQuestions() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.q-card');
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (!q || text.includes(q)) {
+          card.style.display = 'block';
+          if (q) card.classList.add('open');
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Interactive Query Simulation
+    function simulateQuery(queryText, responseText) {
+      // Find output box in the active card or default
+      const outputBoxes = document.querySelectorAll('.sim-output-box');
+      outputBoxes.forEach(box => {
+        box.innerText = queryText + '\n' + responseText;
+      });
+    }
+
+    // Copy Snippet
+    function copySnippet(btn) {
+      const code = btn.closest('.code-container').querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied! ✓';
+        btn.style.color = '#34d399';
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.color = '';
+        }, 1800);
+      });
+    }
+
+    // Quiz Check
+    function checkQuiz(qNum, optIdx, isCorrect, btn) {
+      const parentCard = document.getElementById('quizQ' + qNum);
+      const options = parentCard.querySelectorAll('.quiz-opt-btn');
+      const exp = document.getElementById('quizExp' + qNum);
+
+      options.forEach(opt => opt.disabled = true);
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        exp.style.display = 'block';
+        exp.style.background = 'rgba(16, 185, 129, 0.15)';
+        exp.style.border = '1px solid #10b981';
+        exp.style.color = '#a7f3d0';
+      } else {
+        btn.classList.add('wrong');
+        exp.style.display = 'block';
+        exp.style.background = 'rgba(244, 63, 94, 0.15)';
+        exp.style.border = '1px solid #f43f5e';
+        exp.style.color = '#fecdd3';
+        // Highlight the correct one
+        options.forEach(opt => {
+          if (opt.getAttribute('onclick').includes('true')) {
+            opt.classList.add('correct');
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>
