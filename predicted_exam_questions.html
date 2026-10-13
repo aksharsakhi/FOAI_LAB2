@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>23CSE401 FoAI - Prolog Lab 2 Complete Exam Master</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="dark"] {
+      --bg-dark: #070b14;
+      --bg-surface: #0e1726;
+      --bg-card: rgba(19, 29, 49, 0.75);
+      --bg-card-hover: rgba(24, 37, 62, 0.95);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(99, 102, 241, 0.35);
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-glow: rgba(99, 102, 241, 0.25);
+      --secondary: #06b6d4;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-purple: #a855f7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #040812;
+      --hero-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
+      --hero-title: linear-gradient(135deg, #ffffff 20%, #94a3b8 100%);
+      --header-bg: rgba(14, 23, 38, 0.9);
+      --card-body-bg: rgba(10, 16, 30, 0.5);
+      --chip-bg: rgba(255, 255, 255, 0.05);
+      --input-bg: rgba(14, 23, 38, 0.85);
+      --category-title-color: #f1f5f9;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-hover: #ffffff;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --border-accent: rgba(99, 102, 241, 0.4);
+      --primary: #4f46e5;
+      --primary-light: #6366f1;
+      --primary-glow: rgba(79, 70, 229, 0.15);
+      --secondary: #0891b2;
+      --accent-green: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
+      --accent-purple: #9333ea;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --code-bg: #0f172a;
+      --hero-bg: linear-gradient(180deg, rgba(241, 245, 249, 0.95) 0%, rgba(226, 232, 240, 0.7) 100%);
+      --hero-title: linear-gradient(135deg, #0f172a 20%, #334155 100%);
+      --header-bg: rgba(255, 255, 255, 0.94);
+      --card-body-bg: rgba(248, 250, 252, 0.75);
+      --chip-bg: rgba(15, 23, 42, 0.05);
+      --input-bg: #ffffff;
+      --category-title-color: #0f172a;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, var(--primary-glow) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.06) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 90px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header */
+    header {
+      background: var(--header-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.85rem 1.75rem;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header-inner {
+      max-width: 1350px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge-course {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+    }
+
+    [data-theme="light"] .theme-toggle-btn {
+      background: rgba(15, 23, 42, 0.05);
+      border-color: rgba(15, 23, 42, 0.15);
+    }
+
+    .theme-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary-light);
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1350px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 2.5rem 1.5rem;
+      background: var(--hero-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    .hero-badge-leak {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
+    }
+
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+      background: var(--hero-title);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 1.5rem auto;
+    }
+
+    /* Primary Navigation Tabs */
+    .main-nav-tabs {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding: 0.4rem 0.2rem 1.25rem 0.2rem;
+      scrollbar-width: thin;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 1.75rem;
+    }
+
+    .nav-tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.65rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    [data-theme="light"] .nav-tab-btn {
+      background: rgba(15, 23, 42, 0.04);
+    }
+
+    .nav-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+    }
+
+    .nav-tab-btn.active {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: white;
+      border-color: #818cf8;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+    }
+
+    .nav-tab-btn.leak.active {
+      background: linear-gradient(135deg, #dc2626, #ea580c);
+      border-color: #f87171;
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Search Bar */
+    .search-wrapper {
+      position: relative;
+      margin-bottom: 1.75rem;
+    }
+
+    .search-wrapper input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-wrapper input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+    }
+
+    /* Layout */
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Content Panes */
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--category-title-color);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Question Cards */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      user-select: none;
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary-light);
+      margin-bottom: 0.35rem;
+      letter-spacing: 0.03em;
+    }
+
+    .card-badge.red {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+
+    .card-badge.green {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .chevron {
+      color: var(--text-muted);
+      transition: transform 0.25s ease;
+      font-size: 0.9rem;
+    }
+
+    .card.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    .card-body {
+      display: none;
+      padding: 0 1.5rem 1.5rem 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--card-body-bg);
+    }
+
+    .card.open .card-body {
+      display: block;
+    }
+
+    /* Explanation & Prompts */
+    .prompt-box {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 3px solid var(--accent-amber);
+      padding: 0.85rem 1rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 1.25rem 0 1rem 0;
+      font-size: 0.92rem;
+      color: #fde68a;
+    }
+
+    [data-theme="light"] .prompt-box {
+      background: rgba(245, 158, 11, 0.12);
+      color: #92400e;
+    }
+
+    .trap-box {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: #fca5a5;
+    }
+
+    [data-theme="light"] .trap-box {
+      color: #9f1239;
+      background: rgba(244, 63, 94, 0.1);
+    }
+
+    .trap-box strong {
+      color: #f43f5e;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Code blocks */
+    .code-container {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-sm);
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .code-header {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.4rem 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    pre code {
+      display: block;
+      padding: 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      line-height: 1.55;
+      overflow-x: auto;
+    }
+
+    .token-comment { color: #64748b; font-style: italic; }
+    .token-atom { color: #38bdf8; }
+    .token-var { color: #f472b6; font-weight: 600; }
+    .token-rule { color: #a78bfa; font-weight: 700; }
+    .token-query { color: #34d399; font-weight: 600; }
+    .token-num { color: #fbbf24; }
+
+    /* Query simulation box */
+    .query-sim-box {
+      background: rgba(6, 182, 212, 0.05);
+      border: 1px dashed rgba(6, 182, 212, 0.35);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      margin: 1.25rem 0 0.5rem 0;
+    }
+
+    .sim-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+    }
+
+    .sim-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sim-chip {
+      background: var(--chip-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.3rem 0.65rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sim-chip:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .sim-output {
+      background: #030712;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.84rem;
+      color: #a7f3d0;
+      min-height: 44px;
+      white-space: pre-wrap;
+    }
+
+    /* Table styles */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+
+    .custom-table th, .custom-table td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .custom-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .custom-table td code {
+      font-family: 'Fira Code', monospace;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: 5.5rem;
+      height: fit-content;
+    }
+
+    .widget {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+    }
+
+    .widget-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+    }
+
+    .check-row input {
+      margin-top: 0.2rem;
+      accent-color: var(--primary);
+    }
+
+    /* Quiz components */
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-question {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .quiz-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .quiz-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .quiz-btn.correct {
+      background: rgba(16, 185, 129, 0.2) !important;
+      border-color: var(--accent-green) !important;
+      color: #a7f3d0 !important;
+      font-weight: 600;
+    }
+
+    .quiz-btn.wrong {
+      background: rgba(244, 63, 94, 0.2) !important;
+      border-color: var(--accent-rose) !important;
+      color: #fecdd3 !important;
+    }
+
+    .quiz-feedback {
+      display: none;
+      padding: 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      margin-top: 0.75rem;
+    }
+
+    /* Floating Action */
+    .floating-tools {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 99;
+    }
+
+    .float-top {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      border: 1px solid var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .float-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px var(--primary-glow);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <span class="badge-course">23CSE401 FoAI</span>
+        <h2 class="brand-title">Prolog Lab 2 Master Exam Hub</h2>
+      </div>
+
+      <div class="header-actions">
+        
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <a href="index.html" class="btn-action" style="text-decoration: none; color: inherit;">🏠 Home Hub</a>
+          <a href="today_live_exam.html" class="btn-action" style="text-decoration: none; color: #f87171; font-weight: 600;">🔥 Today's Exam</a>
+          <a href="alternate_exam_prep.html" class="btn-action" style="text-decoration: none; color: inherit;">☕ Alternate Paper</a>
+          <a href="predicted_exam_questions.html" class="btn-action" style="text-decoration: none; color: inherit;">🔮 Predicted Qs</a>
+        </div>
+<button class="btn-action" onclick="expandAll()">Expand All</button>
+        <button class="btn-action" onclick="collapseAll()">Collapse All</button>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+          <span id="themeIcon">☀️</span>
+          <span id="themeText">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container -->
+  <div class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <span class="hero-badge-leak">🔥 CONFIRMED TEST PATTERN FROM TODAY'S EXAM</span>
+      <h1>Master Prolog Lab 2 Before Walking into Exam</h1>
+      <p>Today's other class was given <strong>Task 1 (Extended Family Tree with 20 Queries)</strong> and <strong>Task 2 (Airport Flights Network with 20 Queries)</strong>. Study the exact code, every query answer, and the alternate papers below.</p>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="main-nav-tabs">
+      <button class="nav-tab-btn leak" onclick="switchNavTab('tab-today', this)">🔥 Today's Live Exam (Task 1 & 2)</button>
+      <button class="nav-tab-btn" onclick="switchNavTab('tab-alternate', this)">☕ Alternate Paper (Cafe & Prereqs)</button>
+      <button class="nav-tab-btn" onclick="switchNavTab('tab-west', this)">🎖️ Colonel West FOL Criminal</button>
+      <button class="nav-tab-btn" onclick="switchNavTab('tab-syntax', this)">📖 Core Syntax & Viva</button>
+      <button class="nav-tab-btn" onclick="switchNavTab('tab-predicted', this)" class="nav-tab-btn active">🔮 Predicted Exam Questions</button>
+      <button class="nav-tab-btn" onclick="switchNavTab('tab-quiz', this)">🎯 Exam Simulator Quiz</button>
+    </nav>
+
+    <!-- Search Input -->
+    <div class="search-wrapper">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Search any query or topic (e.g. 'grandfather', 'ek', 'layover', 'sub_atom', 'affordable', 'criminal')..." oninput="filterAllCards()">
+    </div>
+
+    <!-- Main Layout Grid -->
+    <div class="layout-grid">
+      
+      <!-- Content Area -->
+      <main id="mainContent">
+
+        <!-- =========================================================
+             TAB 1: TODAY'S LIVE EXAM (Logic and Prolog 2.pdf)
+             ========================================================= -->
+        <div class="tab-pane active" id="tab-today">
+
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem;">
+            <h3 style="color: #f87171; font-family: 'Outfit'; font-size: 1.2rem; margin-bottom: 0.35rem;">🎯 Verified Exam Structure: 2 Tasks, 40 Total Queries</h3>
+            <p style="color: var(--text-muted); font-size: 0.92rem;">
+              This exact question sheet was administered today. It contains <strong>Task 1: Extended Family Tree</strong> (9 rules + 20 queries a-t) and <strong>Task 2: Airport Flights Network</strong> (4 rules + 20 queries 1-20). Everything you need to score 100% is right here.
+            </p>
+          </div>
+
+          <!-- TASK 1: FAMILY TREE -->
+          <h2 class="section-title">👨‍👩‍👧‍👦 Task 1: Extended Family Tree (Complete Code & 20 Queries)</h2>
+          <p class="section-desc">Facts for 10 people (Jack, Oliver, Ali, James, Simon, Harry, Helen, Sophie, Jess, Lily) and parent relationships.</p>
+
+          <article class="card open" id="today-t1-code">
+            <div class="card-header" onclick="toggleCard('today-t1-code')">
+              <div>
+                <span class="card-badge red">TASK 1 • COMPLETE PROLOG SOURCE</span>
+                <h3 class="card-title">Task 1: Full Facts & 9 Required Rules</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>family_tree.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">/* ========================================================
+   TASK 1: FACTS (Genders and Parent Relationships)
+   ======================================================== */</span>
+<span class="token-atom">male</span>(<span class="token-atom">jack</span>)<span class="token-atom">.</span>  
+<span class="token-atom">male</span>(<span class="token-atom">oliver</span>)<span class="token-atom">.</span>  
+<span class="token-atom">male</span>(<span class="token-atom">ali</span>)<span class="token-atom">.</span>  
+<span class="token-atom">male</span>(<span class="token-atom">james</span>)<span class="token-atom">.</span>  
+<span class="token-atom">male</span>(<span class="token-atom">simon</span>)<span class="token-atom">.</span>  
+<span class="token-atom">male</span>(<span class="token-atom">harry</span>)<span class="token-atom">.</span>  
+
+<span class="token-atom">female</span>(<span class="token-atom">helen</span>)<span class="token-atom">.</span>  
+<span class="token-atom">female</span>(<span class="token-atom">sophie</span>)<span class="token-atom">.</span>  
+<span class="token-atom">female</span>(<span class="token-atom">jess</span>)<span class="token-atom">.</span>  
+<span class="token-atom">female</span>(<span class="token-atom">lily</span>)<span class="token-atom">.</span>  
+
+<span class="token-atom">parent_of</span>(<span class="token-atom">jack</span>, <span class="token-atom">jess</span>)<span class="token-atom">.</span>  
+<span class="token-atom">parent_of</span>(<span class="token-atom">jack</span>, <span class="token-atom">lily</span>)<span class="token-atom">.</span>  
+<span class="token-atom">parent_of</span>(<span class="token-atom">helen</span>, <span class="token-atom">jess</span>)<span class="token-atom">.</span>  
+<span class="token-atom">parent_of</span>(<span class="token-atom">helen</span>, <span class="token-atom">lily</span>)<span class="token-atom">.</span>  
+<span class="token-atom">parent_of</span>(<span class="token-atom">oliver</span>, <span class="token-atom">james</span>)<span class="token-atom">.</span>  
+<span class="token-atom">parent_of</span>(<span class="token-atom">sophie</span>, <span class="token-atom">james</span>)<span class="token-atom">.</span> 
+<span class="token-atom">parent_of</span>(<span class="token-atom">jess</span>, <span class="token-atom">simon</span>)<span class="token-atom">.</span> 
+<span class="token-atom">parent_of</span>(<span class="token-atom">ali</span>, <span class="token-atom">simon</span>)<span class="token-atom">.</span> 
+<span class="token-atom">parent_of</span>(<span class="token-atom">lily</span>, <span class="token-atom">harry</span>)<span class="token-atom">.</span> 
+<span class="token-atom">parent_of</span>(<span class="token-atom">james</span>, <span class="token-atom">harry</span>)<span class="token-atom">.</span> 
+
+<span class="token-comment">/* ========================================================
+   TASK 1: 9 RULES TO COMPLETE
+   ======================================================== */</span>
+<span class="token-comment">% 1. Father</span>
+<span class="token-atom">father_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 2. Mother</span>
+<span class="token-atom">mother_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 3. Grandfather</span>
+<span class="token-atom">grandfather_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 4. Grandmother</span>
+<span class="token-atom">grandmother_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 5. Sister (Female, shares a parent, X \= Y)</span>
+<span class="token-atom">sister_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span>
+
+<span class="token-comment">% 6. Brother (Male, shares a parent, X \= Y)</span>
+<span class="token-atom">brother_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span>
+
+<span class="token-comment">% 7. Aunt (Female, sister of a parent of Y)</span>
+<span class="token-atom">aunt_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-atom">sister_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 8. Uncle (Male, brother of a parent of Y)</span>
+<span class="token-atom">uncle_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-atom">brother_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 9. Ancestor (Recursion: Base case + Recursive case)</span>
+<span class="token-atom">ancestor_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
+<span class="token-atom">ancestor_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> <span class="token-atom">ancestor_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 20 QUERIES TABLE FOR TASK 1 -->
+          <article class="card open" id="today-t1-queries">
+            <div class="card-header" onclick="toggleCard('today-t1-queries')">
+              <div>
+                <span class="card-badge red">TASK 1 • 20 EXAM QUERIES (a to t)</span>
+                <h3 class="card-title">All 20 Queries & Exact Outputs Walkthrough</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <p class="explanation-text">Click any query chip to view how SWI-Prolog responds and why:</p>
+
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Tester for Task 1:</div>
+                <div class="sim-chips">
+                  <span class="sim-chip" onclick="simulateT1('a', '?- father_of(jack, jess).', 'true.')">a. Jack father of Jess?</span>
+                  <span class="sim-chip" onclick="simulateT1('b', '?- mother_of(helen, lily).', 'true.')">b. Helen mother of Lily?</span>
+                  <span class="sim-chip" onclick="simulateT1('c', '?- sister_of(jess, lily).', 'true.')">c. Jess & Lily sisters?</span>
+                  <span class="sim-chip" onclick="simulateT1('d', '?- grandfather_of(oliver, harry).', 'true.')">d. Oliver grandfather of Harry?</span>
+                  <span class="sim-chip" onclick="simulateT1('e', '?- ancestor_of(ali, harry).', 'false.')">e. Ali ancestor of Harry?</span>
+                  <span class="sim-chip" onclick="simulateT1('f', '?- father_of(X, simon).', 'X = ali.')">f. Father of Simon?</span>
+                  <span class="sim-chip" onclick="simulateT1('g', '?- mother_of(X, james).', 'X = sophie.')">g. Mother of James?</span>
+                  <span class="sim-chip" onclick="simulateT1('h', '?- parent_of(lily, Child).', 'Child = harry.')">h. Children of Lily?</span>
+                  <span class="sim-chip" onclick="simulateT1('i', '?- grandmother_of(X, harry).', 'X = helen ;
+X = sophie.')">i. Grandmother of Harry?</span>
+                  <span class="sim-chip" onclick="simulateT1('j', '?- uncle_of(X, harry).', 'false.')">j. Uncle of Harry?</span>
+                  <span class="sim-chip" onclick="simulateT1('k', '?- aunt_of(X, simon).', 'X = lily.')">k. Aunt of Simon?</span>
+                  <span class="sim-chip" onclick="simulateT1('l', '?- brother_of(Brother, harry).', 'false.')">l. Brothers of Harry?</span>
+                  <span class="sim-chip" onclick="simulateT1('r', '?- male(X), father_of(X, _).', 'X = jack ;
+X = oliver ;
+X = ali ;
+X = james.')">r. Males who are fathers?</span>
+                  <span class="sim-chip" onclick="simulateT1('s', '?- parent_of(jack, X), parent_of(helen, X).', 'X = jess ;
+X = lily.')">s. Full siblings of Jack & Helen?</span>
+                  <span class="sim-chip" onclick="simulateT1('t', '?- parent_of(X, Y), \+ parent_of(Y, _).', 'X = ali ;
+X = lily ;
+X = james.')">t. Parents with NO grandkids?</span>
+                </div>
+                <div class="sim-output" id="todaySimOutput1">// Click any query above to simulate output</div>
+              </div>
+
+              <!-- Full Reference Table -->
+              <div style="overflow-x: auto; margin-top: 1rem;">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Question in Exam Sheet</th>
+                      <th>Exact Prolog Query</th>
+                      <th>Expected Output</th>
+                      <th>Why it returns this</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>a</td><td>Is Jack the father of Jess?</td><td><code>?- father_of(jack, jess).</code></td><td><code>true.</code></td><td>Jack is male and parent of Jess.</td></tr>
+                    <tr><td>b</td><td>Is Helen the mother of Lily?</td><td><code>?- mother_of(helen, lily).</code></td><td><code>true.</code></td><td>Helen is female and parent of Lily.</td></tr>
+                    <tr><td>c</td><td>Are Jess and Lily sisters?</td><td><code>?- sister_of(jess, lily).</code></td><td><code>true.</code></td><td>Jess is female and shares parent with Lily.</td></tr>
+                    <tr><td>d</td><td>Is Oliver the grandfather of Harry?</td><td><code>?- grandfather_of(oliver, harry).</code></td><td><code>true.</code></td><td>Oliver &rarr; James &rarr; Harry.</td></tr>
+                    <tr><td>e</td><td>Is Ali an ancestor of Harry?</td><td><code>?- ancestor_of(ali, harry).</code></td><td><code>false.</code></td><td>Ali is parent of Simon, not in Harry's lineage!</td></tr>
+                    <tr><td>f</td><td>Who is the father of Simon?</td><td><code>?- father_of(X, simon).</code></td><td><code>X = ali.</code></td><td>Ali is male and parent of Simon.</td></tr>
+                    <tr><td>g</td><td>Who is the mother of James?</td><td><code>?- mother_of(X, james).</code></td><td><code>X = sophie.</code></td><td>Sophie is female and parent of James.</td></tr>
+                    <tr><td>h</td><td>Who are the children of Lily?</td><td><code>?- parent_of(lily, Child).</code></td><td><code>Child = harry.</code></td><td>Direct fact <code>parent_of(lily, harry)</code>.</td></tr>
+                    <tr><td>i</td><td>Who is grandmother of Harry?</td><td><code>?- grandmother_of(X, harry).</code></td><td><code>X = helen ; X = sophie.</code></td><td>Helen (via Lily) and Sophie (via James).</td></tr>
+                    <tr><td>j</td><td>Who is uncle of Harry?</td><td><code>?- uncle_of(X, harry).</code></td><td><code>false.</code></td><td>Neither Lily nor James has a brother in facts.</td></tr>
+                    <tr><td>k</td><td>Who is aunt of Simon?</td><td><code>?- aunt_of(X, simon).</code></td><td><code>X = lily.</code></td><td>Simon's mother is Jess; Lily is sister of Jess.</td></tr>
+                    <tr><td>l</td><td>Does Harry have any brothers?</td><td><code>?- brother_of(Brother, harry).</code></td><td><code>false.</code></td><td>Harry has no siblings in the knowledge base.</td></tr>
+                    <tr><td>m</td><td>Find all father-child pairs:</td><td><code>?- father_of(Father, Child).</code></td><td>List of pairs</td><td>Binds Father and Child across all facts.</td></tr>
+                    <tr><td>n</td><td>Find all sisters in family:</td><td><code>?- sister_of(Sister, Sibling).</code></td><td><code>Sister = jess, lily...</code></td><td>Finds all valid sister relationships.</td></tr>
+                    <tr><td>o</td><td>All descendants of Helen:</td><td><code>?- ancestor_of(helen, Descendant).</code></td><td><code>jess, lily, simon, harry</code></td><td>Recursively traverses down tree.</td></tr>
+                    <tr><td>p</td><td>All ancestors of Simon:</td><td><code>?- ancestor_of(Ancestor, simon).</code></td><td><code>jess, ali, jack, helen</code></td><td>Recursively traverses up tree.</td></tr>
+                    <tr><td>q</td><td>All grandfathers & grandkids:</td><td><code>?- grandfather_of(GF, GC).</code></td><td>All pairs</td><td>Finds Oliver/Harry and Jack/Simon/Harry.</td></tr>
+                    <tr><td>r</td><td>Males who are also fathers:</td><td><code>?- male(X), father_of(X, _).</code></td><td><code>jack, oliver, ali, james</code></td><td>Uses <code>_</code> anonymous variable for child.</td></tr>
+                    <tr><td>s</td><td>Full siblings of Jack & Helen:</td><td><code>?- parent_of(jack, X), parent_of(helen, X).</code></td><td><code>X = jess ; X = lily.</code></td><td>Conjunction requires both to be parents!</td></tr>
+                    <tr><td>t</td><td>Parent with NO grandchildren:</td><td><code>?- parent_of(X, Y), \+ parent_of(Y, _).</code></td><td><code>ali, lily, james</code></td><td>Uses Negation as Failure <code>\+</code>.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- TASK 2: AIRPORT FLIGHTS -->
+          <h2 class="section-title" style="margin-top: 2rem;">✈️ Task 2: Airport Flights Network (`airport_flights.pl`)</h2>
+          <p class="section-desc">Airports in 6 cities/countries with flight numbers and durations. Direct routes, 1-stop routes, calculations, and recursive connections.</p>
+
+          <article class="card open" id="today-t2-code">
+            <div class="card-header" onclick="toggleCard('today-t2-code')">
+              <div>
+                <span class="card-badge red">TASK 2 • COMPLETE PROLOG SOURCE</span>
+                <h3 class="card-title">Task 2: Facts & 4 Core Rules</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>airport_flights.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">/* ========================================================
+   TASK 2: FACTS (Airports & Flights)
+   ======================================================== */</span>
+<span class="token-atom">airport</span>(<span class="token-atom">london</span>, <span class="token-atom">uk</span>)<span class="token-atom">.</span>  
+<span class="token-atom">airport</span>(<span class="token-atom">paris</span>, <span class="token-atom">france</span>)<span class="token-atom">.</span>  
+<span class="token-atom">airport</span>(<span class="token-atom">frankfurt</span>, <span class="token-atom">germany</span>)<span class="token-atom">.</span>  
+<span class="token-atom">airport</span>(<span class="token-atom">dubai</span>, <span class="token-atom">uae</span>)<span class="token-atom">.</span>  
+<span class="token-atom">airport</span>(<span class="token-atom">delhi</span>, <span class="token-atom">india</span>)<span class="token-atom">.</span>  
+<span class="token-atom">airport</span>(<span class="token-atom">singapore</span>, <span class="token-atom">singapore</span>)<span class="token-atom">.</span> 
+
+<span class="token-atom">flight</span>(<span class="token-atom">ba101</span>, <span class="token-atom">london</span>, <span class="token-atom">paris</span>, <span class="token-num">1</span>)<span class="token-atom">.</span> 
+<span class="token-atom">flight</span>(<span class="token-atom">lh202</span>, <span class="token-atom">paris</span>, <span class="token-atom">frankfurt</span>, <span class="token-num">1.5</span>)<span class="token-atom">.</span> 
+<span class="token-atom">flight</span>(<span class="token-atom">ek303</span>, <span class="token-atom">frankfurt</span>, <span class="token-atom">dubai</span>, <span class="token-num">6</span>)<span class="token-atom">.</span> 
+<span class="token-atom">flight</span>(<span class="token-atom">ek404</span>, <span class="token-atom">london</span>, <span class="token-atom">dubai</span>, <span class="token-num">7</span>)<span class="token-atom">.</span> 
+<span class="token-atom">flight</span>(<span class="token-atom">ai505</span>, <span class="token-atom">dubai</span>, <span class="token-atom">delhi</span>, <span class="token-num">3.5</span>)<span class="token-atom">.</span> 
+<span class="token-atom">flight</span>(<span class="token-atom">sq606</span>, <span class="token-atom">delhi</span>, <span class="token-atom">singapore</span>, <span class="token-num">5.5</span>)<span class="token-atom">.</span> 
+
+<span class="token-comment">/* ========================================================
+   TASK 2: 4 RULES
+   ======================================================== */</span>
+<span class="token-comment">% 1. Direct Route</span>
+<span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span>  
+    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">_</span>)<span class="token-atom">.</span> 
+ 
+<span class="token-comment">% 2. One Stop Route (With intermediate Layover)</span>
+<span class="token-atom">one_stop_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">Layover</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">Layover</span>, <span class="token-var">_</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">Layover</span>, <span class="token-var">To</span>, <span class="token-var">_</span>)<span class="token-atom">.</span> 
+ 
+<span class="token-comment">% 3. Total Duration for 1 Stop Connection</span>
+<span class="token-atom">one_stop_duration</span>(<span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">TotalTime</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">Layover</span>, <span class="token-var">Time1</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">Layover</span>, <span class="token-var">To</span>, <span class="token-var">Time2</span>)<span class="token-atom">,</span> 
+    <span class="token-var">TotalTime</span> <span class="token-rule">is</span> <span class="token-var">Time1</span> <span class="token-atom">+</span> <span class="token-var">Time2</span><span class="token-atom">.</span> 
+ 
+<span class="token-comment">% 4. Recursive Reachability: Any route (direct or indirect)</span>
+<span class="token-comment">% Base Case: Direct flight</span>
+<span class="token-atom">has_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span>  
+    <span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>)<span class="token-atom">.</span> 
+
+<span class="token-comment">% Recursive Case: Fly to an intermediate city, then recurse</span>
+<span class="token-atom">has_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span>  
+    <span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">Via</span>)<span class="token-atom">,</span>  
+    <span class="token-atom">has_route</span>(<span class="token-var">Via</span>, <span class="token-var">To</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+            </div>
+          </article>
+
+          <!-- 20 QUERIES TABLE FOR TASK 2 -->
+          <article class="card open" id="today-t2-queries">
+            <div class="card-header" onclick="toggleCard('today-t2-queries')">
+              <div>
+                <span class="card-badge red">TASK 2 • 20 EXAM QUERIES (1 to 20)</span>
+                <h3 class="card-title">All 20 Flight Queries Explained & Verified</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Tester for Task 2:</div>
+                <div class="sim-chips">
+                  <span class="sim-chip" onclick="simulateT2('1', '?- direct_route(london, paris).', 'true.')">1. Direct London -> Paris?</span>
+                  <span class="sim-chip" onclick="simulateT2('2', '?- direct_route(paris, delhi).', 'false.')">2. Direct Paris -> Delhi?</span>
+                  <span class="sim-chip" onclick="simulateT2('3', '?- has_route(london, singapore).', 'true.')">3. London -> Singapore eventually?</span>
+                  <span class="sim-chip" onclick="simulateT2('7', '?- one_stop_route(london, dubai, Layover).', 'false.')">7. 1-stop London -> Dubai?</span>
+                  <span class="sim-chip" onclick="simulateT2('10', '?- one_stop_duration(london, frankfurt, Hours).', 'Hours = 2.5.')">10. Duration London->Paris->Frankfurt?</span>
+                  <span class="sim-chip" onclick="simulateT2('11', '?- one_stop_route(london, delhi, Layover), one_stop_duration(london, delhi, TotalTime).', 'Layover = dubai,
+TotalTime = 10.5.')">11. 1-stop London -> Delhi Total Time?</span>
+                  <span class="sim-chip" onclick="simulateT2('13', '?- flight(Num, From, To, Duration), Duration > 5.0.', 'Num = ek303, From = frankfurt, To = dubai, Duration = 6 ;
+Num = ek404, From = london, To = dubai, Duration = 7 ;
+Num = sq606, From = delhi, To = singapore, Duration = 5.5.')">13. Flights > 5 hours?</span>
+                  <span class="sim-chip" onclick="simulateT2('18', '?- flight(FlightNum, _, _, _), sub_atom(FlightNum, 0, 2, _, ek).', 'FlightNum = ek303 ;
+FlightNum = ek404.')">18. Flights starting with 'ek'?</span>
+                  <span class="sim-chip" onclick="simulateT2('19', '?- one_stop_duration(paris, Dest, 7.5).', 'Dest = dubai.')">19. 1-stop from Paris taking 7.5h?</span>
+                </div>
+                <div class="sim-output" id="todaySimOutput2">// Click any flight query above to simulate output</div>
+              </div>
+
+              <!-- Full Flight Table -->
+              <div style="overflow-x: auto; margin-top: 1rem;">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Exam Question</th>
+                      <th>Exact Prolog Query Code</th>
+                      <th>Expected Output</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td>Direct flight from London to Paris?</td><td><code>?- direct_route(london, paris).</code></td><td><code>true.</code></td></tr>
+                    <tr><td>2</td><td>Can I fly directly from Paris to Delhi?</td><td><code>?- direct_route(paris, delhi).</code></td><td><code>false.</code></td></tr>
+                    <tr><td>3</td><td>Possible to travel London &rarr; Singapore eventually?</td><td><code>?- has_route(london, singapore).</code></td><td><code>true.</code></td></tr>
+                    <tr><td>4</td><td>Where can I fly to directly from London?</td><td><code>?- direct_route(london, Destination).</code></td><td><code>Destination = paris ; dubai.</code></td></tr>
+                    <tr><td>5</td><td>Which cities have a direct flight into Dubai?</td><td><code>?- direct_route(Origin, dubai).</code></td><td><code>Origin = frankfurt ; london.</code></td></tr>
+                    <tr><td>6</td><td>Flight number leaving Delhi?</td><td><code>?- flight(FlightNum, delhi, _, _).</code></td><td><code>FlightNum = sq606.</code></td></tr>
+                    <tr><td>7</td><td>1-stop London &rarr; Dubai layover city?</td><td><code>?- one_stop_route(london, dubai, Layover).</code></td><td><code>false.</code> (Only direct or 2-stop!)</td></tr>
+                    <tr><td>8</td><td>Where can I travel from Frankfurt with 1 stop?</td><td><code>?- one_stop_route(frankfurt, Destination, _).</code></td><td><code>Destination = delhi.</code></td></tr>
+                    <tr><td>9</td><td>All direct flight routes and durations:</td><td><code>?- flight(_, Origin, Destination, Duration).</code></td><td>Prints all 6 flights</td></tr>
+                    <tr><td>10</td><td>Flying time London &rarr; Paris &rarr; Frankfurt?</td><td><code>?- one_stop_duration(london, frankfurt, Hours).</code></td><td><code>Hours = 2.5.</code> (1 + 1.5)</td></tr>
+                    <tr><td>11</td><td>1-stop London &rarr; Delhi + total flying time:</td><td><code>?- one_stop_route(london, delhi, Layover), one_stop_duration(london, delhi, TotalTime).</code></td><td><code>Layover = dubai, TotalTime = 10.5.</code> (7 + 3.5)</td></tr>
+                    <tr><td>12</td><td>All pairs connected by 1-stop flight:</td><td><code>?- one_stop_route(CityA, CityB, _).</code></td><td>Prints all connected city pairs</td></tr>
+                    <tr><td>13</td><td>Direct flights taking longer than 5 hours:</td><td><code>?- flight(Num, From, To, Duration), Duration > 5.0.</code></td><td><code>ek303 (6), ek404 (7), sq606 (5.5)</code></td></tr>
+                    <tr><td>14</td><td>Short direct flights (under 2 hours):</td><td><code>?- flight(Num, From, To, Duration), Duration < 2.0.</code></td><td><code>ba101 (1), lh202 (1.5)</code></td></tr>
+                    <tr><td>15</td><td>Any flights with destination country UK?</td><td><code>?- flight(_, _, Dest, _), airport(Dest, uk).</code></td><td><code>false.</code></td></tr>
+                    <tr><td>16</td><td>Flight departing from city in France:</td><td><code>?- airport(City, france), flight(_, City, Dest, _).</code></td><td><code>City = paris, Dest = frankfurt.</code></td></tr>
+                    <tr><td>17</td><td>All destinations reachable from London:</td><td><code>?- has_route(london, Destination).</code></td><td><code>paris, frankfurt, dubai, delhi, singapore</code></td></tr>
+                    <tr><td>18</td><td>Flight number starting with 'ek' (sub_atom):</td><td><code>?- flight(FlightNum, _, _, _), sub_atom(FlightNum, 0, 2, _, ek).</code></td><td><code>ek303 ; ek404.</code></td></tr>
+                    <tr><td>19</td><td>Destination from Paris taking exactly 7.5h (1-stop):</td><td><code>?- one_stop_duration(paris, Dest, 7.5).</code></td><td><code>Dest = dubai.</code> (1.5 + 6.0)</td></tr>
+                    <tr><td>20</td><td>City from London that does NOT connect to Singapore?</td><td><code>?- direct_route(london, NextCity), \+ has_route(NextCity, singapore).</code></td><td><code>false.</code> (Both Paris and Dubai reach Singapore!)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+
+        <!-- =========================================================
+             TAB 2: ALTERNATE PAPER (Cafe & CS Prereqs)
+             ========================================================= -->
+        <div class="tab-pane" id="tab-alternate">
+
+          <h2 class="section-title">☕ Problem 1: Campus Cafe Database & Budget Math (`cafe.pl`)</h2>
+          <p class="section-desc">From `Logic and Prolog copy.docx`: Espresso ($3), Latte ($5), Croissant ($4), Sandwich ($8), Muffin ($3).</p>
+
+          <article class="card open" id="alt-cafe">
+            <div class="card-header" onclick="toggleCard('alt-cafe')">
+              <div>
+                <span class="card-badge green">ALTERNATE PAPER • CAFE PROBLEM</span>
+                <h3 class="card-title">Cafe Facts, Affordable Rule & Meal Deal Combinations</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>cafe.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">% item(Name, Category, PriceInUSD)</span>
+<span class="token-atom">item</span>(<span class="token-atom">espresso</span>, <span class="token-atom">drink</span>, <span class="token-num">3</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">latte</span>, <span class="token-atom">drink</span>, <span class="token-num">5</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">croissant</span>, <span class="token-atom">food</span>, <span class="token-num">4</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">sandwich</span>, <span class="token-atom">food</span>, <span class="token-num">8</span>)<span class="token-atom">.</span>
+<span class="token-atom">item</span>(<span class="token-atom">muffin</span>, <span class="token-atom">food</span>, <span class="token-num">3</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% 1. Affordable (Price =< Budget. Note =< NOT <=)</span>
+<span class="token-atom">affordable</span>(<span class="token-var">Item</span>, <span class="token-var">Budget</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">item</span>(<span class="token-var">Item</span>, <span class="token-var">_</span>, <span class="token-var">Price</span>)<span class="token-atom">,</span> 
+    <span class="token-var">Price</span> <span class="token-rule">=&lt;</span> <span class="token-var">Budget</span><span class="token-atom">.</span>
+
+<span class="token-comment">% 2. Meal Deal: Exactly 1 food + 1 drink (Use 'is' for arithmetic sum)</span>
+<span class="token-atom">meal_deal</span>(<span class="token-var">Food</span>, <span class="token-var">Drink</span>, <span class="token-var">TotalCost</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">item</span>(<span class="token-var">Food</span>, <span class="token-atom">food</span>, <span class="token-var">FoodPrice</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">item</span>(<span class="token-var">Drink</span>, <span class="token-atom">drink</span>, <span class="token-var">DrinkPrice</span>)<span class="token-atom">,</span> 
+    <span class="token-var">TotalCost</span> <span class="token-rule">is</span> <span class="token-var">FoodPrice</span> <span class="token-atom">+</span> <span class="token-var">DrinkPrice</span><span class="token-atom">.</span></code></pre>
+              </div>
+
+              <div class="prompt-box">
+                <strong>Queries they ask:</strong><br>
+                • List all food items: <code>?- item(Food, food, _).</code><br>
+                • What can you buy with $4 or less? <code>?- affordable(X, 4).</code> (espresso, croissant, muffin)<br>
+                • Combos &le; $10: <code>?- meal_deal(Food, Drink, Total), Total =&lt; 10.</code>
+              </div>
+            </div>
+          </article>
+
+
+          <h2 class="section-title" style="margin-top: 2rem;">🎓 Problem 2: Computer Science Course Sequencing (`courses.pl`)</h2>
+          <p class="section-desc">CS101 &rarr; CS102 &rarr; CS201 (plus Math101) &rarr; CS301.</p>
+
+          <article class="card open" id="alt-courses">
+            <div class="card-header" onclick="toggleCard('alt-courses')">
+              <div>
+                <span class="card-badge green">ALTERNATE PAPER • PREREQUISITES</span>
+                <h3 class="card-title">Direct Eligibility vs Transitive Recursive Closure</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>courses.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">% prereq(PrereqCourse, TargetCourse)</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">cs101</span>, <span class="token-atom">cs102</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">cs102</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">math101</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">cs201</span>, <span class="token-atom">cs301</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Direct check</span>
+<span class="token-atom">can_take</span>(<span class="token-var">StudentCourse</span>, <span class="token-var">TargetCourse</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">prereq</span>(<span class="token-var">StudentCourse</span>, <span class="token-var">TargetCourse</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Recursive transitive closure (Foundational course eventually required)</span>
+<span class="token-comment">% Base case</span>
+<span class="token-atom">requires_eventually</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">prereq</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Recursive case</span>
+<span class="token-atom">requires_eventually</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">prereq</span>(<span class="token-var">Prereq</span>, <span class="token-var">Intermediate</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">requires_eventually</span>(<span class="token-var">Intermediate</span>, <span class="token-var">Target</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+
+              <div class="prompt-box">
+                <strong>Queries they ask:</strong><br>
+                • What does CS201 directly require? <code>?- prereq(Req, cs201).</code> (cs102 ; math101)<br>
+                • Can jump straight into CS301 from CS101? <code>?- can_take(cs101, cs301).</code> (false)<br>
+                • All foundational courses for CS301? <code>?- requires_eventually(Course, cs301).</code> (cs201, cs101, cs102, math101)
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+
+        <!-- =========================================================
+             TAB 3: COLONEL WEST
+             ========================================================= -->
+        <div class="tab-pane" id="tab-west">
+
+          <h2 class="section-title">🎖️ Colonel West: The Criminal Problem (`criminal.pl`)</h2>
+          <p class="section-desc">The famous First-Order Logic to Horn clause inference proof from Russell & Norvig.</p>
+
+          <article class="card open" id="west-proof">
+            <div class="card-header" onclick="toggleCard('west-proof')">
+              <div>
+                <span class="card-badge">FOL &rarr; HORN CLAUSE TRANSLATION</span>
+                <h3 class="card-title">English Sentences to Prolog Code</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>criminal.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">/* Facts */</span>
+<span class="token-atom">american</span>(<span class="token-atom">west</span>)<span class="token-atom">.</span>
+<span class="token-atom">enemy</span>(<span class="token-atom">nono</span>, <span class="token-atom">america</span>)<span class="token-atom">.</span>
+<span class="token-atom">missile</span>(<span class="token-atom">m1</span>)<span class="token-atom">.</span>
+<span class="token-atom">owns</span>(<span class="token-atom">nono</span>, <span class="token-atom">m1</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">/* Rules */</span>
+<span class="token-atom">weapon</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">missile</span>(<span class="token-var">X</span>)<span class="token-atom">.</span>
+<span class="token-atom">hostile</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">enemy</span>(<span class="token-var">X</span>, <span class="token-atom">america</span>)<span class="token-atom">.</span>
+<span class="token-atom">sells</span>(<span class="token-atom">west</span>, <span class="token-var">X</span>, <span class="token-atom">nono</span>) <span class="token-rule">:-</span> <span class="token-atom">missile</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">owns</span>(<span class="token-atom">nono</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
+
+<span class="token-atom">criminal</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">american</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">weapon</span>(<span class="token-var">Y</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">sells</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">hostile</span>(<span class="token-var">Z</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+
+              <div class="prompt-box">
+                <strong>How to Trace Inference in SWI-Prolog:</strong><br>
+                Type <code>?- trace.</code> then <code>?- criminal(west).</code><br>
+                Prolog walks through the 4 ports:<br>
+                1. <strong>Call:</strong> <code>criminal(west)</code><br>
+                2. <strong>Call:</strong> <code>american(west)</code> &rarr; Exit: true<br>
+                3. <strong>Call:</strong> <code>weapon(Y)</code> &rarr; matches <code>missile(m1)</code> &rarr; Exit: Y = m1<br>
+                4. <strong>Call:</strong> <code>sells(west, m1, Z)</code> &rarr; checks <code>owns(nono, m1)</code> &rarr; Exit: Z = nono<br>
+                5. <strong>Call:</strong> <code>hostile(nono)</code> &rarr; checks <code>enemy(nono, america)</code> &rarr; Exit: true<br>
+                6. <strong>Exit:</strong> <code>criminal(west)</code> &rarr; <strong>true.</strong>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+
+        <!-- =========================================================
+             TAB 4: SYNTAX & VIVA
+             ========================================================= -->
+        <div class="tab-pane" id="tab-syntax">
+
+          <h2 class="section-title">⚠️ The 5 "No Cheat Sheet" Traps to Memorize</h2>
+          <p class="section-desc">Commit these 5 syntax details to memory so you don't lose simple marks:</p>
+
+          <article class="card open" id="syntax-traps">
+            <div class="card-header" onclick="toggleCard('syntax-traps')">
+              <div>
+                <span class="card-badge">SYNTAX MEMORY ANCHOR</span>
+                <h3 class="card-title">Fatal Syntax Traps vs Safe Habits</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div style="overflow-x: auto;">
+                <table class="custom-table">
+                  <thead>
+                    <tr><th>Rule / Concept</th><th>Wrong (Will Fail!)</th><th>Correct Syntax</th><th>Why</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Constants / Atoms</td><td><code>John</code>, <code>Paris</code></td><td><code>john</code>, <code>paris</code></td><td>Lowercase = fixed value. Uppercase = variable.</td></tr>
+                    <tr><td>Variables</td><td><code>x</code>, <code>person</code></td><td><code>X</code>, <code>Person</code></td><td>Uppercase = search variable to solve.</td></tr>
+                    <tr><td>Less than or equal</td><td><code>Price &lt;= 10</code></td><td><code>Price =&lt; 10</code></td><td>Prolog only accepts <code>=&lt;</code> (syntax error otherwise).</td></tr>
+                    <tr><td>Math Calculation</td><td><code>Total = A + B</code></td><td><code>Total is A + B</code></td><td><code>=</code> is unification. <code>is</code> evaluates arithmetic.</td></tr>
+                    <tr><td>Inequality / Not Equal</td><td><code>X != Y</code></td><td><code>X \= Y</code></td><td>Prolog uses <code>\=</code> or <code>\==</code>.</td></tr>
+                    <tr><td>Statement End</td><td>No period</td><td>End with <code>.</code></td><td>Every statement MUST end with a period.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="trap-box">
+                <strong>🚨 The Universal 2-Clause Recursion Formula:</strong>
+                All reachability questions (Flight routes, Prerequisites, Ancestors) use the exact same template:<br>
+                <code>reach(A, B) :- step(A, B).</code> (Base case: direct 1 step)<br>
+                <code>reach(A, B) :- step(A, I), reach(I, B).</code> (Recursive case: 1 step to intermediate, then recurse)
+              </div>
+            </div>
+          </article>
+
+          <!-- Top Viva Answers -->
+          <h2 class="section-title" style="margin-top: 2rem;">🧠 Top Viva Questions & Exact Answers</h2>
+          <article class="card open" id="viva-qa">
+            <div class="card-header" onclick="toggleCard('viva-qa')">
+              <div>
+                <span class="card-badge">THEORY & VIVA</span>
+                <h3 class="card-title">Answers to Impress the Professor</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem;">
+                <div>
+                  <strong style="color: var(--primary-light);">Q1. What programming paradigm does Prolog use?</strong>
+                  <p style="color: var(--text-muted); font-size: 0.92rem;"><strong>Declarative programming.</strong> You declare truths and relationships (Facts and Rules) rather than step-by-step algorithms.</p>
+                </div>
+                <div>
+                  <strong style="color: var(--primary-light);">Q2. What inference method and search strategy does Prolog employ?</strong>
+                  <p style="color: var(--text-muted); font-size: 0.92rem;"><strong>Backward chaining</strong> with <strong>SLD-resolution</strong> and <strong>unification</strong>, exploring choice points using <strong>Depth-First Search (DFS) with automatic backtracking</strong>.</p>
+                </div>
+                <div>
+                  <strong style="color: var(--primary-light);">Q3. What is a Horn clause?</strong>
+                  <p style="color: var(--text-muted); font-size: 0.92rem;">A logical clause with at most one positive literal. In Prolog: <code>Head :- Body.</code></p>
+                </div>
+                <div>
+                  <strong style="color: var(--primary-light);">Q4. What is Closed World Assumption (CWA) and Negation as Failure (NAF)?</strong>
+                  <p style="color: var(--text-muted); font-size: 0.92rem;">Prolog assumes everything not stated or provable from its database is false. Written as <code>\+ Goal</code>.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+
+        <!-- =========================================================
+             TAB 5: PREDICTED QUESTIONS
+             ========================================================= -->
+        <div class="tab-pane" id="tab-predicted">
+
+          <h2 class="section-title">🔮 Predicted Exam Questions (High Probability)</h2>
+          <p class="section-desc">These are the trick queries and twists examiners love to introduce:</p>
+
+          <article class="card open" id="pred-1">
+            <div class="card-header" onclick="toggleCard('pred-1')">
+              <div>
+                <span class="card-badge">PREDICTED #1 • NEGATION AS FAILURE</span>
+                <h3 class="card-title">"Find anyone who is a parent but does NOT have any grandchildren"</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <p class="explanation-text"><strong>Logic:</strong> A person <code>X</code> has child <code>Y</code>, but <code>Y</code> has NO children (<code>\+ parent_of(Y, _)</code>).</p>
+              <div class="code-container">
+                <pre><code><span class="token-query">?-</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-rule">\+</span> <span class="token-atom">parent_of</span>(<span class="token-var">Y</span>, <span class="token-var">_</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+              <p style="font-size: 0.88rem; color: #a7f3d0;"><strong>Answer in Today's Family Tree:</strong> Ali, Lily, James.</p>
+            </div>
+          </article>
+
+          <article class="card" id="pred-2">
+            <div class="card-header" onclick="toggleCard('pred-2')">
+              <div>
+                <span class="card-badge">PREDICTED #2 • SUBSTRING WILDCARD</span>
+                <h3 class="card-title">"Find any flight whose flight number starts with 'ek'"</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <p class="explanation-text"><strong>Logic:</strong> Uses the built-in predicate <code>sub_atom(Atom, StartIndex, Length, RemainingChars, SubString)</code>.</p>
+              <div class="code-container">
+                <pre><code><span class="token-query">?-</span> <span class="token-atom">flight</span>(<span class="token-var">FlightNum</span>, <span class="token-var">_</span>, <span class="token-var">_</span>, <span class="token-var">_</span>)<span class="token-atom">,</span> <span class="token-atom">sub_atom</span>(<span class="token-var">FlightNum</span>, <span class="token-num">0</span>, <span class="token-num">2</span>, <span class="token-var">_</span>, <span class="token-atom">ek</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+              <p style="font-size: 0.88rem; color: #a7f3d0;"><strong>Answer:</strong> ek303 ; ek404.</p>
+            </div>
+          </article>
+
+          <article class="card" id="pred-3">
+            <div class="card-header" onclick="toggleCard('pred-3')">
+              <div>
+                <span class="card-badge">PREDICTED #3 • EXACT CALCULATION FILTER</span>
+                <h3 class="card-title">"Find a destination from Paris that takes exactly 7.5 hours with 1 stop"</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <p class="explanation-text"><strong>Logic:</strong> Query <code>one_stop_duration(From, Dest, TargetDuration)</code> with 7.5 bound.</p>
+              <div class="code-container">
+                <pre><code><span class="token-query">?-</span> <span class="token-atom">one_stop_duration</span>(<span class="token-atom">paris</span>, <span class="token-var">Dest</span>, <span class="token-num">7.5</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+              <p style="font-size: 0.88rem; color: #a7f3d0;"><strong>Answer:</strong> Dest = dubai (Paris &rarr; Frankfurt is 1.5h + Frankfurt &rarr; Dubai is 6h = 7.5h).</p>
+            </div>
+          </article>
+
+          <article class="card" id="pred-4">
+            <div class="card-header" onclick="toggleCard('pred-4')">
+              <div>
+                <span class="card-badge">PREDICTED #4 • DUAL PREREQUISITE</span>
+                <h3 class="card-title">"How to model that CS201 requires BOTH CS102 and Math101"</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <p class="explanation-text">In Prolog facts, declare each prerequisite separately:</p>
+              <div class="code-container">
+                <pre><code><span class="token-atom">prereq</span>(<span class="token-atom">cs102</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
+<span class="token-atom">prereq</span>(<span class="token-atom">math101</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+              <p class="explanation-text">When you query <code>prereq(Req, cs201)</code>, press <code>;</code> to see both <code>cs102</code> and <code>math101</code>!</p>
+            </div>
+          </article>
+
+        </div>
+
+
+        <!-- =========================================================
+             TAB 6: QUIZ
+             ========================================================= -->
+        <div class="tab-pane" id="tab-quiz">
+
+          <h2 class="section-title">🎯 Exam Simulator Quiz</h2>
+          <p class="section-desc">Test your understanding right now with these 5 quick-check questions:</p>
+
+          <div class="quiz-card" id="qz1">
+            <h4 class="quiz-question">1. Which query correctly checks if Jack is Jess's father?</h4>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="submitQuiz(1, 0, true, this)">A) <code>?- father_of(jack, jess).</code></button>
+              <button class="quiz-btn" onclick="submitQuiz(1, 1, false, this)">B) <code>?- father_of(Jack, Jess).</code></button>
+              <button class="quiz-btn" onclick="submitQuiz(1, 2, false, this)">C) <code>?- father_of(jess, jack).</code></button>
+            </div>
+            <div class="quiz-feedback" id="qzf1"><strong>Correct!</strong> Jack is lowercase (atom) and in the first argument position!</div>
+          </div>
+
+          <div class="quiz-card" id="qz2">
+            <h4 class="quiz-question">2. How is 'less than or equal' written in Prolog?</h4>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="submitQuiz(2, 0, false, this)">A) <code>&lt;=</code></button>
+              <button class="quiz-btn" onclick="submitQuiz(2, 1, true, this)">B) <code>=&lt;</code></button>
+              <button class="quiz-btn" onclick="submitQuiz(2, 2, false, this)">C) <code>:=&lt;</code></button>
+            </div>
+            <div class="quiz-feedback" id="qzf2"><strong>Correct!</strong> Prolog syntax uses <code>=&lt;</code>. Typing <code>&lt;=</code> causes a syntax error!</div>
+          </div>
+
+          <div class="quiz-card" id="qz3">
+            <h4 class="quiz-question">3. What does <code>sub_atom(ba101, 0, 2, _, ba)</code> test?</h4>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="submitQuiz(3, 0, true, this)">A) Checks if 'ba101' starts with substring 'ba' at index 0 for length 2</button>
+              <button class="quiz-btn" onclick="submitQuiz(3, 1, false, this)">B) Replaces 'ba' with 101</button>
+              <button class="quiz-btn" onclick="submitQuiz(3, 2, false, this)">C) Deletes 2 characters</button>
+            </div>
+            <div class="quiz-feedback" id="qzf3"><strong>Correct!</strong> <code>sub_atom/5</code> checks substring pattern matches!</div>
+          </div>
+
+          <div class="quiz-card" id="qz4">
+            <h4 class="quiz-question">4. Why must <code>X \= Y</code> be included in the sibling rule?</h4>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="submitQuiz(4, 0, false, this)">A) To filter gender</button>
+              <button class="quiz-btn" onclick="submitQuiz(4, 1, true, this)">B) To prevent a person from being their own sibling</button>
+              <button class="quiz-btn" onclick="submitQuiz(4, 2, false, this)">C) To stop recursion</button>
+            </div>
+            <div class="quiz-feedback" id="qzf4"><strong>Correct!</strong> Without <code>X \= Y</code>, Mary would be her own sibling.</div>
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        
+        <div class="widget">
+          <h3 class="widget-title">📋 Exam Hall Checklist</h3>
+          <label class="check-row"><input type="checkbox"> Started all constants with lowercase</label>
+          <label class="check-row"><input type="checkbox"> Started all variables with UPPERCASE</label>
+          <label class="check-row"><input type="checkbox"> Put a period <code>.</code> at end of every line</label>
+          <label class="check-row"><input type="checkbox"> Used <code>=&lt;</code> (NOT <code>&lt;=</code>)</label>
+          <label class="check-row"><input type="checkbox"> Used <code>is</code> for math (NOT <code>=</code>)</label>
+          <label class="check-row"><input type="checkbox"> Added <code>X \= Y</code> to sibling rules</label>
+          <label class="check-row"><input type="checkbox"> Direct step before recursive step</label>
+        </div>
+
+        <div class="widget">
+          <h3 class="widget-title">⚡ Console Shortcuts</h3>
+          <div style="font-size: 0.82rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.4rem;">
+            <div><strong>Consult file:</strong> <code>['family.pl'].</code></div>
+            <div><strong>Next solution:</strong> Press <code>;</code></div>
+            <div><strong>Stop search:</strong> Press <code>Enter</code></div>
+            <div><strong>Clear screen:</strong> <code>write('\[2J').</code></div>
+            <div><strong>Debug trace:</strong> <code>trace.</code></div>
+            <div><strong>Exit Prolog:</strong> <code>halt.</code></div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Floating back to top -->
+  <div class="floating-tools">
+    <button class="float-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">▲</button>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Theme logic
+    function initTheme() {
+      const saved = localStorage.getItem('prolog_theme') || 'dark';
+      applyTheme(saved);
+    }
+
+    function toggleTheme() {
+      const curr = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = curr === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('prolog_theme', next);
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const icon = document.getElementById('themeIcon');
+      const text = document.getElementById('themeText');
+      if (theme === 'dark') {
+        if (icon) icon.innerText = '☀️';
+        if (text) text.innerText = 'Light';
+      } else {
+        if (icon) icon.innerText = '🌙';
+        if (text) text.innerText = 'Dark';
+      }
+    }
+    initTheme();
+
+    // Tab switching
+    function switchNavTab(tabId, btn) {
+      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+
+    // Card toggles
+    function toggleCard(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('open');
+    }
+
+    function expandAll() {
+      document.querySelectorAll('.card').forEach(c => c.classList.add('open'));
+    }
+
+    function collapseAll() {
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
+    }
+
+    // Search filter
+    function filterAllCards() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.card');
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (!q || text.includes(q)) {
+          card.style.display = 'block';
+          if (q) card.classList.add('open');
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Simulators
+    function simulateT1(qId, query, output) {
+      const box = document.getElementById('todaySimOutput1');
+      if (box) box.innerText = query + '\n' + output;
+    }
+
+    function simulateT2(qId, query, output) {
+      const box = document.getElementById('todaySimOutput2');
+      if (box) box.innerText = query + '\n' + output;
+    }
+
+    // Copy snippet
+    function copySnippet(btn) {
+      const code = btn.closest('.code-container').querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btn.innerText;
+        btn.innerText = 'Copied! ✓';
+        btn.style.color = '#34d399';
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.style.color = '';
+        }, 1800);
+      });
+    }
+
+    // Quiz
+    function submitQuiz(qNum, optIdx, isCorrect, btn) {
+      const parent = document.getElementById('qz' + qNum);
+      const btns = parent.querySelectorAll('.quiz-btn');
+      const fb = document.getElementById('qzf' + qNum);
+
+      btns.forEach(b => b.disabled = true);
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        fb.style.display = 'block';
+        fb.style.background = 'rgba(16, 185, 129, 0.15)';
+        fb.style.border = '1px solid #10b981';
+        fb.style.color = '#a7f3d0';
+      } else {
+        btn.classList.add('wrong');
+        fb.style.display = 'block';
+        fb.style.background = 'rgba(244, 63, 94, 0.15)';
+        fb.style.border = '1px solid #f43f5e';
+        fb.style.color = '#fecdd3';
+        btns.forEach(b => {
+          if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+        });
+      }
+    }
+  </script>
+</body>
+</html>
