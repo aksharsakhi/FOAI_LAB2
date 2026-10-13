@@ -618,7 +618,8 @@
 
       <!-- Segmented Paper Selector -->
       <nav class="nav-tabs">
-        <button class="tab-btn danger active" onclick="switchTab('pane-cseg', this)">🚨 Set 1 (CSE G)</button>
+        <button class="tab-btn active" onclick="switchTab('pane-slides', this)">📚 Syllabus & Slides</button>
+        <button class="tab-btn danger" onclick="switchTab('pane-cseg', this)">🚨 Set 1 (CSE G)</button>
         <button class="tab-btn" onclick="switchTab('pane-leak', this)">🔥 Family & Flights</button>
         <button class="tab-btn" onclick="switchTab('pane-alt', this)">☕ Cafe & Prereqs</button>
         <button class="tab-btn" onclick="switchTab('pane-west', this)">🎖️ Colonel West</button>
@@ -657,7 +658,161 @@
       <!-- ========================================================
            TAB 1: CSE SECTION G LAB EVALUATION 1 (SET 1)
            ======================================================== -->
-      <section class="tab-view active" id="pane-cseg">
+      
+      <!-- ========================================================
+           TAB 0: SYLLABUS & LECTURE PRESENTATION (prologue.pptx & Role of Prologue)
+           ======================================================== -->
+      <section class="tab-view" id="pane-slides">
+
+        <!-- Getting Started from Slide 2 -->
+        <article class="card open" id="slide-start">
+          <button class="card-head" onclick="toggleCard('slide-start')">
+            <div class="card-head-info">
+              <span class="tag green">PRESENTATION SLIDES 1 - 2</span>
+              <h3 class="card-title">Getting Started with SWI-Prolog (Workflow & Controls)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-body">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+              <strong>Prolog stands for Programming in Logic.</strong> Here is the exact setup workflow from the professor's slides:
+            </p>
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead><tr><th>Step</th><th>Action</th><th>Command / Shortcut</th></tr></thead>
+                <tbody>
+                  <tr><td>1. Write clauses</td><td>Write facts & rules in Notepad / text editor</td><td>Save as <code>filename.pl</code> (type: All Files)</td></tr>
+                  <tr><td>2. Load program</td><td>Open SWI-Prolog &rarr; File &rarr; Consult</td><td>Or in console: <code>?- consult(['filename.pl']).</code> or <code>?- ['filename.pl'].</code></td></tr>
+                  <tr><td>3. Check loaded</td><td>Verify that file is loaded in memory</td><td><code>?- source_file('likes.pl').</code></td></tr>
+                  <tr><td>4. View contents</td><td>List loaded clauses for a predicate</td><td><code>?- listing(likes).</code> or <code>?- listing.</code></td></tr>
+                  <tr><td>5. Clear screen</td><td>Clear console output completely</td><td><code>?- write('\33\[2J').</code></td></tr>
+                  <tr><td>6. Next solution</td><td>Ask Prolog for alternate matching answer</td><td>Press <code>;</code> (semicolon) or <code>n</code></td></tr>
+                  <tr><td>7. Abort / Stop</td><td>Cancel execution if stuck or looping</td><td>Press <code>Ctrl + C</code> then type <code>a</code> (abort)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ex 1: likes.pl from Slide 3 - 5 -->
+        <article class="card open" id="slide-likes">
+          <button class="card-head" onclick="toggleCard('slide-likes')">
+            <div class="card-head-info">
+              <span class="tag purple">PRESENTATION EXERCISE 1</span>
+              <h3 class="card-title">Exercise 1: `likes.pl` (Transitive Likes & Queries)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-body">
+            <div class="code-wrap">
+              <div class="code-header">
+                <span>likes.pl</span>
+                <button class="copy-btn" onclick="copySnippet(this)">Copy</button>
+              </div>
+              <pre><code><span class="tok-comment">/* Slide 3 & 4 Facts */</span>
+<span class="tok-atom">likes</span>(<span class="tok-atom">john</span>, <span class="tok-atom">pizza</span>)<span class="tok-atom">.</span> 
+<span class="tok-atom">likes</span>(<span class="tok-atom">john</span>, <span class="tok-atom">pasta</span>)<span class="tok-atom">.</span> 
+<span class="tok-atom">likes</span>(<span class="tok-atom">mary</span>, <span class="tok-atom">sushi</span>)<span class="tok-atom">.</span> 
+<span class="tok-atom">likes</span>(<span class="tok-atom">mary</span>, <span class="tok-atom">pizza</span>)<span class="tok-atom">.</span> 
+<span class="tok-atom">likes</span>(<span class="tok-atom">john</span>, <span class="tok-atom">mary</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">likes</span>(<span class="tok-atom">mary</span>, <span class="tok-atom">jay</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">/* Slide 3 Rules */</span>
+<span class="tok-comment">% Transitive likes rule: X likes Y if X likes Z and Z likes Y</span>
+<span class="tok-atom">likes</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-rule">:-</span> <span class="tok-atom">likes</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">,</span> <span class="tok-atom">likes</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">% Simple grandfather rule</span>
+<span class="tok-atom">grandfather</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-rule">:-</span> <span class="tok-atom">father</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="term-box">
+              <div class="term-label">⚡ Test Slide 3 Queries:</div>
+              <div class="chips-row">
+                <span class="chip" onclick="runSim('ts1', '?- likes(mary, X).', 'X = sushi ;\nX = pizza ;\nX = jay.')">?- likes(mary, X).</span>
+                <span class="chip" onclick="runSim('ts1', '?- likes(Y, pizza).', 'Y = john ;\nY = mary.')">?- likes(Y, pizza).</span>
+                <span class="chip" onclick="runSim('ts1', '?- listing(likes).', 'likes(john, pizza).\nlikes(john, pasta).\nlikes(mary, sushi).\nlikes(mary, pizza).\nlikes(john, mary).\nlikes(mary, jay).\nlikes(A, B) :- likes(A, C), likes(C, B).')">?- listing(likes).</span>
+              </div>
+              <div class="term-out" id="ts1">// Click query above to execute</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ex 2: family.pl from Slide 8 - 10 -->
+        <article class="card open" id="slide-family">
+          <button class="card-head" onclick="toggleCard('slide-family')">
+            <div class="card-head-info">
+              <span class="tag cyan">PRESENTATION EXERCISE 2</span>
+              <h3 class="card-title">Exercise 2: Introductory Family Tree (`family.pl` from Slide 8)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+              The classic 6-clause parent relationship from Slide 8 (Bratko Family Tree):
+            </p>
+            <div class="code-wrap">
+              <div class="code-header">
+                <span>family.pl</span>
+                <button class="copy-btn" onclick="copySnippet(this)">Copy</button>
+              </div>
+              <pre><code><span class="tok-atom">parent</span>(<span class="tok-atom">pam</span>, <span class="tok-atom">bob</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent</span>(<span class="tok-atom">tom</span>, <span class="tok-atom">bob</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent</span>(<span class="tok-atom">tom</span>, <span class="tok-atom">liz</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent</span>(<span class="tok-atom">bob</span>, <span class="tok-atom">ann</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent</span>(<span class="tok-atom">bob</span>, <span class="tok-atom">pat</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent</span>(<span class="tok-atom">pat</span>, <span class="tok-atom">jim</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="term-box">
+              <div class="term-label">⚡ Slide 8 & 9 Queries:</div>
+              <div class="chips-row">
+                <span class="chip" onclick="runSim('ts2', '?- parent(bob, pat).', 'true.')">?- parent(bob, pat).</span>
+                <span class="chip" onclick="runSim('ts2', '?- parent(X, liz).', 'X = tom.')">?- parent(X, liz).</span>
+                <span class="chip" onclick="runSim('ts2', '?- parent(bob, Child).', 'Child = ann ;\nChild = pat.')">?- parent(bob, Child).</span>
+              </div>
+              <div class="term-out" id="ts2">// Click query above to execute</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Role of Prologue Theory -->
+        <article class="card open" id="slide-role">
+          <button class="card-head" onclick="toggleCard('slide-role')">
+            <div class="card-head-info">
+              <span class="tag red">SYLLABUS THEORY</span>
+              <h3 class="card-title">The 3 Core Pillars of Symbolic AI (`Role of Prologue.pdf`)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 0.75rem;">
+              <div style="background: rgba(99, 102, 241, 0.08); border-left: 3px solid var(--primary); padding: 0.75rem 1rem; border-radius: 0 6px 6px 0;">
+                <strong style="color: var(--primary-light);">1. Shifting to Declarative Programming Paradigm</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  Unlike imperative languages (C++, Java, Python) where you tell the computer <em>how</em> to compute step-by-step, Prolog focuses on <strong>what</strong> the problem is by providing Facts and Rules, letting the inference engine handle execution.
+                </p>
+              </div>
+
+              <div style="background: rgba(6, 182, 212, 0.08); border-left: 3px solid var(--secondary); padding: 0.75rem 1rem; border-radius: 0 6px 6px 0;">
+                <strong style="color: #22d3ee;">2. Hands-on Knowledge Representation</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  Translating human language statements into computational predicate logic and Horn clauses. Example: mapping <em>"Every human is mortal"</em> into <code>mortal(X) :- human(X).</code>
+                </p>
+              </div>
+
+              <div style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--accent-green); padding: 0.75rem 1rem; border-radius: 0 6px 6px 0;">
+                <strong style="color: #34d399;">3. Automated Inference & Automatic Backtracking</strong>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                  Prolog uses <strong>Resolution & Unification</strong> with backward chaining. When a path fails or you press <code>;</code>, it uses built-in <strong>Depth-First Search (DFS)</strong> with automatic backtracking to traverse alternative branches in the state space tree.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <section class="tab-view" id="pane-cseg">
 
         <!-- Problem 1: A Small World -->
         <article class="card open" id="set1-p1">
