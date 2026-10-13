@@ -44,6 +44,167 @@
 
 ## 2. SWI-Prolog Console & Shell Operations
 
+---
+
+## 2.1 OFFICIAL LAB EVALUATION 1 - SET 1 (CSE SECTION G)
+
+> **Paper Reference:** `23cse401 Lab Evaluation1-set1_cse G.pdf` (Nosco AI Benchmark)
+
+### Problem 1: A Small World (Room Knowledge Representation)
+
+#### Facts:
+```prolog
+furniture(wardrobe, 1).
+furniture(bookshelf, 1).
+furniture(bed, 1).
+furniture(desk, 1).
+furniture(chair, 1).
+
+number(door, 1).
+number(window, 2).
+
+at(wall_1, wardrobe).
+at(wall_1, door).
+at(wall_2, bookshelf).
+at(wall_2, bed).
+at(wall_3, bed).
+at(wall_3, window_1).
+at(wall_3, desk).
+at(wall_4, desk).
+at(wall_4, window_2).
+at(wall_4, wardrobe).
+at(window_1, bed).
+at(window_2, desk).
+
+in(corner_1, wardrobe).
+in(corner_3, bed).
+in(corner_4, desk).
+
+left(door, bookshelf).
+left(bookshelf, bed).
+left(bed, desk).
+left(desk, wardrobe).
+left(wardrobe, door).
+```
+
+#### Rules & Queries:
+```prolog
+% 1. Which furniture is in the room?
+furniture(X) :- furniture(X, N).
+% Query 1: ?- furniture(X).
+
+% 2. How many doors, windows, tables... in room?
+number(X, N) :- furniture(X, N).
+% Query 2: ?- number(door, N).
+
+% 3. Where is the table, chair...?
+place(X, P) :- at(P, X).
+place(X, P) :- in(P, X).
+place(chair, at_desk).
+% Query 3: ?- place(chair, Place).
+
+% 4. Left and Right (Right is inverse of Left)
+right(X, Y) :- left(Y, X).
+% Query 4: ?- left(Object1, Object2). / ?- right(Object1, Object2).
+
+% 5. What is at wall 2, window 1...?
+% Query 5: ?- at(wall_2, Object).
+
+% 6. What is in corner 1...?
+% Query 6: ?- in(corner_1, Object).
+```
+
+---
+
+### Problem 2: The 4-Color Map Problem (Constraint Satisfaction)
+
+```prolog
+color(red).
+color(blue).
+color(yellow).
+color(green).
+
+adjacent(X, Y) :- color(X), color(Y), X \= Y.
+
+% Map with regions A, B, C, D, E:
+map(A, B, C, D, E) :-
+    adjacent(A, B), adjacent(A, D), adjacent(A, E),
+    adjacent(B, C), adjacent(B, D), adjacent(B, E),
+    adjacent(C, D), adjacent(C, E),
+    adjacent(D, E).
+```
+**Query:** `?- map(A, B, C, D, E).` (Prolog backtracks to find all valid color assignments).
+
+---
+
+### Problem 3: Europe (Geographic DB, Density Math & Neighbors)
+
+#### Facts:
+```prolog
+area(austria, 83858).
+area(france, 547030).
+area(germany, 357021).
+area(italy, 301230).
+area(liechtenstein, 160). 
+area(spain, 504851).
+area(switzerland, 41290).
+area(united_kingdom, 244820).
+
+population(austria, 8169929).
+population(france, 63182000).
+population(germany, 83251851).
+population(italy, 59530464).
+population(liechtenstein, 32842). 
+population(spain, 47059533).
+population(switzerland, 7507000).
+population(united_kingdom, 61100835).
+
+neighbor(austria, switzerland).
+neighbor(france, switzerland).
+neighbor(france, germany).
+neighbor(france, spain).
+neighbor(germany, switzerland).
+neighbor(italy, switzerland).
+neighbor(liechtenstein, switzerland).
+```
+
+#### Rules & Queries:
+```prolog
+% Density: D = population / area (Use 'is' for math!)
+density(S, D) :- 
+    population(S, E), 
+    area(S, F), 
+    D is E / F.
+
+% Bidirectional neighbor
+neighbors(S1, S2) :- neighbor(S1, S2).
+neighbors(S1, S2) :- neighbor(S2, S1).
+
+% Query 1: Which state is a neighbor of Switzerland?
+neighbor_ch(S) :- neighbors(switzerland, S).
+% Output: austria, france, germany, italy, liechtenstein.
+
+% Query 2: Which state is a neighbor of France?
+neighbor_f(S) :- neighbors(france, S).
+% Output: switzerland, germany, spain.
+
+% Query 3: Neighbor of Germany with population > Germany AND area > Germany?
+neighbor_d(S) :- 
+    neighbors(germany, S), 
+    population(germany, ED), population(S, ES),
+    area(germany, FD), area(S, FS), 
+    ES > ED, FS > FD.
+% Output: false. (France has larger area but smaller population!)
+
+% Query 4: Neighbor of Switzerland with higher density than Switzerland?
+neighbor_ch1(S) :- 
+    neighbors(switzerland, S),
+    density(switzerland, DCH), density(S, DS), 
+    DS > DCH.
+% Output: germany (233.18), italy (197.62), liechtenstein (205.26).
+```
+
+
 ```prolog
 ?- consult('family.pl').     % Load/consult file (or ?- ['family.pl'].)
 ?- father_of(jack, X).       % Run query

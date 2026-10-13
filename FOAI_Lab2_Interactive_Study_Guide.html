@@ -764,7 +764,8 @@
         
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
           <a href="index.html" class="btn-action" style="text-decoration: none; color: inherit;">🏠 Home Hub</a>
-          <a href="today_live_exam.html" class="btn-action" style="text-decoration: none; color: #f87171; font-weight: 600;">🔥 Today's Exam</a>
+          <a href="lab_eval1_set1.html" class="btn-action" style="text-decoration: none; color: #ef4444; font-weight: 700;">🚨 CSE G Eval 1</a>
+          <a href="today_live_exam.html" class="btn-action" style="text-decoration: none; color: #f87171; font-weight: 600;">🔥 Family & Flights</a>
           <a href="alternate_exam_prep.html" class="btn-action" style="text-decoration: none; color: inherit;">☕ Alternate Paper</a>
           <a href="predicted_exam_questions.html" class="btn-action" style="text-decoration: none; color: inherit;">🔮 Predicted Qs</a>
         </div>
@@ -790,7 +791,8 @@
 
     <!-- Navigation Tabs -->
     <nav class="main-nav-tabs">
-      <button class="nav-tab-btn leak active" onclick="switchNavTab('tab-today', this)">🔥 Today's Live Exam (Task 1 & 2)</button>
+      <button class="nav-tab-btn leak active" onclick="switchNavTab('tab-eval1', this)">🚨 Lab Eval 1 - Set 1 (CSE G)</button>
+      <button class="nav-tab-btn" onclick="switchNavTab('tab-today', this)">🔥 Class Exam Leak (Family & Flights)</button>
       <button class="nav-tab-btn" onclick="switchNavTab('tab-alternate', this)">☕ Alternate Paper (Cafe & Prereqs)</button>
       <button class="nav-tab-btn" onclick="switchNavTab('tab-west', this)">🎖️ Colonel West FOL Criminal</button>
       <button class="nav-tab-btn" onclick="switchNavTab('tab-syntax', this)">📖 Core Syntax & Viva</button>
@@ -813,7 +815,281 @@
         <!-- =========================================================
              TAB 1: TODAY'S LIVE EXAM (Logic and Prolog 2.pdf)
              ========================================================= -->
-        <div class="tab-pane active" id="tab-today">
+        
+        <!-- =========================================================
+             TAB 0: CSE G LAB EVALUATION 1 - SET 1 (A Small World, 4-Color, Europe)
+             ========================================================= -->
+        <div class="tab-pane active" id="tab-eval1">
+
+          <div style="background: rgba(239, 68, 68, 0.12); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 0 25px rgba(239, 68, 68, 0.2);">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+              <span style="background: #ef4444; color: white; font-weight: 800; font-size: 0.78rem; padding: 0.25rem 0.65rem; border-radius: 9999px; text-transform: uppercase;">OFFICIAL QUESTION PAPER</span>
+              <h3 style="color: #f87171; font-family: 'Outfit'; font-size: 1.35rem; margin: 0;">23CSE401 Lab Evaluation 1 - Set 1 (CSE Section G)</h3>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+              This is the official evaluation paper from <strong>CSE Section G</strong>. It tests 3 core AI knowledge representation and logic domains:
+              <strong>Problem 1: A Small World (Room Layout)</strong>, 
+              <strong>Problem 2: The 4-Color Map Coloring Problem (CSP)</strong>, and 
+              <strong>Problem 3: Europe (Geographic Database, Density Math & Neighbors)</strong>.
+            </p>
+          </div>
+
+          <!-- PROBLEM 1: A SMALL WORLD -->
+          <h2 class="section-title">🛋️ Problem 1: A Small World (Room Knowledge Representation)</h2>
+          <p class="section-desc">Modeling a student room with furniture, walls, windows, corners, and spatial relations (left, right, at, in).</p>
+
+          <article class="card open" id="eval1-prob1">
+            <div class="card-header" onclick="toggleCard('eval1-prob1')">
+              <div>
+                <span class="card-badge red">SET 1 • PROBLEM 1 COMPLETE CODE</span>
+                <h3 class="card-title">Room Representation: Facts & Deduction Rules</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>small_world.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">/* ========================================================
+   PROBLEM 1: FACTS (Furniture, Doors, Windows, Positions)
+   ======================================================== */</span>
+<span class="token-atom">furniture</span>(<span class="token-atom">wardrobe</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
+<span class="token-atom">furniture</span>(<span class="token-atom">bookshelf</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
+<span class="token-atom">furniture</span>(<span class="token-atom">bed</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
+<span class="token-atom">furniture</span>(<span class="token-atom">desk</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
+<span class="token-atom">furniture</span>(<span class="token-atom">chair</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
+
+<span class="token-atom">number</span>(<span class="token-atom">door</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
+<span class="token-atom">number</span>(<span class="token-atom">window</span>, <span class="token-num">2</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Location at walls & windows</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_1</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_1</span>, <span class="token-atom">door</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_2</span>, <span class="token-atom">bookshelf</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_2</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_3</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_3</span>, <span class="token-atom">window_1</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_3</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_4</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_4</span>, <span class="token-atom">window_2</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">wall_4</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">window_1</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
+<span class="token-atom">at</span>(<span class="token-atom">window_2</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Location in corners</span>
+<span class="token-atom">in</span>(<span class="token-atom">corner_1</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
+<span class="token-atom">in</span>(<span class="token-atom">corner_3</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
+<span class="token-atom">in</span>(<span class="token-atom">corner_4</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Relative spatial arrangement (looking from room center)</span>
+<span class="token-atom">left</span>(<span class="token-atom">door</span>, <span class="token-atom">bookshelf</span>)<span class="token-atom">.</span>
+<span class="token-atom">left</span>(<span class="token-atom">bookshelf</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
+<span class="token-atom">left</span>(<span class="token-atom">bed</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
+<span class="token-atom">left</span>(<span class="token-atom">desk</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
+<span class="token-atom">left</span>(<span class="token-atom">wardrobe</span>, <span class="token-atom">door</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">/* ========================================================
+   PROBLEM 1: DEDUCTION RULES
+   ======================================================== */</span>
+<span class="token-comment">% Rule 1: Which furniture is in the room?</span>
+<span class="token-atom">furniture</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">furniture</span>(<span class="token-var">X</span>, <span class="token-var">N</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Rule 2: How many items of each object?</span>
+<span class="token-atom">number</span>(<span class="token-var">X</span>, <span class="token-var">N</span>) <span class="token-rule">:-</span> <span class="token-atom">furniture</span>(<span class="token-var">X</span>, <span class="token-var">N</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Rule 3: General place rule (combining 'at', 'in', and specific places)</span>
+<span class="token-atom">place</span>(<span class="token-var">X</span>, <span class="token-var">P</span>) <span class="token-rule">:-</span> <span class="token-atom">at</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
+<span class="token-atom">place</span>(<span class="token-var">X</span>, <span class="token-var">P</span>) <span class="token-rule">:-</span> <span class="token-atom">in</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
+<span class="token-atom">place</span>(<span class="token-atom">chair</span>, <span class="token-atom">at_desk</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Rule 4: Right relation is inverse of left</span>
+<span class="token-atom">right</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">left</span>(<span class="token-var">Y</span>, <span class="token-var">X</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+
+              <!-- Queries -->
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Test for Problem 1:</div>
+                <div class="sim-chips">
+                  <span class="sim-chip" onclick="simulateEval1('1', '?- furniture(X).', 'X = wardrobe ;
+X = bookshelf ;
+X = bed ;
+X = desk ;
+X = chair.')">Query 1: Which furniture is in room?</span>
+                  <span class="sim-chip" onclick="simulateEval1('2', '?- number(door, N).', 'N = 1.')">Query 2: How many doors?</span>
+                  <span class="sim-chip" onclick="simulateEval1('3', '?- place(chair, Place).', 'Place = at_desk.')">Query 3: Where is the chair?</span>
+                  <span class="sim-chip" onclick="simulateEval1('4', '?- right(X, bed).', 'X = bookshelf.')">Query 4: What is to right of bed?</span>
+                  <span class="sim-chip" onclick="simulateEval1('5', '?- at(wall_2, Object).', 'Object = bookshelf ;
+Object = bed.')">Query 5: What is at wall 2?</span>
+                  <span class="sim-chip" onclick="simulateEval1('6', '?- in(corner_1, Object).', 'Object = wardrobe.')">Query 6: What is in corner 1?</span>
+                </div>
+                <div class="sim-output" id="eval1SimOutput1">// Click any query to simulate output</div>
+              </div>
+            </div>
+          </article>
+
+
+          <!-- PROBLEM 2: THE 4-COLOR PROBLEM -->
+          <h2 class="section-title" style="margin-top: 2rem;">🎨 Problem 2: The 4-Color Map Problem (Constraint Satisfaction)</h2>
+          <p class="section-desc">Coloring adjacent regions (A, B, C, D, E) such that no two neighboring regions share the same color using red, blue, yellow, and green.</p>
+
+          <article class="card open" id="eval1-prob2">
+            <div class="card-header" onclick="toggleCard('eval1-prob2')">
+              <div>
+                <span class="card-badge red">SET 1 • PROBLEM 2 COMPLETE CODE</span>
+                <h3 class="card-title">4-Color Map Coloring in Prolog</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>four_color.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">/* Colors Available */</span>
+<span class="token-atom">color</span>(<span class="token-atom">red</span>)<span class="token-atom">.</span>
+<span class="token-atom">color</span>(<span class="token-atom">blue</span>)<span class="token-atom">.</span>
+<span class="token-atom">color</span>(<span class="token-atom">yellow</span>)<span class="token-atom">.</span>
+<span class="token-atom">color</span>(<span class="token-atom">green</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">/* Two adjacent regions must have valid colors and NOT be equal (X \= Y) */</span>
+<span class="token-atom">adjacent</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">color</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">color</span>(<span class="token-var">Y</span>)<span class="token-atom">,</span> 
+    <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span>
+
+<span class="token-comment">/* Map with regions A, B, C, D, E based on Fig 2.1 in exam */</span>
+<span class="token-atom">map</span>(<span class="token-var">A</span>, <span class="token-var">B</span>, <span class="token-var">C</span>, <span class="token-var">D</span>, <span class="token-var">E</span>) <span class="token-rule">:-</span>
+    <span class="token-atom">adjacent</span>(<span class="token-var">A</span>, <span class="token-var">B</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">adjacent</span>(<span class="token-var">A</span>, <span class="token-var">D</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">adjacent</span>(<span class="token-var">A</span>, <span class="token-var">E</span>)<span class="token-atom">,</span>
+    <span class="token-atom">adjacent</span>(<span class="token-var">B</span>, <span class="token-var">C</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">adjacent</span>(<span class="token-var">B</span>, <span class="token-var">D</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">adjacent</span>(<span class="token-var">B</span>, <span class="token-var">E</span>)<span class="token-atom">,</span>
+    <span class="token-atom">adjacent</span>(<span class="token-var">C</span>, <span class="token-var">D</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">adjacent</span>(<span class="token-var">C</span>, <span class="token-var">E</span>)<span class="token-atom">,</span>
+    <span class="token-atom">adjacent</span>(<span class="token-var">D</span>, <span class="token-var">E</span>)<span class="token-atom">.</span></code></pre>
+              </div>
+
+              <div class="prompt-box">
+                <strong>How to query all admissible colorings:</strong><br>
+                <code>?- map(A, B, C, D, E).</code><br>
+                Press <code>;</code> to see the different color combinations! Prolog uses <strong>unification and backtracking</strong> to find every valid assignment.
+              </div>
+            </div>
+          </article>
+
+
+          <!-- PROBLEM 3: EUROPE -->
+          <h2 class="section-title" style="margin-top: 2rem;">🌍 Problem 3: Europe (Geographic DB, Density Math & Neighbors)</h2>
+          <p class="section-desc">Facts for area, population, and bilateral neighbor relations, plus density calculation using arithmetic.</p>
+
+          <article class="card open" id="eval1-prob3">
+            <div class="card-header" onclick="toggleCard('eval1-prob3')">
+              <div>
+                <span class="card-badge red">SET 1 • PROBLEM 3 COMPLETE CODE</span>
+                <h3 class="card-title">European Geography Facts, Density Rule & Neighbor Deduction</h3>
+              </div>
+              <span class="chevron">▼</span>
+            </div>
+            <div class="card-body">
+              <div class="code-container">
+                <div class="code-header"><span>europe.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
+                <pre><code><span class="token-comment">/* ========================================================
+   AREA FACTS (in km^2)
+   ======================================================== */</span>
+<span class="token-atom">area</span>(<span class="token-atom">austria</span>, <span class="token-num">83858</span>)<span class="token-atom">.</span>
+<span class="token-atom">area</span>(<span class="token-atom">france</span>, <span class="token-num">547030</span>)<span class="token-atom">.</span>
+<span class="token-atom">area</span>(<span class="token-atom">germany</span>, <span class="token-num">357021</span>)<span class="token-atom">.</span>
+<span class="token-atom">area</span>(<span class="token-atom">italy</span>, <span class="token-num">301230</span>)<span class="token-atom">.</span>
+<span class="token-atom">area</span>(<span class="token-atom">liechtenstein</span>, <span class="token-num">160</span>)<span class="token-atom">.</span> 
+<span class="token-atom">area</span>(<span class="token-atom">spain</span>, <span class="token-num">504851</span>)<span class="token-atom">.</span>
+<span class="token-atom">area</span>(<span class="token-atom">switzerland</span>, <span class="token-num">41290</span>)<span class="token-atom">.</span>
+<span class="token-atom">area</span>(<span class="token-atom">united_kingdom</span>, <span class="token-num">244820</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">/* ========================================================
+   POPULATION FACTS
+   ======================================================== */</span>
+<span class="token-atom">population</span>(<span class="token-atom">austria</span>, <span class="token-num">8169929</span>)<span class="token-atom">.</span>
+<span class="token-atom">population</span>(<span class="token-atom">france</span>, <span class="token-num">63182000</span>)<span class="token-atom">.</span>
+<span class="token-atom">population</span>(<span class="token-atom">germany</span>, <span class="token-num">83251851</span>)<span class="token-atom">.</span>
+<span class="token-atom">population</span>(<span class="token-atom">italy</span>, <span class="token-num">59530464</span>)<span class="token-atom">.</span>
+<span class="token-atom">population</span>(<span class="token-atom">liechtenstein</span>, <span class="token-num">32842</span>)<span class="token-atom">.</span> 
+<span class="token-atom">population</span>(<span class="token-atom">spain</span>, <span class="token-num">47059533</span>)<span class="token-atom">.</span>
+<span class="token-atom">population</span>(<span class="token-atom">switzerland</span>, <span class="token-num">7507000</span>)<span class="token-atom">.</span>
+<span class="token-atom">population</span>(<span class="token-atom">united_kingdom</span>, <span class="token-num">61100835</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">/* ========================================================
+   NEIGHBOR FACTS
+   ======================================================== */</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">austria</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">france</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">france</span>, <span class="token-atom">germany</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">france</span>, <span class="token-atom">spain</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">germany</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">italy</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbor</span>(<span class="token-atom">liechtenstein</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">/* ========================================================
+   DEDUCTION RULES
+   ======================================================== */</span>
+<span class="token-comment">% 1. Population density calculation (D = Population / Area)</span>
+<span class="token-atom">density</span>(<span class="token-var">S</span>, <span class="token-var">D</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">population</span>(<span class="token-var">S</span>, <span class="token-var">E</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">area</span>(<span class="token-var">S</span>, <span class="token-var">F</span>)<span class="token-atom">,</span> 
+    <span class="token-var">D</span> <span class="token-rule">is</span> <span class="token-var">E</span> <span class="token-atom">/</span> <span class="token-var">F</span><span class="token-atom">.</span>
+
+<span class="token-comment">% 2. Symmetric / Bidirectional neighbor relation</span>
+<span class="token-atom">neighbors</span>(<span class="token-var">S1</span>, <span class="token-var">S2</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbor</span>(<span class="token-var">S1</span>, <span class="token-var">S2</span>)<span class="token-atom">.</span>
+<span class="token-atom">neighbors</span>(<span class="token-var">S1</span>, <span class="token-var">S2</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbor</span>(<span class="token-var">S2</span>, <span class="token-var">S1</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Query 1: Which state is a neighbor of Switzerland?</span>
+<span class="token-atom">neighbor_ch</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbors</span>(<span class="token-atom">switzerland</span>, <span class="token-var">S</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Query 2: Which state is a neighbor of France?</span>
+<span class="token-atom">neighbor_f</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbors</span>(<span class="token-atom">france</span>, <span class="token-var">S</span>)<span class="token-atom">.</span>
+
+<span class="token-comment">% Query 3: Neighbor of Germany with both bigger population AND larger area</span>
+<span class="token-atom">neighbor_d</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">neighbors</span>(<span class="token-atom">germany</span>, <span class="token-var">S</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">population</span>(<span class="token-atom">germany</span>, <span class="token-var">ED</span>)<span class="token-atom">,</span> <span class="token-atom">population</span>(<span class="token-var">S</span>, <span class="token-var">ES</span>)<span class="token-atom">,</span>
+    <span class="token-atom">area</span>(<span class="token-atom">germany</span>, <span class="token-var">FD</span>)<span class="token-atom">,</span> <span class="token-atom">area</span>(<span class="token-var">S</span>, <span class="token-var">FS</span>)<span class="token-atom">,</span> 
+    <span class="token-var">ES</span> <span class="token-atom">&gt;</span> <span class="token-var">ED</span><span class="token-atom">,</span> <span class="token-var">FS</span> <span class="token-atom">&gt;</span> <span class="token-var">FD</span><span class="token-atom">.</span>
+
+<span class="token-comment">% Query 4: Neighbor of Switzerland that has higher density than Switzerland</span>
+<span class="token-atom">neighbor_ch1</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> 
+    <span class="token-atom">neighbors</span>(<span class="token-atom">switzerland</span>, <span class="token-var">S</span>)<span class="token-atom">,</span>
+    <span class="token-atom">density</span>(<span class="token-atom">switzerland</span>, <span class="token-var">DCH</span>)<span class="token-atom">,</span> 
+    <span class="token-atom">density</span>(<span class="token-var">S</span>, <span class="token-var">DS</span>)<span class="token-atom">,</span> 
+    <span class="token-var">DS</span> <span class="token-atom">&gt;</span> <span class="token-var">DCH</span><span class="token-atom">.</span></code></pre>
+              </div>
+
+              <!-- Queries -->
+              <div class="query-sim-box">
+                <div class="sim-title">⚡ Interactive Query Test for Problem 3:</div>
+                <div class="sim-chips">
+                  <span class="sim-chip" onclick="simulateEval1('p3_1', '?- neighbor_ch(S).', 'S = austria ;
+S = france ;
+S = germany ;
+S = italy ;
+S = liechtenstein.')">Q1: Neighbors of Switzerland?</span>
+                  <span class="sim-chip" onclick="simulateEval1('p3_2', '?- neighbor_f(S).', 'S = switzerland ;
+S = germany ;
+S = spain.')">Q2: Neighbors of France?</span>
+                  <span class="sim-chip" onclick="simulateEval1('p3_3', '?- neighbor_d(S).', 'false.')">Q3: Neighbor of Germany with pop > Germany & area > Germany?</span>
+                  <span class="sim-chip" onclick="simulateEval1('p3_4', '?- neighbor_ch1(S).', 'S = germany (density 233.18) ;
+S = italy (density 197.62) ;
+S = liechtenstein (density 205.26).')">Q4: Neighbors of Switzerland with higher density?</span>
+                </div>
+                <div class="sim-output" id="eval1SimOutput2">// Click any query to simulate output</div>
+              </div>
+
+              <div class="trap-box" style="margin-top: 1rem;">
+                <strong>💡 Why Query 3 Returns false:</strong>
+                Germany's population is 83.25 million, and area is 357,021 km². Its neighbors in the database are France, Switzerland, and Austria. While France has a larger area (547,030 km²), its population is only 63.18 million (smaller than Germany). Neither Switzerland nor Austria has a larger area or population. Thus, no neighbor satisfies both <code>ES > ED</code> and <code>FS > FD</code> simultaneously!
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="tab-pane" id="tab-today">
 
           <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem;">
             <h3 style="color: #f87171; font-family: 'Outfit'; font-size: 1.2rem; margin-bottom: 0.35rem;">🎯 Verified Exam Structure: 2 Tasks, 40 Total Queries</h3>
@@ -1576,6 +1852,14 @@ FlightNum = ek404.')">18. Flights starting with 'ek'?</span>
     }
 
     // Simulators
+    
+    function simulateEval1(id, query, output) {
+      const box1 = document.getElementById('eval1SimOutput1');
+      const box2 = document.getElementById('eval1SimOutput2');
+      if (box1 && id.length === 1) box1.innerText = query + '\n' + output;
+      if (box2 && id.startsWith('p3')) box2.innerText = query + '\n' + output;
+    }
+
     function simulateT1(qId, query, output) {
       const box = document.getElementById('todaySimOutput1');
       if (box) box.innerText = query + '\n' + output;
