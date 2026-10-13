@@ -3,22 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>23CSE401 FoAI - Prolog Lab 2 Complete Exam Master</title>
+  <title>FoAI Lab 2 • SWI-Prolog Master Exam Suite</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    /* -------------------------------------------------------------
+       DESIGN SYSTEM & CSS VARIABLES
+       ------------------------------------------------------------- */
     :root, [data-theme="dark"] {
-      --bg-dark: #070b14;
-      --bg-surface: #0e1726;
-      --bg-card: rgba(19, 29, 49, 0.75);
-      --bg-card-hover: rgba(24, 37, 62, 0.95);
+      --bg-base: #060911;
+      --bg-surface: #0c121e;
+      --bg-card: rgba(16, 24, 40, 0.75);
+      --bg-card-hover: rgba(22, 34, 58, 0.95);
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-accent: rgba(99, 102, 241, 0.35);
+      --border-glow: rgba(99, 102, 241, 0.5);
       --primary: #6366f1;
       --primary-light: #818cf8;
-      --primary-glow: rgba(99, 102, 241, 0.25);
+      --primary-glow: rgba(99, 102, 241, 0.3);
       --secondary: #06b6d4;
+      --secondary-glow: rgba(6, 182, 212, 0.25);
       --accent-green: #10b981;
       --accent-amber: #f59e0b;
       --accent-rose: #f43f5e;
@@ -26,31 +31,28 @@
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
-      --code-bg: #040812;
-      --hero-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
-      --hero-title: linear-gradient(135deg, #ffffff 20%, #94a3b8 100%);
-      --header-bg: rgba(14, 23, 38, 0.9);
-      --card-body-bg: rgba(10, 16, 30, 0.5);
-      --chip-bg: rgba(255, 255, 255, 0.05);
-      --input-bg: rgba(14, 23, 38, 0.85);
-      --category-title-color: #f1f5f9;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 18px;
-      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      --code-bg: #030712;
+      --header-bg: rgba(6, 9, 17, 0.85);
+      --nav-pill-bg: rgba(255, 255, 255, 0.04);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.7);
+      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
     }
 
     [data-theme="light"] {
-      --bg-dark: #f8fafc;
+      --bg-base: #f8fafc;
       --bg-surface: #ffffff;
-      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card: rgba(255, 255, 255, 0.9);
       --bg-card-hover: #ffffff;
-      --border-subtle: rgba(15, 23, 42, 0.1);
-      --border-accent: rgba(99, 102, 241, 0.4);
+      --border-subtle: rgba(15, 23, 42, 0.09);
+      --border-accent: rgba(99, 102, 241, 0.3);
+      --border-glow: rgba(99, 102, 241, 0.35);
       --primary: #4f46e5;
       --primary-light: #6366f1;
       --primary-glow: rgba(79, 70, 229, 0.15);
       --secondary: #0891b2;
+      --secondary-glow: rgba(8, 145, 178, 0.15);
       --accent-green: #059669;
       --accent-amber: #d97706;
       --accent-rose: #e11d48;
@@ -59,95 +61,114 @@
       --text-muted: #475569;
       --text-dim: #64748b;
       --code-bg: #0f172a;
-      --hero-bg: linear-gradient(180deg, rgba(241, 245, 249, 0.95) 0%, rgba(226, 232, 240, 0.7) 100%);
-      --hero-title: linear-gradient(135deg, #0f172a 20%, #334155 100%);
-      --header-bg: rgba(255, 255, 255, 0.94);
-      --card-body-bg: rgba(248, 250, 252, 0.75);
-      --chip-bg: rgba(15, 23, 42, 0.05);
-      --input-bg: #ffffff;
-      --category-title-color: #0f172a;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 18px;
-      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --nav-pill-bg: rgba(15, 23, 42, 0.04);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 20px -5px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 20px 30px -10px rgba(15, 23, 42, 0.1);
+      --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(at 0% 0%, var(--primary-glow) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-        radial-gradient(at 50% 100%, rgba(168, 85, 247, 0.06) 0px, transparent 50%);
-      background-attachment: fixed;
+      background-color: var(--bg-base);
       color: var(--text-main);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', sans-serif;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      padding-bottom: 90px;
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(at 10% 10%, var(--primary-glow) 0px, transparent 40%),
+        radial-gradient(at 90% 15%, var(--secondary-glow) 0px, transparent 40%),
+        radial-gradient(at 50% 90%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Header */
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    /* -------------------------------------------------------------
+       HEADER & NAVIGATION
+       ------------------------------------------------------------- */
     header {
-      background: var(--header-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
       position: sticky;
       top: 0;
-      z-index: 100;
-      padding: 0.85rem 1.75rem;
-      transition: background 0.3s ease, border-color 0.3s ease;
+      z-index: 200;
+      background: var(--header-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
     }
 
-    .header-inner {
-      max-width: 1350px;
+    .header-container {
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 0.85rem 1.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.5rem;
     }
 
-    .brand {
+    .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
     }
 
-    .badge-course {
-      background: linear-gradient(135deg, #ef4444, #f97316);
-      color: white;
-      font-size: 0.72rem;
+    .brand-logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
       font-weight: 800;
-      padding: 0.25rem 0.65rem;
-      border-radius: 9999px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+      color: white;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
     }
 
-    .brand-title {
+    .brand-text h1 {
       font-family: 'Outfit', sans-serif;
       font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      background: linear-gradient(90deg, var(--text-main), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .header-actions {
+    .brand-text span {
+      font-size: 0.75rem;
+      color: var(--secondary);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .header-controls {
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
 
-    .theme-toggle-btn {
-      background: rgba(255, 255, 255, 0.06);
+    .theme-toggle {
+      background: var(--nav-pill-bg);
       border: 1px solid var(--border-subtle);
       color: var(--text-main);
-      padding: 0.4rem 0.85rem;
+      padding: 0.45rem 0.95rem;
       border-radius: 9999px;
       font-size: 0.85rem;
       font-weight: 600;
@@ -155,469 +176,484 @@
       display: flex;
       align-items: center;
       gap: 0.45rem;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    [data-theme="light"] .theme-toggle-btn {
-      background: rgba(15, 23, 42, 0.05);
-      border-color: rgba(15, 23, 42, 0.15);
+    .theme-toggle:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+      transform: translateY(-1px);
     }
 
-    .theme-toggle-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: var(--primary-light);
-    }
-
-    .btn-action {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      padding: 0.4rem 0.85rem;
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 0.35rem 0.85rem;
       border-radius: 9999px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
 
-    .btn-action:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseAnimation 2s infinite;
     }
 
-    /* Container */
-    .container {
-      max-width: 1350px;
-      margin: 2rem auto;
+    @keyframes pulseAnimation {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    /* -------------------------------------------------------------
+       HERO BANNER
+       ------------------------------------------------------------- */
+    .hero-wrap {
+      max-width: 1400px;
+      margin: 2rem auto 1.5rem auto;
       padding: 0 1.5rem;
     }
 
-    /* Hero */
-    .hero {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding: 2.5rem 1.5rem;
-      background: var(--hero-bg);
+    .hero-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.4) 100%);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
+      border-radius: 20px;
+      padding: 2.75rem 2.25rem;
       position: relative;
       overflow: hidden;
-      transition: background 0.3s ease;
+      box-shadow: var(--shadow-lg);
     }
 
-    .hero-badge-leak {
+    [data-theme="light"] .hero-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
+      border: 1px solid rgba(239, 68, 68, 0.35);
       color: #fca5a5;
-      padding: 0.45rem 1.1rem;
+      padding: 0.35rem 0.95rem;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
+      margin-bottom: 1.25rem;
     }
 
-    .hero h1 {
+    .hero-card h2 {
       font-family: 'Outfit', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 0.75rem;
-      background: var(--hero-title);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+      letter-spacing: -0.02em;
     }
 
-    .hero p {
-      font-size: 1.05rem;
+    .hero-card p {
       color: var(--text-muted);
-      max-width: 820px;
-      margin: 0 auto 1.5rem auto;
+      font-size: 1.1rem;
+      max-width: 850px;
+      line-height: 1.6;
     }
 
-    /* Primary Navigation Tabs */
-    .main-nav-tabs {
+    /* -------------------------------------------------------------
+       SEGMENTED APP NAV
+       ------------------------------------------------------------- */
+    .app-nav-wrap {
+      max-width: 1400px;
+      margin: 0 auto 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .segmented-nav {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 0.4rem;
       overflow-x: auto;
-      padding: 0.4rem 0.2rem 1.25rem 0.2rem;
-      scrollbar-width: thin;
-      border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 1.75rem;
+      scrollbar-width: none;
+      box-shadow: var(--shadow-sm);
     }
 
-    .nav-tab-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
+    .segmented-nav::-webkit-scrollbar { display: none; }
+
+    .nav-item {
+      background: transparent;
+      border: none;
       color: var(--text-muted);
-      padding: 0.65rem 1.25rem;
-      border-radius: 9999px;
-      font-size: 0.92rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
       font-weight: 600;
+      padding: 0.75rem 1.35rem;
+      border-radius: 10px;
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.25s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
 
-    [data-theme="light"] .nav-tab-btn {
-      background: rgba(15, 23, 42, 0.04);
-    }
-
-    .nav-tab-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .nav-item:hover {
       color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
     }
 
-    .nav-tab-btn.active {
-      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--primary), #7c3aed);
       color: white;
-      border-color: #818cf8;
-      box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 4px 15px var(--primary-glow);
     }
 
-    .nav-tab-btn.leak.active {
+    .nav-item.alert.active {
       background: linear-gradient(135deg, #dc2626, #ea580c);
-      border-color: #f87171;
-      box-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
     }
 
-    /* Search Bar */
-    .search-wrapper {
-      position: relative;
-      margin-bottom: 1.75rem;
-    }
-
-    .search-wrapper input {
-      width: 100%;
-      background: var(--input-bg);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 0.85rem 1rem 0.85rem 2.75rem;
-      color: var(--text-main);
-      font-size: 1rem;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    .search-wrapper input:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px var(--primary-glow);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-dim);
-    }
-
-    /* Layout */
-    .layout-grid {
+    /* -------------------------------------------------------------
+       MAIN APP LAYOUT
+       ------------------------------------------------------------- */
+    .app-main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: 2rem;
     }
 
-    @media (max-width: 1024px) {
-      .layout-grid {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width: 1100px) {
+      .app-main { grid-template-columns: 1fr; }
     }
 
-    /* Content Panes */
-    .tab-pane {
-      display: none;
-      flex-direction: column;
-      gap: 1.5rem;
+    .tab-content { display: none; flex-direction: column; gap: 2rem; }
+    .tab-content.active { display: flex; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .tab-pane.active {
-      display: flex;
-    }
-
-    /* Section Headers */
-    .section-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--category-title-color);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.5rem;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.25rem;
-    }
-
-    /* Question Cards */
-    .card {
+    /* -------------------------------------------------------------
+       INTERACTIVE VISUAL CARDS & ACCORDIONS
+       ------------------------------------------------------------- */
+    .content-card {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
+      border-radius: 16px;
       overflow: hidden;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-md);
+      transition: all 0.25s ease;
     }
 
-    .card:hover {
+    .content-card:hover {
       border-color: var(--border-accent);
-      background: var(--bg-card-hover);
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-glow);
     }
 
-    .card-header {
-      padding: 1.25rem 1.5rem;
+    .card-header-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 1.35rem 1.75rem;
+      text-align: left;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 1rem;
       user-select: none;
     }
 
-    .card-badge {
-      display: inline-block;
-      font-size: 0.75rem;
+    .card-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .card-tag {
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 0.2rem 0.55rem;
-      border-radius: var(--radius-sm);
-      background: rgba(99, 102, 241, 0.15);
-      color: var(--primary-light);
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      width: fit-content;
     }
 
-    .card-badge.red {
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-    }
-
-    .card-badge.green {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-    }
+    .card-tag.red { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .card-tag.purple { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+    .card-tag.cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    .card-tag.green { background: rgba(16, 185, 129, 0.15); color: #34d399; }
 
     .card-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
+      font-size: 1.25rem;
+      font-weight: 700;
       color: var(--text-main);
-      line-height: 1.35;
+      line-height: 1.3;
     }
 
-    .chevron {
+    .card-chevron {
       color: var(--text-muted);
+      font-size: 0.95rem;
       transition: transform 0.25s ease;
-      font-size: 0.9rem;
     }
 
-    .card.open .chevron {
-      transform: rotate(180deg);
-    }
+    .content-card.open .card-chevron { transform: rotate(180deg); }
 
-    .card-body {
+    .card-inner-body {
       display: none;
-      padding: 0 1.5rem 1.5rem 1.5rem;
+      padding: 0 1.75rem 1.75rem 1.75rem;
       border-top: 1px solid var(--border-subtle);
-      background: var(--card-body-bg);
+      background: rgba(4, 7, 16, 0.35);
     }
 
-    .card.open .card-body {
-      display: block;
+    [data-theme="light"] .card-inner-body {
+      background: rgba(248, 250, 252, 0.6);
     }
 
-    /* Explanation & Prompts */
-    .prompt-box {
-      background: rgba(245, 158, 11, 0.08);
-      border-left: 3px solid var(--accent-amber);
-      padding: 0.85rem 1rem;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin: 1.25rem 0 1rem 0;
-      font-size: 0.92rem;
-      color: #fde68a;
-    }
+    .content-card.open .card-inner-body { display: block; }
 
-    [data-theme="light"] .prompt-box {
-      background: rgba(245, 158, 11, 0.12);
-      color: #92400e;
-    }
-
-    .trap-box {
-      background: rgba(244, 63, 94, 0.08);
-      border: 1px solid rgba(244, 63, 94, 0.25);
-      border-radius: var(--radius-sm);
-      padding: 0.85rem 1rem;
-      margin: 1rem 0;
-      font-size: 0.9rem;
-      color: #fca5a5;
-    }
-
-    [data-theme="light"] .trap-box {
-      color: #9f1239;
-      background: rgba(244, 63, 94, 0.1);
-    }
-
-    .trap-box strong {
-      color: #f43f5e;
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    /* Code blocks */
-    .code-container {
+    /* -------------------------------------------------------------
+       CODE CONTAINERS
+       ------------------------------------------------------------- */
+    .code-box {
       background: var(--code-bg);
       border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: var(--radius-sm);
-      margin: 1rem 0;
+      border-radius: 12px;
+      margin: 1.25rem 0;
       overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .code-header {
+    .code-top-bar {
       background: rgba(255, 255, 255, 0.03);
-      padding: 0.4rem 0.85rem;
+      padding: 0.5rem 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.75rem;
-      color: var(--text-dim);
       font-family: 'Fira Code', monospace;
-    }
-
-    .copy-btn {
-      background: transparent;
-      border: none;
+      font-size: 0.78rem;
       color: var(--text-dim);
-      font-size: 0.75rem;
-      cursor: pointer;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      transition: all 0.2s ease;
     }
 
-    .copy-btn:hover {
+    .code-window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot.r { background: #ef4444; }
+    .dot.y { background: #f59e0b; }
+    .dot.g { background: #10b981; }
+
+    .copy-button {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .copy-button:hover {
+      background: rgba(255, 255, 255, 0.1);
       color: var(--text-main);
-      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--primary);
     }
 
     pre code {
       display: block;
-      padding: 1rem;
+      padding: 1.25rem;
       font-family: 'Fira Code', monospace;
       font-size: 0.88rem;
       color: #e2e8f0;
-      line-height: 1.55;
+      line-height: 1.6;
       overflow-x: auto;
     }
 
-    .token-comment { color: #64748b; font-style: italic; }
-    .token-atom { color: #38bdf8; }
-    .token-var { color: #f472b6; font-weight: 600; }
-    .token-rule { color: #a78bfa; font-weight: 700; }
-    .token-query { color: #34d399; font-weight: 600; }
-    .token-num { color: #fbbf24; }
+    .tok-comment { color: #64748b; font-style: italic; }
+    .tok-atom { color: #38bdf8; }
+    .tok-var { color: #f472b6; font-weight: 600; }
+    .tok-op { color: #a78bfa; font-weight: 700; }
+    .tok-num { color: #fbbf24; }
 
-    /* Query simulation box */
-    .query-sim-box {
-      background: rgba(6, 182, 212, 0.05);
-      border: 1px dashed rgba(6, 182, 212, 0.35);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      margin: 1.25rem 0 0.5rem 0;
+    /* -------------------------------------------------------------
+       INTERACTIVE SIMULATOR BOX
+       ------------------------------------------------------------- */
+    .terminal-sim {
+      background: #020617;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin: 1.5rem 0 1rem 0;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
     }
 
-    .sim-title {
+    .sim-header {
       font-size: 0.82rem;
       font-weight: 700;
       color: var(--secondary);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.6rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    .sim-chips {
+    .query-chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-bottom: 0.75rem;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
     }
 
-    .sim-chip {
-      background: var(--chip-bg);
+    .chip-btn {
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 0.3rem 0.65rem;
+      border-radius: 8px;
+      padding: 0.4rem 0.75rem;
       font-family: 'Fira Code', monospace;
       font-size: 0.8rem;
-      color: var(--text-main);
+      color: #cbd5e1;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .sim-chip:hover {
+    .chip-btn:hover {
       background: rgba(6, 182, 212, 0.15);
       border-color: var(--secondary);
-      transform: translateY(-1px);
+      color: white;
+      transform: translateY(-2px);
     }
 
-    .sim-output {
-      background: #030712;
-      border-radius: 6px;
-      padding: 0.75rem 1rem;
+    .terminal-screen {
+      background: #010409;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
       font-family: 'Fira Code', monospace;
-      font-size: 0.84rem;
-      color: #a7f3d0;
-      min-height: 44px;
+      font-size: 0.85rem;
+      color: #34d399;
+      min-height: 52px;
       white-space: pre-wrap;
+      line-height: 1.5;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* Table styles */
-    .custom-table {
+    /* -------------------------------------------------------------
+       INTERACTIVE GRAPHICAL VISUALIZERS (ROOM & MAP)
+       ------------------------------------------------------------- */
+    .visualizer-wrapper {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+      text-align: center;
+    }
+
+    .map-svg-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .map-region {
+      cursor: pointer;
+      transition: all 0.2s ease;
+      stroke-width: 2px;
+      stroke: #334155;
+    }
+
+    .map-region:hover {
+      filter: brightness(1.2);
+      stroke: white;
+      stroke-width: 3px;
+    }
+
+    /* -------------------------------------------------------------
+       CUSTOM TABLES
+       ------------------------------------------------------------- */
+    .table-responsive {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+    }
+
+    .exam-table {
       width: 100%;
       border-collapse: collapse;
-      margin: 1rem 0;
       font-size: 0.88rem;
     }
 
-    .custom-table th, .custom-table td {
-      padding: 0.65rem 0.75rem;
-      border-bottom: 1px solid var(--border-subtle);
-      text-align: left;
-    }
-
-    .custom-table th {
+    .exam-table th {
+      background: rgba(255, 255, 255, 0.03);
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       font-size: 0.75rem;
       letter-spacing: 0.05em;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 2px solid var(--border-subtle);
     }
 
-    .custom-table td code {
+    .exam-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: #e2e8f0;
+    }
+
+    [data-theme="light"] .exam-table td { color: #1e293b; }
+
+    .exam-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .exam-table code {
       font-family: 'Fira Code', monospace;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.1);
-      padding: 0.1rem 0.35rem;
+      color: var(--secondary);
+      background: rgba(6, 182, 212, 0.1);
+      padding: 0.15rem 0.4rem;
       border-radius: 4px;
     }
 
-    /* Sidebar */
-    .sidebar {
+    /* -------------------------------------------------------------
+       SIDEBAR & STICKY TOOLS
+       ------------------------------------------------------------- */
+    .app-sidebar {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
@@ -626,110 +662,46 @@
       height: fit-content;
     }
 
-    .widget {
+    .side-card {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+      border-radius: 16px;
+      padding: 1.35rem;
+      box-shadow: var(--shadow-sm);
     }
 
-    .widget-title {
+    .side-card h3 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
       color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    .check-row {
+    .checklist-row {
       display: flex;
       align-items: flex-start;
-      gap: 0.5rem;
+      gap: 0.55rem;
       font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.65rem;
       cursor: pointer;
     }
 
-    .check-row input {
+    .checklist-row input {
       margin-top: 0.2rem;
       accent-color: var(--primary);
     }
 
-    /* Quiz components */
-    .quiz-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-accent);
-      border-radius: var(--radius-md);
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .quiz-question {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--text-main);
-    }
-
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-    }
-
-    .quiz-btn {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1rem;
-      text-align: left;
-      color: var(--text-main);
-      font-size: 0.92rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .quiz-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .quiz-btn.correct {
-      background: rgba(16, 185, 129, 0.2) !important;
-      border-color: var(--accent-green) !important;
-      color: #a7f3d0 !important;
-      font-weight: 600;
-    }
-
-    .quiz-btn.wrong {
-      background: rgba(244, 63, 94, 0.2) !important;
-      border-color: var(--accent-rose) !important;
-      color: #fecdd3 !important;
-    }
-
-    .quiz-feedback {
-      display: none;
-      padding: 0.85rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.9rem;
-      margin-top: 0.75rem;
-    }
-
-    /* Floating Action */
-    .floating-tools {
+    /* Floating Back to Top */
+    .fab-top {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
-      z-index: 99;
-    }
-
-    .float-top {
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -740,1057 +712,626 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       transition: all 0.2s ease;
+      z-index: 99;
     }
 
-    .float-top:hover {
+    .fab-top:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 25px var(--primary-glow);
+      box-shadow: 0 15px 30px var(--primary-glow);
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Top Navigation Header -->
   <header>
-    <div class="header-inner">
-      <div class="brand">
-        <span class="badge-course">23CSE401 FoAI</span>
-        <h2 class="brand-title">Prolog Lab 2 Master Exam Hub</h2>
-      </div>
-
-      <div class="header-actions">
-        
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <a href="index.html" class="btn-action" style="text-decoration: none; color: inherit;">🏠 Home Hub</a>
-          <a href="lab_eval1_set1.html" class="btn-action" style="text-decoration: none; color: #ef4444; font-weight: 700;">🚨 CSE G Eval 1</a>
-          <a href="today_live_exam.html" class="btn-action" style="text-decoration: none; color: #f87171; font-weight: 600;">🔥 Family & Flights</a>
-          <a href="alternate_exam_prep.html" class="btn-action" style="text-decoration: none; color: inherit;">☕ Alternate Paper</a>
-          <a href="predicted_exam_questions.html" class="btn-action" style="text-decoration: none; color: inherit;">🔮 Predicted Qs</a>
+    <div class="header-container">
+      <a href="index.html" class="brand-wrap">
+        <div class="brand-logo-icon">P</div>
+        <div class="brand-text">
+          <h1>Prolog Lab 2 Master Suite</h1>
+          <span>23CSE401 Fundamentals of AI</span>
         </div>
-<button class="btn-action" onclick="expandAll()">Expand All</button>
-        <button class="btn-action" onclick="collapseAll()">Collapse All</button>
-        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
-          <span id="themeIcon">☀️</span>
-          <span id="themeText">Light</span>
+      </a>
+
+      <div class="header-controls">
+        <div class="status-badge">
+          <div class="pulse-dot"></div>
+          <span>EXAM READY</span>
+        </div>
+        <button class="theme-toggle" id="themeBtn" onclick="toggleAppTheme()">
+          <span id="themeIco">☀️</span>
+          <span id="themeLbl">Light</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Container -->
-  <div class="container">
+  <!-- Hero Banner -->
+  <div class="hero-wrap">
+    <div class="hero-card">
+      <span class="hero-tag">🔥 OFFICIAL EXAM PAPERS & LEAKS INCLUDED</span>
+      <h2>Master All 3 Exam Sets In Under 30 Minutes</h2>
+      <p>Covering the exact question papers from CSE Section G, today's live class leak, and the alternate papers. Every fact, rule, and query is fully coded and verified below.</p>
+    </div>
+  </div>
 
-    <!-- Hero -->
-    <section class="hero">
-      <span class="hero-badge-leak">🔥 CONFIRMED TEST PATTERN FROM TODAY'S EXAM</span>
-      <h1>Master Prolog Lab 2 Before Walking into Exam</h1>
-      <p>Today's other class was given <strong>Task 1 (Extended Family Tree with 20 Queries)</strong> and <strong>Task 2 (Airport Flights Network with 20 Queries)</strong>. Study the exact code, every query answer, and the alternate papers below.</p>
-    </section>
+  <!-- Segmented Tab Navigation -->
+  <div class="app-nav-wrap">
+    <div class="segmented-nav">
+      <button class="nav-item alert active" onclick="showTab('pane-cseg', this)">🚨 CSE G Lab Eval 1 (Set 1)</button>
+      <button class="nav-item" onclick="showTab('pane-leak', this)">🔥 Today's Exam Leak (Family & Flights)</button>
+      <button class="nav-item" onclick="showTab('pane-alternate', this)">☕ Alternate Paper (Cafe & Prereqs)</button>
+      <button class="nav-item" onclick="showTab('pane-west', this)">🎖️ Colonel West FOL</button>
+      <button class="nav-item" onclick="showTab('pane-syntax', this)">📖 Core Syntax & Viva</button>
+    </div>
+  </div>
 
-    <!-- Navigation Tabs -->
-    <nav class="main-nav-tabs">
-      <button class="nav-tab-btn leak active" onclick="switchNavTab('tab-eval1', this)">🚨 Lab Eval 1 - Set 1 (CSE G)</button>
-      <button class="nav-tab-btn" onclick="switchNavTab('tab-today', this)">🔥 Class Exam Leak (Family & Flights)</button>
-      <button class="nav-tab-btn" onclick="switchNavTab('tab-alternate', this)">☕ Alternate Paper (Cafe & Prereqs)</button>
-      <button class="nav-tab-btn" onclick="switchNavTab('tab-west', this)">🎖️ Colonel West FOL Criminal</button>
-      <button class="nav-tab-btn" onclick="switchNavTab('tab-syntax', this)">📖 Core Syntax & Viva</button>
-      <button class="nav-tab-btn" onclick="switchNavTab('tab-predicted', this)">🔮 Predicted Exam Questions</button>
-      <button class="nav-tab-btn" onclick="switchNavTab('tab-quiz', this)">🎯 Exam Simulator Quiz</button>
-    </nav>
+  <!-- Main Grid -->
+  <div class="app-main">
 
-    <!-- Search Input -->
-    <div class="search-wrapper">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" placeholder="Search any query or topic (e.g. 'grandfather', 'ek', 'layover', 'sub_atom', 'affordable', 'criminal')..." oninput="filterAllCards()">
+    <!-- Left Content Column -->
+    <div class="content-feed">
+
+      <!-- ========================================================
+           TAB 1: CSE SECTION G LAB EVALUATION 1 (SET 1)
+           ======================================================== -->
+      <section class="tab-content active" id="pane-cseg">
+
+        <!-- Intro Banner -->
+        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 14px; padding: 1.25rem;">
+          <h3 style="color: #f87171; font-family: 'Outfit'; font-size: 1.2rem; margin-bottom: 0.3rem;">📋 Official Question Paper: 23CSE401 Lab Evaluation 1 - Set 1</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            This paper contains 3 problems: <strong>Problem 1: A Small World (Room representation)</strong>, <strong>Problem 2: The 4-Color Map Problem (Constraint Satisfaction)</strong>, and <strong>Problem 3: Europe (Geographic DB, density math & neighbors)</strong>.
+          </p>
+        </div>
+
+        <!-- Problem 1 Card -->
+        <article class="content-card open" id="cseg-p1">
+          <button class="card-header-btn" onclick="toggleCard('cseg-p1')">
+            <div class="card-header-left">
+              <span class="card-tag red">PROBLEM 1 • KNOWLEDGE REPRESENTATION</span>
+              <h3 class="card-title">Problem 1: A Small World (Student Room Layout)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            
+            <!-- Room Layout Diagram -->
+            <div class="visualizer-wrapper">
+              <h4 style="font-size: 0.9rem; color: var(--secondary); margin-bottom: 0.75rem; text-transform: uppercase;">Room Blueprint Layout (Fig. 1.1)</h4>
+              <svg viewBox="0 0 500 280" style="max-width: 440px; margin: 0 auto; display: block; background: #020617; border: 2px solid #334155; border-radius: 8px;">
+                <!-- Walls -->
+                <text x="20" y="25" fill="#64748b" font-size="11">corner 4</text>
+                <text x="210" y="25" fill="#38bdf8" font-size="11">window 1</text>
+                <text x="320" y="25" fill="#64748b" font-size="11">wall 3</text>
+                <text x="440" y="25" fill="#64748b" font-size="11">corner 3</text>
+                
+                <text x="15" y="150" fill="#38bdf8" font-size="11" transform="rotate(-90 15,150)">window 2 / wall 4</text>
+                <text x="475" y="150" fill="#64748b" font-size="11" transform="rotate(90 475,150)">wall 2</text>
+                
+                <text x="20" y="270" fill="#64748b" font-size="11">corner 1</text>
+                <text x="220" y="270" fill="#64748b" font-size="11">wall 1</text>
+                <text x="310" y="270" fill="#f59e0b" font-size="11">door</text>
+                <text x="440" y="270" fill="#64748b" font-size="11">corner 2</text>
+
+                <!-- Furniture Blocks -->
+                <rect x="50" y="50" width="60" height="90" fill="#1e293b" stroke="#6366f1" stroke-width="2" rx="4"/>
+                <text x="65" y="100" fill="#e2e8f0" font-size="12">desk</text>
+
+                <circle cx="150" cy="95" r="24" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+                <text x="136" y="99" fill="#e2e8f0" font-size="12">chair</text>
+
+                <rect x="270" y="45" width="150" height="50" fill="#1e293b" stroke="#10b981" stroke-width="2" rx="4"/>
+                <text x="330" y="75" fill="#e2e8f0" font-size="12">bed</text>
+
+                <rect x="390" y="120" width="25" height="110" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="4"/>
+                <text x="395" y="180" fill="#e2e8f0" font-size="11" transform="rotate(90 395,180)">bookshelf</text>
+
+                <rect x="50" y="195" width="85" height="45" fill="#1e293b" stroke="#f43f5e" stroke-width="2" rx="4"/>
+                <text x="60" y="222" fill="#e2e8f0" font-size="12">wardrobe</text>
+              </svg>
+            </div>
+
+            <!-- Complete Source -->
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>small_world.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-comment">/* Facts: Furniture items & count */</span>
+<span class="tok-atom">furniture</span>(<span class="tok-atom">wardrobe</span>, <span class="tok-num">1</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">furniture</span>(<span class="tok-atom">bookshelf</span>, <span class="tok-num">1</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">furniture</span>(<span class="tok-atom">bed</span>, <span class="tok-num">1</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">furniture</span>(<span class="tok-atom">desk</span>, <span class="tok-num">1</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">furniture</span>(<span class="tok-atom">chair</span>, <span class="tok-num">1</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">number</span>(<span class="tok-atom">door</span>, <span class="tok-num">1</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">number</span>(<span class="tok-atom">window</span>, <span class="tok-num">2</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">/* Locations at walls, windows & corners */</span>
+<span class="tok-atom">at</span>(<span class="tok-atom">wall_1</span>, <span class="tok-atom">wardrobe</span>)<span class="tok-atom">.</span>   <span class="tok-atom">at</span>(<span class="tok-atom">wall_1</span>, <span class="tok-atom">door</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">at</span>(<span class="tok-atom">wall_2</span>, <span class="tok-atom">bookshelf</span>)<span class="tok-atom">.</span>  <span class="tok-atom">at</span>(<span class="tok-atom">wall_2</span>, <span class="tok-atom">bed</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">at</span>(<span class="tok-atom">wall_3</span>, <span class="tok-atom">bed</span>)<span class="tok-atom">.</span>        <span class="tok-atom">at</span>(<span class="tok-atom">wall_3</span>, <span class="tok-atom">window_1</span>)<span class="tok-atom">.</span>  <span class="tok-atom">at</span>(<span class="tok-atom">wall_3</span>, <span class="tok-atom">desk</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">at</span>(<span class="tok-atom">wall_4</span>, <span class="tok-atom">desk</span>)<span class="tok-atom">.</span>       <span class="tok-atom">at</span>(<span class="tok-atom">wall_4</span>, <span class="tok-atom">window_2</span>)<span class="tok-atom">.</span>  <span class="tok-atom">at</span>(<span class="tok-atom">wall_4</span>, <span class="tok-atom">wardrobe</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">at</span>(<span class="tok-atom">window_1</span>, <span class="tok-atom">bed</span>)<span class="tok-atom">.</span>      <span class="tok-atom">at</span>(<span class="tok-atom">window_2</span>, <span class="tok-atom">desk</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">in</span>(<span class="tok-atom">corner_1</span>, <span class="tok-atom">wardrobe</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">in</span>(<span class="tok-atom">corner_3</span>, <span class="tok-atom">bed</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">in</span>(<span class="tok-atom">corner_4</span>, <span class="tok-atom">desk</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">/* Left relation (from center of room) */</span>
+<span class="tok-atom">left</span>(<span class="tok-atom">door</span>, <span class="tok-atom">bookshelf</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">left</span>(<span class="tok-atom">bookshelf</span>, <span class="tok-atom">bed</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">left</span>(<span class="tok-atom">bed</span>, <span class="tok-atom">desk</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">left</span>(<span class="tok-atom">desk</span>, <span class="tok-atom">wardrobe</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">left</span>(<span class="tok-atom">wardrobe</span>, <span class="tok-atom">door</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">/* Rules */</span>
+<span class="tok-atom">furniture</span>(<span class="tok-var">X</span>) <span class="tok-op">:-</span> <span class="tok-atom">furniture</span>(<span class="tok-var">X</span>, <span class="tok-var">N</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">number</span>(<span class="tok-var">X</span>, <span class="tok-var">N</span>) <span class="tok-op">:-</span> <span class="tok-atom">furniture</span>(<span class="tok-var">X</span>, <span class="tok-var">N</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">place</span>(<span class="tok-var">X</span>, <span class="tok-var">P</span>) <span class="tok-op">:-</span> <span class="tok-atom">at</span>(<span class="tok-var">P</span>, <span class="tok-var">X</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">place</span>(<span class="tok-var">X</span>, <span class="tok-var">P</span>) <span class="tok-op">:-</span> <span class="tok-atom">in</span>(<span class="tok-var">P</span>, <span class="tok-var">X</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">place</span>(<span class="tok-atom">chair</span>, <span class="tok-atom">at_desk</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">right</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">left</span>(<span class="tok-var">Y</span>, <span class="tok-var">X</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <!-- Simulator -->
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Click to Run Problem 1 Queries in SWI-Prolog:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term1', '?- furniture(X).', 'X = wardrobe ;\nX = bookshelf ;\nX = bed ;\nX = desk ;\nX = chair.')">?- furniture(X).</span>
+                <span class="chip-btn" onclick="runSim('term1', '?- number(door, N).', 'N = 1.')">?- number(door, N).</span>
+                <span class="chip-btn" onclick="runSim('term1', '?- place(chair, Where).', 'Where = at_desk.')">?- place(chair, Where).</span>
+                <span class="chip-btn" onclick="runSim('term1', '?- right(X, bed).', 'X = bookshelf.')">?- right(X, bed).</span>
+                <span class="chip-btn" onclick="runSim('term1', '?- at(wall_2, What).', 'What = bookshelf ;\nWhat = bed.')">?- at(wall_2, What).</span>
+              </div>
+              <div class="terminal-screen" id="term1">// Click a query chip above to execute</div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- Problem 2 Card -->
+        <article class="content-card open" id="cseg-p2">
+          <button class="card-header-btn" onclick="toggleCard('cseg-p2')">
+            <div class="card-header-left">
+              <span class="card-tag purple">PROBLEM 2 • CONSTRAINT SATISFACTION (CSP)</span>
+              <h3 class="card-title">Problem 2: The 4-Color Map Problem</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            
+            <div class="visualizer-wrapper">
+              <h4 style="font-size: 0.9rem; color: var(--secondary); margin-bottom: 0.75rem; text-transform: uppercase;">Interactive Topological Map (Fig. 2.1)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Click any region below to toggle colors (Red &rarr; Blue &rarr; Yellow &rarr; Green):</p>
+              <svg viewBox="0 0 360 220" style="max-width: 380px; margin: 0 auto; display: block; border: 2px solid #334155; border-radius: 8px;">
+                <!-- Region A -->
+                <rect id="regA" class="map-region" x="10" y="10" width="80" height="200" fill="#dc2626" onclick="cycleColor('regA')"/>
+                <text x="45" y="115" fill="white" font-weight="700" font-size="16" pointer-events="none">A</text>
+
+                <!-- Region B -->
+                <rect id="regB" class="map-region" x="90" y="10" width="260" height="80" fill="#2563eb" onclick="cycleColor('regB')"/>
+                <text x="210" y="55" fill="white" font-weight="700" font-size="16" pointer-events="none">B</text>
+
+                <!-- Region C -->
+                <rect id="regC" class="map-region" x="90" y="90" width="130" height="60" fill="#eab308" onclick="cycleColor('regC')"/>
+                <text x="150" y="125" fill="white" font-weight="700" font-size="16" pointer-events="none">C</text>
+
+                <!-- Region D -->
+                <rect id="regD" class="map-region" x="220" y="90" width="130" height="60" fill="#16a34a" onclick="cycleColor('regD')"/>
+                <text x="280" y="125" fill="white" font-weight="700" font-size="16" pointer-events="none">D</text>
+
+                <!-- Region E -->
+                <rect id="regE" class="map-region" x="90" y="150" width="260" height="60" fill="#9333ea" onclick="cycleColor('regE')"/>
+                <text x="210" y="185" fill="white" font-weight="700" font-size="16" pointer-events="none">E</text>
+              </svg>
+            </div>
+
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>four_color.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-atom">color</span>(<span class="tok-atom">red</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">color</span>(<span class="tok-atom">blue</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">color</span>(<span class="tok-atom">yellow</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">color</span>(<span class="tok-atom">green</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">% Adjacency constraint: Colors must be different (X \= Y)</span>
+<span class="tok-atom">adjacent</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">color</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">color</span>(<span class="tok-var">Y</span>)<span class="tok-atom">,</span> <span class="tok-var">X</span> <span class="tok-op">\=</span> <span class="tok-var">Y</span><span class="tok-atom">.</span>
+
+<span class="tok-comment">% Map topology (5 regions)</span>
+<span class="tok-atom">map</span>(<span class="tok-var">A</span>, <span class="tok-var">B</span>, <span class="tok-var">C</span>, <span class="tok-var">D</span>, <span class="tok-var">E</span>) <span class="tok-op">:-</span>
+    <span class="tok-atom">adjacent</span>(<span class="tok-var">A</span>, <span class="tok-var">B</span>)<span class="tok-atom">,</span> <span class="tok-atom">adjacent</span>(<span class="tok-var">A</span>, <span class="tok-var">D</span>)<span class="tok-atom">,</span> <span class="tok-atom">adjacent</span>(<span class="tok-var">A</span>, <span class="tok-var">E</span>)<span class="tok-atom">,</span>
+    <span class="tok-atom">adjacent</span>(<span class="tok-var">B</span>, <span class="tok-var">C</span>)<span class="tok-atom">,</span> <span class="tok-atom">adjacent</span>(<span class="tok-var">B</span>, <span class="tok-var">D</span>)<span class="tok-atom">,</span> <span class="tok-atom">adjacent</span>(<span class="tok-var">B</span>, <span class="tok-var">E</span>)<span class="tok-atom">,</span>
+    <span class="tok-atom">adjacent</span>(<span class="tok-var">C</span>, <span class="tok-var">D</span>)<span class="tok-atom">,</span> <span class="tok-atom">adjacent</span>(<span class="tok-var">C</span>, <span class="tok-var">E</span>)<span class="tok-atom">,</span>
+    <span class="tok-atom">adjacent</span>(<span class="tok-var">D</span>, <span class="tok-var">E</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Query Execution:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term2', '?- map(A, B, C, D, E).', 'A = red,\nB = blue,\nC = red,\nD = yellow,\nE = green ;\n(press ; for next admissible coloring)')">?- map(A, B, C, D, E).</span>
+              </div>
+              <div class="terminal-screen" id="term2">// Click query above to find an admissible coloring</div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- Problem 3 Card -->
+        <article class="content-card open" id="cseg-p3">
+          <button class="card-header-btn" onclick="toggleCard('cseg-p3')">
+            <div class="card-header-left">
+              <span class="card-tag cyan">PROBLEM 3 • GEOGRAPHIC DB & ARITHMETIC</span>
+              <h3 class="card-title">Problem 3: Europe (Density Calculation & Neighbor Rules)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>europe.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-comment">/* Facts: area in km^2, population, neighbors */</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">austria</span>, <span class="tok-num">83858</span>)<span class="tok-atom">.</span>        <span class="tok-atom">population</span>(<span class="tok-atom">austria</span>, <span class="tok-num">8169929</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">france</span>, <span class="tok-num">547030</span>)<span class="tok-atom">.</span>        <span class="tok-atom">population</span>(<span class="tok-atom">france</span>, <span class="tok-num">63182000</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">germany</span>, <span class="tok-num">357021</span>)<span class="tok-atom">.</span>       <span class="tok-atom">population</span>(<span class="tok-atom">germany</span>, <span class="tok-num">83251851</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">italy</span>, <span class="tok-num">301230</span>)<span class="tok-atom">.</span>         <span class="tok-atom">population</span>(<span class="tok-atom">italy</span>, <span class="tok-num">59530464</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">liechtenstein</span>, <span class="tok-num">160</span>)<span class="tok-atom">.</span>    <span class="tok-atom">population</span>(<span class="tok-atom">liechtenstein</span>, <span class="tok-num">32842</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">spain</span>, <span class="tok-num">504851</span>)<span class="tok-atom">.</span>         <span class="tok-atom">population</span>(<span class="tok-atom">spain</span>, <span class="tok-num">47059533</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">switzerland</span>, <span class="tok-num">41290</span>)<span class="tok-atom">.</span>    <span class="tok-atom">population</span>(<span class="tok-atom">switzerland</span>, <span class="tok-num">7507000</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">area</span>(<span class="tok-atom">united_kingdom</span>, <span class="tok-num">244820</span>)<span class="tok-atom">.</span><span class="tok-atom">population</span>(<span class="tok-atom">united_kingdom</span>, <span class="tok-num">61100835</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">austria</span>, <span class="tok-atom">switzerland</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">france</span>, <span class="tok-atom">switzerland</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">france</span>, <span class="tok-atom">germany</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">france</span>, <span class="tok-atom">spain</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">germany</span>, <span class="tok-atom">switzerland</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">italy</span>, <span class="tok-atom">switzerland</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor</span>(<span class="tok-atom">liechtenstein</span>, <span class="tok-atom">switzerland</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">/* Rules */</span>
+<span class="tok-comment">% Density: Population / Area</span>
+<span class="tok-atom">density</span>(<span class="tok-var">S</span>, <span class="tok-var">D</span>) <span class="tok-op">:-</span> <span class="tok-atom">population</span>(<span class="tok-var">S</span>, <span class="tok-var">E</span>)<span class="tok-atom">,</span> <span class="tok-atom">area</span>(<span class="tok-var">S</span>, <span class="tok-var">F</span>)<span class="tok-atom">,</span> <span class="tok-var">D</span> <span class="tok-op">is</span> <span class="tok-var">E</span> <span class="tok-op">/</span> <span class="tok-var">F</span><span class="tok-atom">.</span>
+
+<span class="tok-comment">% Bidirectional neighbors</span>
+<span class="tok-atom">neighbors</span>(<span class="tok-var">S1</span>, <span class="tok-var">S2</span>) <span class="tok-op">:-</span> <span class="tok-atom">neighbor</span>(<span class="tok-var">S1</span>, <span class="tok-var">S2</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbors</span>(<span class="tok-var">S1</span>, <span class="tok-var">S2</span>) <span class="tok-op">:-</span> <span class="tok-atom">neighbor</span>(<span class="tok-var">S2</span>, <span class="tok-var">S1</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">% Query deduction rules</span>
+<span class="tok-atom">neighbor_ch</span>(<span class="tok-var">S</span>) <span class="tok-op">:-</span> <span class="tok-atom">neighbors</span>(<span class="tok-atom">switzerland</span>, <span class="tok-var">S</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">neighbor_f</span>(<span class="tok-var">S</span>) <span class="tok-op">:-</span> <span class="tok-atom">neighbors</span>(<span class="tok-atom">france</span>, <span class="tok-var">S</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">neighbor_d</span>(<span class="tok-var">S</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">neighbors</span>(<span class="tok-atom">germany</span>, <span class="tok-var">S</span>)<span class="tok-atom">,</span> 
+    <span class="tok-atom">population</span>(<span class="tok-atom">germany</span>, <span class="tok-var">ED</span>)<span class="tok-atom">,</span> <span class="tok-atom">population</span>(<span class="tok-var">S</span>, <span class="tok-var">ES</span>)<span class="tok-atom">,</span>
+    <span class="tok-atom">area</span>(<span class="tok-atom">germany</span>, <span class="tok-var">FD</span>)<span class="tok-atom">,</span> <span class="tok-atom">area</span>(<span class="tok-var">S</span>, <span class="tok-var">FS</span>)<span class="tok-atom">,</span> 
+    <span class="tok-var">ES</span> <span class="tok-op">&gt;</span> <span class="tok-var">ED</span><span class="tok-atom">,</span> <span class="tok-var">FS</span> <span class="tok-op">&gt;</span> <span class="tok-var">FD</span><span class="tok-atom">.</span>
+
+<span class="tok-atom">neighbor_ch1</span>(<span class="tok-var">S</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">neighbors</span>(<span class="tok-atom">switzerland</span>, <span class="tok-var">S</span>)<span class="tok-atom">,</span>
+    <span class="tok-atom">density</span>(<span class="tok-atom">switzerland</span>, <span class="tok-var">DCH</span>)<span class="tok-atom">,</span> <span class="tok-atom">density</span>(<span class="tok-var">S</span>, <span class="tok-var">DS</span>)<span class="tok-atom">,</span> 
+    <span class="tok-var">DS</span> <span class="tok-op">&gt;</span> <span class="tok-var">DCH</span><span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Run Europe Deduction Queries:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term3', '?- neighbor_ch(S).', 'S = austria ;\nS = france ;\nS = germany ;\nS = italy ;\nS = liechtenstein.')">Q1: Neighbors of Switzerland</span>
+                <span class="chip-btn" onclick="runSim('term3', '?- neighbor_f(S).', 'S = switzerland ;\nS = germany ;\nS = spain.')">Q2: Neighbors of France</span>
+                <span class="chip-btn" onclick="runSim('term3', '?- neighbor_d(S).', 'false.\n(No neighbor has both higher population and larger area!)')">Q3: Neighbor of Germany > pop & area</span>
+                <span class="chip-btn" onclick="runSim('term3', '?- neighbor_ch1(S).', 'S = germany (density 233.18) ;\nS = italy (density 197.62) ;\nS = liechtenstein (density 205.26).')">Q4: Higher density than Switzerland</span>
+              </div>
+              <div class="terminal-screen" id="term3">// Click query above to execute</div>
+            </div>
+
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 2: TODAY'S EXAM LEAK (FAMILY & FLIGHTS)
+           ======================================================== -->
+      <section class="tab-content" id="pane-leak">
+
+        <article class="content-card open" id="leak-family">
+          <button class="card-header-btn" onclick="toggleCard('leak-family')">
+            <div class="card-header-left">
+              <span class="card-tag red">TASK 1 • 20 EXAM QUERIES</span>
+              <h3 class="card-title">Task 1: Extended Family Tree (Jack, Helen, Ali, etc.)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>family_tree.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-comment">% Facts</span>
+<span class="tok-atom">male</span>(<span class="tok-atom">jack</span>)<span class="tok-atom">.</span> <span class="tok-atom">male</span>(<span class="tok-atom">oliver</span>)<span class="tok-atom">.</span> <span class="tok-atom">male</span>(<span class="tok-atom">ali</span>)<span class="tok-atom">.</span> <span class="tok-atom">male</span>(<span class="tok-atom">james</span>)<span class="tok-atom">.</span> <span class="tok-atom">male</span>(<span class="tok-atom">simon</span>)<span class="tok-atom">.</span> <span class="tok-atom">male</span>(<span class="tok-atom">harry</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">female</span>(<span class="tok-atom">helen</span>)<span class="tok-atom">.</span> <span class="tok-atom">female</span>(<span class="tok-atom">sophie</span>)<span class="tok-atom">.</span> <span class="tok-atom">female</span>(<span class="tok-atom">jess</span>)<span class="tok-atom">.</span> <span class="tok-atom">female</span>(<span class="tok-atom">lily</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">parent_of</span>(<span class="tok-atom">jack</span>, <span class="tok-atom">jess</span>)<span class="tok-atom">.</span> <span class="tok-atom">parent_of</span>(<span class="tok-atom">jack</span>, <span class="tok-atom">lily</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent_of</span>(<span class="tok-atom">helen</span>, <span class="tok-atom">jess</span>)<span class="tok-atom">.</span> <span class="tok-atom">parent_of</span>(<span class="tok-atom">helen</span>, <span class="tok-atom">lily</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent_of</span>(<span class="tok-atom">oliver</span>, <span class="tok-atom">james</span>)<span class="tok-atom">.</span> <span class="tok-atom">parent_of</span>(<span class="tok-atom">sophie</span>, <span class="tok-atom">james</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent_of</span>(<span class="tok-atom">jess</span>, <span class="tok-atom">simon</span>)<span class="tok-atom">.</span> <span class="tok-atom">parent_of</span>(<span class="tok-atom">ali</span>, <span class="tok-atom">simon</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">parent_of</span>(<span class="tok-atom">lily</span>, <span class="tok-atom">harry</span>)<span class="tok-atom">.</span> <span class="tok-atom">parent_of</span>(<span class="tok-atom">james</span>, <span class="tok-atom">harry</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">% 9 Rules</span>
+<span class="tok-atom">father_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">male</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">mother_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">female</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">grandfather_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">male</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">grandmother_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">female</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">sister_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">female</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">P</span>, <span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">P</span>, <span class="tok-var">Y</span>)<span class="tok-atom">,</span> <span class="tok-var">X</span> <span class="tok-op">\=</span> <span class="tok-var">Y</span><span class="tok-atom">.</span>
+<span class="tok-atom">brother_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">male</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">P</span>, <span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">P</span>, <span class="tok-var">Y</span>)<span class="tok-atom">,</span> <span class="tok-var">X</span> <span class="tok-op">\=</span> <span class="tok-var">Y</span><span class="tok-atom">.</span>
+<span class="tok-atom">aunt_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">female</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">,</span> <span class="tok-atom">sister_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">uncle_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">male</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">,</span> <span class="tok-atom">brother_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">ancestor_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">ancestor_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>) <span class="tok-op">:-</span> <span class="tok-atom">parent_of</span>(<span class="tok-var">X</span>, <span class="tok-var">Z</span>)<span class="tok-atom">,</span> <span class="tok-atom">ancestor_of</span>(<span class="tok-var">Z</span>, <span class="tok-var">Y</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Test Task 1 Live Queries:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term-leak1', '?- father_of(jack, jess).', 'true.')">a. Jack father of Jess?</span>
+                <span class="chip-btn" onclick="runSim('term-leak1', '?- ancestor_of(ali, harry).', 'false.')">e. Ali ancestor of Harry?</span>
+                <span class="chip-btn" onclick="runSim('term-leak1', '?- uncle_of(X, harry).', 'false.')">j. Uncle of Harry?</span>
+                <span class="chip-btn" onclick="runSim('term-leak1', '?- parent_of(X, Y), \+ parent_of(Y, _).', 'X = ali ;\nX = lily ;\nX = james.')">t. Parents with NO grandkids</span>
+              </div>
+              <div class="terminal-screen" id="term-leak1">// Click query above to execute</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card open" id="leak-flights">
+          <button class="card-header-btn" onclick="toggleCard('leak-flights')">
+            <div class="card-header-left">
+              <span class="card-tag cyan">TASK 2 • FLIGHT CONNECTIONS</span>
+              <h3 class="card-title">Task 2: Airport Flights Network (`airport_flights.pl`)</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>airport_flights.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-atom">direct_route</span>(<span class="tok-var">From</span>, <span class="tok-var">To</span>) <span class="tok-op">:-</span> <span class="tok-atom">flight</span>(<span class="tok-var">_</span>, <span class="tok-var">From</span>, <span class="tok-var">To</span>, <span class="tok-var">_</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">one_stop_route</span>(<span class="tok-var">From</span>, <span class="tok-var">To</span>, <span class="tok-var">Layover</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">flight</span>(<span class="tok-var">_</span>, <span class="tok-var">From</span>, <span class="tok-var">Layover</span>, <span class="tok-var">_</span>)<span class="tok-atom">,</span> 
+    <span class="tok-atom">flight</span>(<span class="tok-var">_</span>, <span class="tok-var">Layover</span>, <span class="tok-var">To</span>, <span class="tok-var">_</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">one_stop_duration</span>(<span class="tok-var">From</span>, <span class="tok-var">To</span>, <span class="tok-var">TotalTime</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">flight</span>(<span class="tok-var">_</span>, <span class="tok-var">From</span>, <span class="tok-var">Layover</span>, <span class="tok-var">T1</span>)<span class="tok-atom">,</span> 
+    <span class="tok-atom">flight</span>(<span class="tok-var">_</span>, <span class="tok-var">Layover</span>, <span class="tok-var">To</span>, <span class="tok-var">T2</span>)<span class="tok-atom">,</span> 
+    <span class="tok-var">TotalTime</span> <span class="tok-op">is</span> <span class="tok-var">T1</span> <span class="tok-op">+</span> <span class="tok-var">T2</span><span class="tok-atom">.</span>
+
+<span class="tok-atom">has_route</span>(<span class="tok-var">From</span>, <span class="tok-var">To</span>) <span class="tok-op">:-</span> <span class="tok-atom">direct_route</span>(<span class="tok-var">From</span>, <span class="tok-var">To</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">has_route</span>(<span class="tok-var">From</span>, <span class="tok-var">To</span>) <span class="tok-op">:-</span> <span class="tok-atom">direct_route</span>(<span class="tok-var">From</span>, <span class="tok-var">Via</span>)<span class="tok-atom">,</span> <span class="tok-atom">has_route</span>(<span class="tok-var">Via</span>, <span class="tok-var">To</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Test Task 2 Queries:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term-leak2', '?- one_stop_route(london, dubai, Layover).', 'false.\n(Only direct ek404 exists; no 1-stop connection!)')">7. 1-stop London -> Dubai?</span>
+                <span class="chip-btn" onclick="runSim('term-leak2', '?- one_stop_duration(london, frankfurt, Hours).', 'Hours = 2.5.')">10. Duration London->Paris->Frankfurt</span>
+                <span class="chip-btn" onclick="runSim('term-leak2', '?- flight(FlightNum, _, _, _), sub_atom(FlightNum, 0, 2, _, ek).', 'FlightNum = ek303 ;\nFlightNum = ek404.')">18. Flight starting with 'ek'</span>
+                <span class="chip-btn" onclick="runSim('term-leak2', '?- one_stop_duration(paris, Dest, 7.5).', 'Dest = dubai.')">19. 1-stop from Paris taking 7.5h</span>
+              </div>
+              <div class="terminal-screen" id="term-leak2">// Click query above to execute</div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 3: ALTERNATE PAPER (CAFE & PREREQS)
+           ======================================================== -->
+      <section class="tab-content" id="pane-alternate">
+
+        <article class="content-card open" id="card-cafe">
+          <button class="card-header-btn" onclick="toggleCard('card-cafe')">
+            <div class="card-header-left">
+              <span class="card-tag green">ARITHMETIC & BUDGET</span>
+              <h3 class="card-title">Campus Cafe (`cafe.pl`): Budget Math & Combos</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>cafe.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-atom">item</span>(<span class="tok-atom">espresso</span>, <span class="tok-atom">drink</span>, <span class="tok-num">3</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">item</span>(<span class="tok-atom">latte</span>, <span class="tok-atom">drink</span>, <span class="tok-num">5</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">item</span>(<span class="tok-atom">croissant</span>, <span class="tok-atom">food</span>, <span class="tok-num">4</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">item</span>(<span class="tok-atom">sandwich</span>, <span class="tok-atom">food</span>, <span class="tok-num">8</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">item</span>(<span class="tok-atom">muffin</span>, <span class="tok-atom">food</span>, <span class="tok-num">3</span>)<span class="tok-atom">.</span>
+
+<span class="tok-comment">% Note '=<' NOT '<='</span>
+<span class="tok-atom">affordable</span>(<span class="tok-var">Item</span>, <span class="tok-var">Budget</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">item</span>(<span class="tok-var">Item</span>, <span class="tok-var">_</span>, <span class="tok-var">Price</span>)<span class="tok-atom">,</span> 
+    <span class="tok-var">Price</span> <span class="tok-op">=&lt;</span> <span class="tok-var">Budget</span><span class="tok-atom">.</span>
+
+<span class="tok-comment">% Note 'is' for arithmetic evaluation</span>
+<span class="tok-atom">meal_deal</span>(<span class="tok-var">Food</span>, <span class="tok-var">Drink</span>, <span class="tok-var">TotalCost</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">item</span>(<span class="tok-var">Food</span>, <span class="tok-atom">food</span>, <span class="tok-var">FoodPrice</span>)<span class="tok-atom">,</span> 
+    <span class="tok-atom">item</span>(<span class="tok-var">Drink</span>, <span class="tok-atom">drink</span>, <span class="tok-var">DrinkPrice</span>)<span class="tok-atom">,</span> 
+    <span class="tok-var">TotalCost</span> <span class="tok-op">is</span> <span class="tok-var">FoodPrice</span> <span class="tok-op">+</span> <span class="tok-var">DrinkPrice</span><span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Cafe Queries:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term-alt1', '?- affordable(X, 4).', 'X = espresso ;\nX = croissant ;\nX = muffin.')">?- affordable(X, 4).</span>
+                <span class="chip-btn" onclick="runSim('term-alt1', '?- meal_deal(F, D, C), C =< 10.', 'F = croissant, D = espresso, C = 7 ;\nF = croissant, D = latte,    C = 9 ;\nF = muffin,    D = espresso, C = 6 ;\nF = muffin,    D = latte,    C = 8.')">Meal deals &le; $10</span>
+              </div>
+              <div class="terminal-screen" id="term-alt1">// Click query above to execute</div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 4: COLONEL WEST
+           ======================================================== -->
+      <section class="tab-content" id="pane-west">
+
+        <article class="content-card open" id="card-west">
+          <button class="card-header-btn" onclick="toggleCard('card-west')">
+            <div class="card-header-left">
+              <span class="card-tag purple">FOL INFERENCE & RESOLUTION</span>
+              <h3 class="card-title">Colonel West: The Criminal Problem</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <div class="code-box">
+              <div class="code-top-bar">
+                <div class="code-window-dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+                <span>criminal.pl</span>
+                <button class="copy-button" onclick="copySnippet(this)">Copy Code</button>
+              </div>
+              <pre><code><span class="tok-atom">american</span>(<span class="tok-atom">west</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">enemy</span>(<span class="tok-atom">nono</span>, <span class="tok-atom">america</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">missile</span>(<span class="tok-atom">m1</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">owns</span>(<span class="tok-atom">nono</span>, <span class="tok-atom">m1</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">weapon</span>(<span class="tok-var">X</span>) <span class="tok-op">:-</span> <span class="tok-atom">missile</span>(<span class="tok-var">X</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">hostile</span>(<span class="tok-var">X</span>) <span class="tok-op">:-</span> <span class="tok-atom">enemy</span>(<span class="tok-var">X</span>, <span class="tok-atom">america</span>)<span class="tok-atom">.</span>
+<span class="tok-atom">sells</span>(<span class="tok-atom">west</span>, <span class="tok-var">X</span>, <span class="tok-atom">nono</span>) <span class="tok-op">:-</span> <span class="tok-atom">missile</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">owns</span>(<span class="tok-atom">nono</span>, <span class="tok-var">X</span>)<span class="tok-atom">.</span>
+
+<span class="tok-atom">criminal</span>(<span class="tok-var">X</span>) <span class="tok-op">:-</span> 
+    <span class="tok-atom">american</span>(<span class="tok-var">X</span>)<span class="tok-atom">,</span> <span class="tok-atom">weapon</span>(<span class="tok-var">Y</span>)<span class="tok-atom">,</span> 
+    <span class="tok-atom">sells</span>(<span class="tok-var">X</span>, <span class="tok-var">Y</span>, <span class="tok-var">Z</span>)<span class="tok-atom">,</span> <span class="tok-atom">hostile</span>(<span class="tok-var">Z</span>)<span class="tok-atom">.</span></code></pre>
+            </div>
+
+            <div class="terminal-sim">
+              <div class="sim-header">⚡ Resolution & Trace Output:</div>
+              <div class="query-chips">
+                <span class="chip-btn" onclick="runSim('term-west', '?- criminal(west).', 'Call: criminal(west)\nCall: american(west) -> Exit: true\nCall: weapon(Y) -> Exit: Y = m1\nCall: sells(west, m1, Z) -> Exit: Z = nono\nCall: hostile(nono) -> Exit: true\nExit: criminal(west) -> true.')">?- trace, criminal(west).</span>
+              </div>
+              <div class="terminal-screen" id="term-west">// Click query above to see resolution trace</div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- ========================================================
+           TAB 5: SYNTAX & VIVA
+           ======================================================== -->
+      <section class="tab-content" id="pane-syntax">
+
+        <article class="content-card open" id="card-syntax">
+          <button class="card-header-btn" onclick="toggleCard('card-syntax')">
+            <div class="card-header-left">
+              <span class="card-tag red">NO CHEAT SHEET RULES</span>
+              <h3 class="card-title">Syntax Traps & Viva Cheatsheet</h3>
+            </div>
+            <span class="card-chevron">▼</span>
+          </button>
+          <div class="card-inner-body">
+            <div class="table-responsive">
+              <table class="exam-table">
+                <thead>
+                  <tr><th>Concept</th><th>Trap (Wrong!)</th><th>Correct Syntax</th><th>Explanation</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Constants</td><td><code>John</code></td><td><code>john</code></td><td>Lowercase = concrete entity</td></tr>
+                  <tr><td>Variables</td><td><code>x</code></td><td><code>X</code></td><td>Uppercase = search variable</td></tr>
+                  <tr><td>Less/Equal</td><td><code>Price &lt;= 10</code></td><td><code>Price =&lt; 10</code></td><td>Prolog syntax strictly uses <code>=&lt;</code></td></tr>
+                  <tr><td>Arithmetic</td><td><code>Total = A + B</code></td><td><code>Total is A + B</code></td><td><code>=</code> is pattern matching; <code>is</code> evaluates</td></tr>
+                  <tr><td>Not Equal</td><td><code>X != Y</code></td><td><code>X \= Y</code></td><td>Used to stop self-siblings</td></tr>
+                  <tr><td>Terminator</td><td>No period</td><td>End with <code>.</code></td><td>Every fact, rule, and query needs <code>.</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="background: rgba(99, 102, 241, 0.1); border-left: 3px solid var(--primary); padding: 1rem; border-radius: 0 8px 8px 0; margin-top: 1rem;">
+              <strong style="color: var(--primary-light);">The Universal 2-Clause Recursion Formula:</strong><br>
+              <code>reach(A, B) :- step(A, B).</code> (Base case)<br>
+              <code>reach(A, B) :- step(A, I), reach(I, B).</code> (Recursive case: Step to intermediate, then recurse!)
+            </div>
+          </div>
+        </article>
+
+      </section>
+
     </div>
 
-    <!-- Main Layout Grid -->
-    <div class="layout-grid">
+    <!-- Right Sidebar -->
+    <aside class="app-sidebar">
       
-      <!-- Content Area -->
-      <main id="mainContent">
+      <div class="side-card">
+        <h3>📋 Exam Hall Checklist</h3>
+        <label class="checklist-row"><input type="checkbox"> Constants start with lowercase</label>
+        <label class="checklist-row"><input type="checkbox"> Variables start with UPPERCASE</label>
+        <label class="checklist-row"><input type="checkbox"> Put a period <code>.</code> on every line</label>
+        <label class="checklist-row"><input type="checkbox"> Used <code>=&lt;</code> (NOT <code>&lt;=</code>)</label>
+        <label class="checklist-row"><input type="checkbox"> Used <code>is</code> for math (NOT <code>=</code>)</label>
+        <label class="checklist-row"><input type="checkbox"> Added <code>X \= Y</code> in sibling rule</label>
+        <label class="checklist-row"><input type="checkbox"> Base case before recursive case</label>
+      </div>
 
-        <!-- =========================================================
-             TAB 1: TODAY'S LIVE EXAM (Logic and Prolog 2.pdf)
-             ========================================================= -->
-        
-        <!-- =========================================================
-             TAB 0: CSE G LAB EVALUATION 1 - SET 1 (A Small World, 4-Color, Europe)
-             ========================================================= -->
-        <div class="tab-pane active" id="tab-eval1">
-
-          <div style="background: rgba(239, 68, 68, 0.12); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 0 25px rgba(239, 68, 68, 0.2);">
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-              <span style="background: #ef4444; color: white; font-weight: 800; font-size: 0.78rem; padding: 0.25rem 0.65rem; border-radius: 9999px; text-transform: uppercase;">OFFICIAL QUESTION PAPER</span>
-              <h3 style="color: #f87171; font-family: 'Outfit'; font-size: 1.35rem; margin: 0;">23CSE401 Lab Evaluation 1 - Set 1 (CSE Section G)</h3>
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-              This is the official evaluation paper from <strong>CSE Section G</strong>. It tests 3 core AI knowledge representation and logic domains:
-              <strong>Problem 1: A Small World (Room Layout)</strong>, 
-              <strong>Problem 2: The 4-Color Map Coloring Problem (CSP)</strong>, and 
-              <strong>Problem 3: Europe (Geographic Database, Density Math & Neighbors)</strong>.
-            </p>
-          </div>
-
-          <!-- PROBLEM 1: A SMALL WORLD -->
-          <h2 class="section-title">🛋️ Problem 1: A Small World (Room Knowledge Representation)</h2>
-          <p class="section-desc">Modeling a student room with furniture, walls, windows, corners, and spatial relations (left, right, at, in).</p>
-
-          <article class="card open" id="eval1-prob1">
-            <div class="card-header" onclick="toggleCard('eval1-prob1')">
-              <div>
-                <span class="card-badge red">SET 1 • PROBLEM 1 COMPLETE CODE</span>
-                <h3 class="card-title">Room Representation: Facts & Deduction Rules</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>small_world.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">/* ========================================================
-   PROBLEM 1: FACTS (Furniture, Doors, Windows, Positions)
-   ======================================================== */</span>
-<span class="token-atom">furniture</span>(<span class="token-atom">wardrobe</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
-<span class="token-atom">furniture</span>(<span class="token-atom">bookshelf</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
-<span class="token-atom">furniture</span>(<span class="token-atom">bed</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
-<span class="token-atom">furniture</span>(<span class="token-atom">desk</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
-<span class="token-atom">furniture</span>(<span class="token-atom">chair</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
-
-<span class="token-atom">number</span>(<span class="token-atom">door</span>, <span class="token-num">1</span>)<span class="token-atom">.</span>
-<span class="token-atom">number</span>(<span class="token-atom">window</span>, <span class="token-num">2</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Location at walls & windows</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_1</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_1</span>, <span class="token-atom">door</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_2</span>, <span class="token-atom">bookshelf</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_2</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_3</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_3</span>, <span class="token-atom">window_1</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_3</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_4</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_4</span>, <span class="token-atom">window_2</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">wall_4</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">window_1</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
-<span class="token-atom">at</span>(<span class="token-atom">window_2</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Location in corners</span>
-<span class="token-atom">in</span>(<span class="token-atom">corner_1</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
-<span class="token-atom">in</span>(<span class="token-atom">corner_3</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
-<span class="token-atom">in</span>(<span class="token-atom">corner_4</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Relative spatial arrangement (looking from room center)</span>
-<span class="token-atom">left</span>(<span class="token-atom">door</span>, <span class="token-atom">bookshelf</span>)<span class="token-atom">.</span>
-<span class="token-atom">left</span>(<span class="token-atom">bookshelf</span>, <span class="token-atom">bed</span>)<span class="token-atom">.</span>
-<span class="token-atom">left</span>(<span class="token-atom">bed</span>, <span class="token-atom">desk</span>)<span class="token-atom">.</span>
-<span class="token-atom">left</span>(<span class="token-atom">desk</span>, <span class="token-atom">wardrobe</span>)<span class="token-atom">.</span>
-<span class="token-atom">left</span>(<span class="token-atom">wardrobe</span>, <span class="token-atom">door</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">/* ========================================================
-   PROBLEM 1: DEDUCTION RULES
-   ======================================================== */</span>
-<span class="token-comment">% Rule 1: Which furniture is in the room?</span>
-<span class="token-atom">furniture</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">furniture</span>(<span class="token-var">X</span>, <span class="token-var">N</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Rule 2: How many items of each object?</span>
-<span class="token-atom">number</span>(<span class="token-var">X</span>, <span class="token-var">N</span>) <span class="token-rule">:-</span> <span class="token-atom">furniture</span>(<span class="token-var">X</span>, <span class="token-var">N</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Rule 3: General place rule (combining 'at', 'in', and specific places)</span>
-<span class="token-atom">place</span>(<span class="token-var">X</span>, <span class="token-var">P</span>) <span class="token-rule">:-</span> <span class="token-atom">at</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
-<span class="token-atom">place</span>(<span class="token-var">X</span>, <span class="token-var">P</span>) <span class="token-rule">:-</span> <span class="token-atom">in</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
-<span class="token-atom">place</span>(<span class="token-atom">chair</span>, <span class="token-atom">at_desk</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Rule 4: Right relation is inverse of left</span>
-<span class="token-atom">right</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">left</span>(<span class="token-var">Y</span>, <span class="token-var">X</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-
-              <!-- Queries -->
-              <div class="query-sim-box">
-                <div class="sim-title">⚡ Interactive Query Test for Problem 1:</div>
-                <div class="sim-chips">
-                  <span class="sim-chip" onclick="simulateEval1('1', '?- furniture(X).', 'X = wardrobe ;
-X = bookshelf ;
-X = bed ;
-X = desk ;
-X = chair.')">Query 1: Which furniture is in room?</span>
-                  <span class="sim-chip" onclick="simulateEval1('2', '?- number(door, N).', 'N = 1.')">Query 2: How many doors?</span>
-                  <span class="sim-chip" onclick="simulateEval1('3', '?- place(chair, Place).', 'Place = at_desk.')">Query 3: Where is the chair?</span>
-                  <span class="sim-chip" onclick="simulateEval1('4', '?- right(X, bed).', 'X = bookshelf.')">Query 4: What is to right of bed?</span>
-                  <span class="sim-chip" onclick="simulateEval1('5', '?- at(wall_2, Object).', 'Object = bookshelf ;
-Object = bed.')">Query 5: What is at wall 2?</span>
-                  <span class="sim-chip" onclick="simulateEval1('6', '?- in(corner_1, Object).', 'Object = wardrobe.')">Query 6: What is in corner 1?</span>
-                </div>
-                <div class="sim-output" id="eval1SimOutput1">// Click any query to simulate output</div>
-              </div>
-            </div>
-          </article>
-
-
-          <!-- PROBLEM 2: THE 4-COLOR PROBLEM -->
-          <h2 class="section-title" style="margin-top: 2rem;">🎨 Problem 2: The 4-Color Map Problem (Constraint Satisfaction)</h2>
-          <p class="section-desc">Coloring adjacent regions (A, B, C, D, E) such that no two neighboring regions share the same color using red, blue, yellow, and green.</p>
-
-          <article class="card open" id="eval1-prob2">
-            <div class="card-header" onclick="toggleCard('eval1-prob2')">
-              <div>
-                <span class="card-badge red">SET 1 • PROBLEM 2 COMPLETE CODE</span>
-                <h3 class="card-title">4-Color Map Coloring in Prolog</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>four_color.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">/* Colors Available */</span>
-<span class="token-atom">color</span>(<span class="token-atom">red</span>)<span class="token-atom">.</span>
-<span class="token-atom">color</span>(<span class="token-atom">blue</span>)<span class="token-atom">.</span>
-<span class="token-atom">color</span>(<span class="token-atom">yellow</span>)<span class="token-atom">.</span>
-<span class="token-atom">color</span>(<span class="token-atom">green</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">/* Two adjacent regions must have valid colors and NOT be equal (X \= Y) */</span>
-<span class="token-atom">adjacent</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">color</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">color</span>(<span class="token-var">Y</span>)<span class="token-atom">,</span> 
-    <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span>
-
-<span class="token-comment">/* Map with regions A, B, C, D, E based on Fig 2.1 in exam */</span>
-<span class="token-atom">map</span>(<span class="token-var">A</span>, <span class="token-var">B</span>, <span class="token-var">C</span>, <span class="token-var">D</span>, <span class="token-var">E</span>) <span class="token-rule">:-</span>
-    <span class="token-atom">adjacent</span>(<span class="token-var">A</span>, <span class="token-var">B</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">adjacent</span>(<span class="token-var">A</span>, <span class="token-var">D</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">adjacent</span>(<span class="token-var">A</span>, <span class="token-var">E</span>)<span class="token-atom">,</span>
-    <span class="token-atom">adjacent</span>(<span class="token-var">B</span>, <span class="token-var">C</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">adjacent</span>(<span class="token-var">B</span>, <span class="token-var">D</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">adjacent</span>(<span class="token-var">B</span>, <span class="token-var">E</span>)<span class="token-atom">,</span>
-    <span class="token-atom">adjacent</span>(<span class="token-var">C</span>, <span class="token-var">D</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">adjacent</span>(<span class="token-var">C</span>, <span class="token-var">E</span>)<span class="token-atom">,</span>
-    <span class="token-atom">adjacent</span>(<span class="token-var">D</span>, <span class="token-var">E</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-
-              <div class="prompt-box">
-                <strong>How to query all admissible colorings:</strong><br>
-                <code>?- map(A, B, C, D, E).</code><br>
-                Press <code>;</code> to see the different color combinations! Prolog uses <strong>unification and backtracking</strong> to find every valid assignment.
-              </div>
-            </div>
-          </article>
-
-
-          <!-- PROBLEM 3: EUROPE -->
-          <h2 class="section-title" style="margin-top: 2rem;">🌍 Problem 3: Europe (Geographic DB, Density Math & Neighbors)</h2>
-          <p class="section-desc">Facts for area, population, and bilateral neighbor relations, plus density calculation using arithmetic.</p>
-
-          <article class="card open" id="eval1-prob3">
-            <div class="card-header" onclick="toggleCard('eval1-prob3')">
-              <div>
-                <span class="card-badge red">SET 1 • PROBLEM 3 COMPLETE CODE</span>
-                <h3 class="card-title">European Geography Facts, Density Rule & Neighbor Deduction</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>europe.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">/* ========================================================
-   AREA FACTS (in km^2)
-   ======================================================== */</span>
-<span class="token-atom">area</span>(<span class="token-atom">austria</span>, <span class="token-num">83858</span>)<span class="token-atom">.</span>
-<span class="token-atom">area</span>(<span class="token-atom">france</span>, <span class="token-num">547030</span>)<span class="token-atom">.</span>
-<span class="token-atom">area</span>(<span class="token-atom">germany</span>, <span class="token-num">357021</span>)<span class="token-atom">.</span>
-<span class="token-atom">area</span>(<span class="token-atom">italy</span>, <span class="token-num">301230</span>)<span class="token-atom">.</span>
-<span class="token-atom">area</span>(<span class="token-atom">liechtenstein</span>, <span class="token-num">160</span>)<span class="token-atom">.</span> 
-<span class="token-atom">area</span>(<span class="token-atom">spain</span>, <span class="token-num">504851</span>)<span class="token-atom">.</span>
-<span class="token-atom">area</span>(<span class="token-atom">switzerland</span>, <span class="token-num">41290</span>)<span class="token-atom">.</span>
-<span class="token-atom">area</span>(<span class="token-atom">united_kingdom</span>, <span class="token-num">244820</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">/* ========================================================
-   POPULATION FACTS
-   ======================================================== */</span>
-<span class="token-atom">population</span>(<span class="token-atom">austria</span>, <span class="token-num">8169929</span>)<span class="token-atom">.</span>
-<span class="token-atom">population</span>(<span class="token-atom">france</span>, <span class="token-num">63182000</span>)<span class="token-atom">.</span>
-<span class="token-atom">population</span>(<span class="token-atom">germany</span>, <span class="token-num">83251851</span>)<span class="token-atom">.</span>
-<span class="token-atom">population</span>(<span class="token-atom">italy</span>, <span class="token-num">59530464</span>)<span class="token-atom">.</span>
-<span class="token-atom">population</span>(<span class="token-atom">liechtenstein</span>, <span class="token-num">32842</span>)<span class="token-atom">.</span> 
-<span class="token-atom">population</span>(<span class="token-atom">spain</span>, <span class="token-num">47059533</span>)<span class="token-atom">.</span>
-<span class="token-atom">population</span>(<span class="token-atom">switzerland</span>, <span class="token-num">7507000</span>)<span class="token-atom">.</span>
-<span class="token-atom">population</span>(<span class="token-atom">united_kingdom</span>, <span class="token-num">61100835</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">/* ========================================================
-   NEIGHBOR FACTS
-   ======================================================== */</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">austria</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">france</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">france</span>, <span class="token-atom">germany</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">france</span>, <span class="token-atom">spain</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">germany</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">italy</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbor</span>(<span class="token-atom">liechtenstein</span>, <span class="token-atom">switzerland</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">/* ========================================================
-   DEDUCTION RULES
-   ======================================================== */</span>
-<span class="token-comment">% 1. Population density calculation (D = Population / Area)</span>
-<span class="token-atom">density</span>(<span class="token-var">S</span>, <span class="token-var">D</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">population</span>(<span class="token-var">S</span>, <span class="token-var">E</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">area</span>(<span class="token-var">S</span>, <span class="token-var">F</span>)<span class="token-atom">,</span> 
-    <span class="token-var">D</span> <span class="token-rule">is</span> <span class="token-var">E</span> <span class="token-atom">/</span> <span class="token-var">F</span><span class="token-atom">.</span>
-
-<span class="token-comment">% 2. Symmetric / Bidirectional neighbor relation</span>
-<span class="token-atom">neighbors</span>(<span class="token-var">S1</span>, <span class="token-var">S2</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbor</span>(<span class="token-var">S1</span>, <span class="token-var">S2</span>)<span class="token-atom">.</span>
-<span class="token-atom">neighbors</span>(<span class="token-var">S1</span>, <span class="token-var">S2</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbor</span>(<span class="token-var">S2</span>, <span class="token-var">S1</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Query 1: Which state is a neighbor of Switzerland?</span>
-<span class="token-atom">neighbor_ch</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbors</span>(<span class="token-atom">switzerland</span>, <span class="token-var">S</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Query 2: Which state is a neighbor of France?</span>
-<span class="token-atom">neighbor_f</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> <span class="token-atom">neighbors</span>(<span class="token-atom">france</span>, <span class="token-var">S</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Query 3: Neighbor of Germany with both bigger population AND larger area</span>
-<span class="token-atom">neighbor_d</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">neighbors</span>(<span class="token-atom">germany</span>, <span class="token-var">S</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">population</span>(<span class="token-atom">germany</span>, <span class="token-var">ED</span>)<span class="token-atom">,</span> <span class="token-atom">population</span>(<span class="token-var">S</span>, <span class="token-var">ES</span>)<span class="token-atom">,</span>
-    <span class="token-atom">area</span>(<span class="token-atom">germany</span>, <span class="token-var">FD</span>)<span class="token-atom">,</span> <span class="token-atom">area</span>(<span class="token-var">S</span>, <span class="token-var">FS</span>)<span class="token-atom">,</span> 
-    <span class="token-var">ES</span> <span class="token-atom">&gt;</span> <span class="token-var">ED</span><span class="token-atom">,</span> <span class="token-var">FS</span> <span class="token-atom">&gt;</span> <span class="token-var">FD</span><span class="token-atom">.</span>
-
-<span class="token-comment">% Query 4: Neighbor of Switzerland that has higher density than Switzerland</span>
-<span class="token-atom">neighbor_ch1</span>(<span class="token-var">S</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">neighbors</span>(<span class="token-atom">switzerland</span>, <span class="token-var">S</span>)<span class="token-atom">,</span>
-    <span class="token-atom">density</span>(<span class="token-atom">switzerland</span>, <span class="token-var">DCH</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">density</span>(<span class="token-var">S</span>, <span class="token-var">DS</span>)<span class="token-atom">,</span> 
-    <span class="token-var">DS</span> <span class="token-atom">&gt;</span> <span class="token-var">DCH</span><span class="token-atom">.</span></code></pre>
-              </div>
-
-              <!-- Queries -->
-              <div class="query-sim-box">
-                <div class="sim-title">⚡ Interactive Query Test for Problem 3:</div>
-                <div class="sim-chips">
-                  <span class="sim-chip" onclick="simulateEval1('p3_1', '?- neighbor_ch(S).', 'S = austria ;
-S = france ;
-S = germany ;
-S = italy ;
-S = liechtenstein.')">Q1: Neighbors of Switzerland?</span>
-                  <span class="sim-chip" onclick="simulateEval1('p3_2', '?- neighbor_f(S).', 'S = switzerland ;
-S = germany ;
-S = spain.')">Q2: Neighbors of France?</span>
-                  <span class="sim-chip" onclick="simulateEval1('p3_3', '?- neighbor_d(S).', 'false.')">Q3: Neighbor of Germany with pop > Germany & area > Germany?</span>
-                  <span class="sim-chip" onclick="simulateEval1('p3_4', '?- neighbor_ch1(S).', 'S = germany (density 233.18) ;
-S = italy (density 197.62) ;
-S = liechtenstein (density 205.26).')">Q4: Neighbors of Switzerland with higher density?</span>
-                </div>
-                <div class="sim-output" id="eval1SimOutput2">// Click any query to simulate output</div>
-              </div>
-
-              <div class="trap-box" style="margin-top: 1rem;">
-                <strong>💡 Why Query 3 Returns false:</strong>
-                Germany's population is 83.25 million, and area is 357,021 km². Its neighbors in the database are France, Switzerland, and Austria. While France has a larger area (547,030 km²), its population is only 63.18 million (smaller than Germany). Neither Switzerland nor Austria has a larger area or population. Thus, no neighbor satisfies both <code>ES > ED</code> and <code>FS > FD</code> simultaneously!
-              </div>
-            </div>
-          </article>
-
+      <div class="side-card">
+        <h3>⚡ Console Shortcuts</h3>
+        <div style="font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.5rem;">
+          <div><strong>Consult file:</strong> <code>['family.pl'].</code></div>
+          <div><strong>Next answer:</strong> Press <code>;</code></div>
+          <div><strong>Stop query:</strong> Press <code>Enter</code></div>
+          <div><strong>Clear screen:</strong> <code>write('\[2J').</code></div>
+          <div><strong>Trace debug:</strong> <code>trace.</code></div>
+          <div><strong>Exit console:</strong> <code>halt.</code></div>
         </div>
+      </div>
 
-        <div class="tab-pane" id="tab-today">
-
-          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem;">
-            <h3 style="color: #f87171; font-family: 'Outfit'; font-size: 1.2rem; margin-bottom: 0.35rem;">🎯 Verified Exam Structure: 2 Tasks, 40 Total Queries</h3>
-            <p style="color: var(--text-muted); font-size: 0.92rem;">
-              This exact question sheet was administered today. It contains <strong>Task 1: Extended Family Tree</strong> (9 rules + 20 queries a-t) and <strong>Task 2: Airport Flights Network</strong> (4 rules + 20 queries 1-20). Everything you need to score 100% is right here.
-            </p>
-          </div>
-
-          <!-- TASK 1: FAMILY TREE -->
-          <h2 class="section-title">👨‍👩‍👧‍👦 Task 1: Extended Family Tree (Complete Code & 20 Queries)</h2>
-          <p class="section-desc">Facts for 10 people (Jack, Oliver, Ali, James, Simon, Harry, Helen, Sophie, Jess, Lily) and parent relationships.</p>
-
-          <article class="card open" id="today-t1-code">
-            <div class="card-header" onclick="toggleCard('today-t1-code')">
-              <div>
-                <span class="card-badge red">TASK 1 • COMPLETE PROLOG SOURCE</span>
-                <h3 class="card-title">Task 1: Full Facts & 9 Required Rules</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>family_tree.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">/* ========================================================
-   TASK 1: FACTS (Genders and Parent Relationships)
-   ======================================================== */</span>
-<span class="token-atom">male</span>(<span class="token-atom">jack</span>)<span class="token-atom">.</span>  
-<span class="token-atom">male</span>(<span class="token-atom">oliver</span>)<span class="token-atom">.</span>  
-<span class="token-atom">male</span>(<span class="token-atom">ali</span>)<span class="token-atom">.</span>  
-<span class="token-atom">male</span>(<span class="token-atom">james</span>)<span class="token-atom">.</span>  
-<span class="token-atom">male</span>(<span class="token-atom">simon</span>)<span class="token-atom">.</span>  
-<span class="token-atom">male</span>(<span class="token-atom">harry</span>)<span class="token-atom">.</span>  
-
-<span class="token-atom">female</span>(<span class="token-atom">helen</span>)<span class="token-atom">.</span>  
-<span class="token-atom">female</span>(<span class="token-atom">sophie</span>)<span class="token-atom">.</span>  
-<span class="token-atom">female</span>(<span class="token-atom">jess</span>)<span class="token-atom">.</span>  
-<span class="token-atom">female</span>(<span class="token-atom">lily</span>)<span class="token-atom">.</span>  
-
-<span class="token-atom">parent_of</span>(<span class="token-atom">jack</span>, <span class="token-atom">jess</span>)<span class="token-atom">.</span>  
-<span class="token-atom">parent_of</span>(<span class="token-atom">jack</span>, <span class="token-atom">lily</span>)<span class="token-atom">.</span>  
-<span class="token-atom">parent_of</span>(<span class="token-atom">helen</span>, <span class="token-atom">jess</span>)<span class="token-atom">.</span>  
-<span class="token-atom">parent_of</span>(<span class="token-atom">helen</span>, <span class="token-atom">lily</span>)<span class="token-atom">.</span>  
-<span class="token-atom">parent_of</span>(<span class="token-atom">oliver</span>, <span class="token-atom">james</span>)<span class="token-atom">.</span>  
-<span class="token-atom">parent_of</span>(<span class="token-atom">sophie</span>, <span class="token-atom">james</span>)<span class="token-atom">.</span> 
-<span class="token-atom">parent_of</span>(<span class="token-atom">jess</span>, <span class="token-atom">simon</span>)<span class="token-atom">.</span> 
-<span class="token-atom">parent_of</span>(<span class="token-atom">ali</span>, <span class="token-atom">simon</span>)<span class="token-atom">.</span> 
-<span class="token-atom">parent_of</span>(<span class="token-atom">lily</span>, <span class="token-atom">harry</span>)<span class="token-atom">.</span> 
-<span class="token-atom">parent_of</span>(<span class="token-atom">james</span>, <span class="token-atom">harry</span>)<span class="token-atom">.</span> 
-
-<span class="token-comment">/* ========================================================
-   TASK 1: 9 RULES TO COMPLETE
-   ======================================================== */</span>
-<span class="token-comment">% 1. Father</span>
-<span class="token-atom">father_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 2. Mother</span>
-<span class="token-atom">mother_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 3. Grandfather</span>
-<span class="token-atom">grandfather_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 4. Grandmother</span>
-<span class="token-atom">grandmother_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 5. Sister (Female, shares a parent, X \= Y)</span>
-<span class="token-atom">sister_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span>
-
-<span class="token-comment">% 6. Brother (Male, shares a parent, X \= Y)</span>
-<span class="token-atom">brother_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">P</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-var">X</span> <span class="token-rule">\=</span> <span class="token-var">Y</span><span class="token-atom">.</span>
-
-<span class="token-comment">% 7. Aunt (Female, sister of a parent of Y)</span>
-<span class="token-atom">aunt_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">female</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-atom">sister_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 8. Uncle (Male, brother of a parent of Y)</span>
-<span class="token-atom">uncle_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">male</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">parent_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-atom">brother_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 9. Ancestor (Recursion: Base case + Recursive case)</span>
-<span class="token-atom">ancestor_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span>
-<span class="token-atom">ancestor_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>) <span class="token-rule">:-</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> <span class="token-atom">ancestor_of</span>(<span class="token-var">Z</span>, <span class="token-var">Y</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-            </div>
-          </article>
-
-          <!-- 20 QUERIES TABLE FOR TASK 1 -->
-          <article class="card open" id="today-t1-queries">
-            <div class="card-header" onclick="toggleCard('today-t1-queries')">
-              <div>
-                <span class="card-badge red">TASK 1 • 20 EXAM QUERIES (a to t)</span>
-                <h3 class="card-title">All 20 Queries & Exact Outputs Walkthrough</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <p class="explanation-text">Click any query chip to view how SWI-Prolog responds and why:</p>
-
-              <div class="query-sim-box">
-                <div class="sim-title">⚡ Interactive Query Tester for Task 1:</div>
-                <div class="sim-chips">
-                  <span class="sim-chip" onclick="simulateT1('a', '?- father_of(jack, jess).', 'true.')">a. Jack father of Jess?</span>
-                  <span class="sim-chip" onclick="simulateT1('b', '?- mother_of(helen, lily).', 'true.')">b. Helen mother of Lily?</span>
-                  <span class="sim-chip" onclick="simulateT1('c', '?- sister_of(jess, lily).', 'true.')">c. Jess & Lily sisters?</span>
-                  <span class="sim-chip" onclick="simulateT1('d', '?- grandfather_of(oliver, harry).', 'true.')">d. Oliver grandfather of Harry?</span>
-                  <span class="sim-chip" onclick="simulateT1('e', '?- ancestor_of(ali, harry).', 'false.')">e. Ali ancestor of Harry?</span>
-                  <span class="sim-chip" onclick="simulateT1('f', '?- father_of(X, simon).', 'X = ali.')">f. Father of Simon?</span>
-                  <span class="sim-chip" onclick="simulateT1('g', '?- mother_of(X, james).', 'X = sophie.')">g. Mother of James?</span>
-                  <span class="sim-chip" onclick="simulateT1('h', '?- parent_of(lily, Child).', 'Child = harry.')">h. Children of Lily?</span>
-                  <span class="sim-chip" onclick="simulateT1('i', '?- grandmother_of(X, harry).', 'X = helen ;
-X = sophie.')">i. Grandmother of Harry?</span>
-                  <span class="sim-chip" onclick="simulateT1('j', '?- uncle_of(X, harry).', 'false.')">j. Uncle of Harry?</span>
-                  <span class="sim-chip" onclick="simulateT1('k', '?- aunt_of(X, simon).', 'X = lily.')">k. Aunt of Simon?</span>
-                  <span class="sim-chip" onclick="simulateT1('l', '?- brother_of(Brother, harry).', 'false.')">l. Brothers of Harry?</span>
-                  <span class="sim-chip" onclick="simulateT1('r', '?- male(X), father_of(X, _).', 'X = jack ;
-X = oliver ;
-X = ali ;
-X = james.')">r. Males who are fathers?</span>
-                  <span class="sim-chip" onclick="simulateT1('s', '?- parent_of(jack, X), parent_of(helen, X).', 'X = jess ;
-X = lily.')">s. Full siblings of Jack & Helen?</span>
-                  <span class="sim-chip" onclick="simulateT1('t', '?- parent_of(X, Y), \+ parent_of(Y, _).', 'X = ali ;
-X = lily ;
-X = james.')">t. Parents with NO grandkids?</span>
-                </div>
-                <div class="sim-output" id="todaySimOutput1">// Click any query above to simulate output</div>
-              </div>
-
-              <!-- Full Reference Table -->
-              <div style="overflow-x: auto; margin-top: 1rem;">
-                <table class="custom-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Question in Exam Sheet</th>
-                      <th>Exact Prolog Query</th>
-                      <th>Expected Output</th>
-                      <th>Why it returns this</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>a</td><td>Is Jack the father of Jess?</td><td><code>?- father_of(jack, jess).</code></td><td><code>true.</code></td><td>Jack is male and parent of Jess.</td></tr>
-                    <tr><td>b</td><td>Is Helen the mother of Lily?</td><td><code>?- mother_of(helen, lily).</code></td><td><code>true.</code></td><td>Helen is female and parent of Lily.</td></tr>
-                    <tr><td>c</td><td>Are Jess and Lily sisters?</td><td><code>?- sister_of(jess, lily).</code></td><td><code>true.</code></td><td>Jess is female and shares parent with Lily.</td></tr>
-                    <tr><td>d</td><td>Is Oliver the grandfather of Harry?</td><td><code>?- grandfather_of(oliver, harry).</code></td><td><code>true.</code></td><td>Oliver &rarr; James &rarr; Harry.</td></tr>
-                    <tr><td>e</td><td>Is Ali an ancestor of Harry?</td><td><code>?- ancestor_of(ali, harry).</code></td><td><code>false.</code></td><td>Ali is parent of Simon, not in Harry's lineage!</td></tr>
-                    <tr><td>f</td><td>Who is the father of Simon?</td><td><code>?- father_of(X, simon).</code></td><td><code>X = ali.</code></td><td>Ali is male and parent of Simon.</td></tr>
-                    <tr><td>g</td><td>Who is the mother of James?</td><td><code>?- mother_of(X, james).</code></td><td><code>X = sophie.</code></td><td>Sophie is female and parent of James.</td></tr>
-                    <tr><td>h</td><td>Who are the children of Lily?</td><td><code>?- parent_of(lily, Child).</code></td><td><code>Child = harry.</code></td><td>Direct fact <code>parent_of(lily, harry)</code>.</td></tr>
-                    <tr><td>i</td><td>Who is grandmother of Harry?</td><td><code>?- grandmother_of(X, harry).</code></td><td><code>X = helen ; X = sophie.</code></td><td>Helen (via Lily) and Sophie (via James).</td></tr>
-                    <tr><td>j</td><td>Who is uncle of Harry?</td><td><code>?- uncle_of(X, harry).</code></td><td><code>false.</code></td><td>Neither Lily nor James has a brother in facts.</td></tr>
-                    <tr><td>k</td><td>Who is aunt of Simon?</td><td><code>?- aunt_of(X, simon).</code></td><td><code>X = lily.</code></td><td>Simon's mother is Jess; Lily is sister of Jess.</td></tr>
-                    <tr><td>l</td><td>Does Harry have any brothers?</td><td><code>?- brother_of(Brother, harry).</code></td><td><code>false.</code></td><td>Harry has no siblings in the knowledge base.</td></tr>
-                    <tr><td>m</td><td>Find all father-child pairs:</td><td><code>?- father_of(Father, Child).</code></td><td>List of pairs</td><td>Binds Father and Child across all facts.</td></tr>
-                    <tr><td>n</td><td>Find all sisters in family:</td><td><code>?- sister_of(Sister, Sibling).</code></td><td><code>Sister = jess, lily...</code></td><td>Finds all valid sister relationships.</td></tr>
-                    <tr><td>o</td><td>All descendants of Helen:</td><td><code>?- ancestor_of(helen, Descendant).</code></td><td><code>jess, lily, simon, harry</code></td><td>Recursively traverses down tree.</td></tr>
-                    <tr><td>p</td><td>All ancestors of Simon:</td><td><code>?- ancestor_of(Ancestor, simon).</code></td><td><code>jess, ali, jack, helen</code></td><td>Recursively traverses up tree.</td></tr>
-                    <tr><td>q</td><td>All grandfathers & grandkids:</td><td><code>?- grandfather_of(GF, GC).</code></td><td>All pairs</td><td>Finds Oliver/Harry and Jack/Simon/Harry.</td></tr>
-                    <tr><td>r</td><td>Males who are also fathers:</td><td><code>?- male(X), father_of(X, _).</code></td><td><code>jack, oliver, ali, james</code></td><td>Uses <code>_</code> anonymous variable for child.</td></tr>
-                    <tr><td>s</td><td>Full siblings of Jack & Helen:</td><td><code>?- parent_of(jack, X), parent_of(helen, X).</code></td><td><code>X = jess ; X = lily.</code></td><td>Conjunction requires both to be parents!</td></tr>
-                    <tr><td>t</td><td>Parent with NO grandchildren:</td><td><code>?- parent_of(X, Y), \+ parent_of(Y, _).</code></td><td><code>ali, lily, james</code></td><td>Uses Negation as Failure <code>\+</code>.</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-
-
-          <!-- TASK 2: AIRPORT FLIGHTS -->
-          <h2 class="section-title" style="margin-top: 2rem;">✈️ Task 2: Airport Flights Network (`airport_flights.pl`)</h2>
-          <p class="section-desc">Airports in 6 cities/countries with flight numbers and durations. Direct routes, 1-stop routes, calculations, and recursive connections.</p>
-
-          <article class="card open" id="today-t2-code">
-            <div class="card-header" onclick="toggleCard('today-t2-code')">
-              <div>
-                <span class="card-badge red">TASK 2 • COMPLETE PROLOG SOURCE</span>
-                <h3 class="card-title">Task 2: Facts & 4 Core Rules</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>airport_flights.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">/* ========================================================
-   TASK 2: FACTS (Airports & Flights)
-   ======================================================== */</span>
-<span class="token-atom">airport</span>(<span class="token-atom">london</span>, <span class="token-atom">uk</span>)<span class="token-atom">.</span>  
-<span class="token-atom">airport</span>(<span class="token-atom">paris</span>, <span class="token-atom">france</span>)<span class="token-atom">.</span>  
-<span class="token-atom">airport</span>(<span class="token-atom">frankfurt</span>, <span class="token-atom">germany</span>)<span class="token-atom">.</span>  
-<span class="token-atom">airport</span>(<span class="token-atom">dubai</span>, <span class="token-atom">uae</span>)<span class="token-atom">.</span>  
-<span class="token-atom">airport</span>(<span class="token-atom">delhi</span>, <span class="token-atom">india</span>)<span class="token-atom">.</span>  
-<span class="token-atom">airport</span>(<span class="token-atom">singapore</span>, <span class="token-atom">singapore</span>)<span class="token-atom">.</span> 
-
-<span class="token-atom">flight</span>(<span class="token-atom">ba101</span>, <span class="token-atom">london</span>, <span class="token-atom">paris</span>, <span class="token-num">1</span>)<span class="token-atom">.</span> 
-<span class="token-atom">flight</span>(<span class="token-atom">lh202</span>, <span class="token-atom">paris</span>, <span class="token-atom">frankfurt</span>, <span class="token-num">1.5</span>)<span class="token-atom">.</span> 
-<span class="token-atom">flight</span>(<span class="token-atom">ek303</span>, <span class="token-atom">frankfurt</span>, <span class="token-atom">dubai</span>, <span class="token-num">6</span>)<span class="token-atom">.</span> 
-<span class="token-atom">flight</span>(<span class="token-atom">ek404</span>, <span class="token-atom">london</span>, <span class="token-atom">dubai</span>, <span class="token-num">7</span>)<span class="token-atom">.</span> 
-<span class="token-atom">flight</span>(<span class="token-atom">ai505</span>, <span class="token-atom">dubai</span>, <span class="token-atom">delhi</span>, <span class="token-num">3.5</span>)<span class="token-atom">.</span> 
-<span class="token-atom">flight</span>(<span class="token-atom">sq606</span>, <span class="token-atom">delhi</span>, <span class="token-atom">singapore</span>, <span class="token-num">5.5</span>)<span class="token-atom">.</span> 
-
-<span class="token-comment">/* ========================================================
-   TASK 2: 4 RULES
-   ======================================================== */</span>
-<span class="token-comment">% 1. Direct Route</span>
-<span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span>  
-    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">_</span>)<span class="token-atom">.</span> 
- 
-<span class="token-comment">% 2. One Stop Route (With intermediate Layover)</span>
-<span class="token-atom">one_stop_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">Layover</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">Layover</span>, <span class="token-var">_</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">Layover</span>, <span class="token-var">To</span>, <span class="token-var">_</span>)<span class="token-atom">.</span> 
- 
-<span class="token-comment">% 3. Total Duration for 1 Stop Connection</span>
-<span class="token-atom">one_stop_duration</span>(<span class="token-var">From</span>, <span class="token-var">To</span>, <span class="token-var">TotalTime</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">From</span>, <span class="token-var">Layover</span>, <span class="token-var">Time1</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">flight</span>(<span class="token-var">_</span>, <span class="token-var">Layover</span>, <span class="token-var">To</span>, <span class="token-var">Time2</span>)<span class="token-atom">,</span> 
-    <span class="token-var">TotalTime</span> <span class="token-rule">is</span> <span class="token-var">Time1</span> <span class="token-atom">+</span> <span class="token-var">Time2</span><span class="token-atom">.</span> 
- 
-<span class="token-comment">% 4. Recursive Reachability: Any route (direct or indirect)</span>
-<span class="token-comment">% Base Case: Direct flight</span>
-<span class="token-atom">has_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span>  
-    <span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>)<span class="token-atom">.</span> 
-
-<span class="token-comment">% Recursive Case: Fly to an intermediate city, then recurse</span>
-<span class="token-atom">has_route</span>(<span class="token-var">From</span>, <span class="token-var">To</span>) <span class="token-rule">:-</span>  
-    <span class="token-atom">direct_route</span>(<span class="token-var">From</span>, <span class="token-var">Via</span>)<span class="token-atom">,</span>  
-    <span class="token-atom">has_route</span>(<span class="token-var">Via</span>, <span class="token-var">To</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-            </div>
-          </article>
-
-          <!-- 20 QUERIES TABLE FOR TASK 2 -->
-          <article class="card open" id="today-t2-queries">
-            <div class="card-header" onclick="toggleCard('today-t2-queries')">
-              <div>
-                <span class="card-badge red">TASK 2 • 20 EXAM QUERIES (1 to 20)</span>
-                <h3 class="card-title">All 20 Flight Queries Explained & Verified</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="query-sim-box">
-                <div class="sim-title">⚡ Interactive Query Tester for Task 2:</div>
-                <div class="sim-chips">
-                  <span class="sim-chip" onclick="simulateT2('1', '?- direct_route(london, paris).', 'true.')">1. Direct London -> Paris?</span>
-                  <span class="sim-chip" onclick="simulateT2('2', '?- direct_route(paris, delhi).', 'false.')">2. Direct Paris -> Delhi?</span>
-                  <span class="sim-chip" onclick="simulateT2('3', '?- has_route(london, singapore).', 'true.')">3. London -> Singapore eventually?</span>
-                  <span class="sim-chip" onclick="simulateT2('7', '?- one_stop_route(london, dubai, Layover).', 'false.')">7. 1-stop London -> Dubai?</span>
-                  <span class="sim-chip" onclick="simulateT2('10', '?- one_stop_duration(london, frankfurt, Hours).', 'Hours = 2.5.')">10. Duration London->Paris->Frankfurt?</span>
-                  <span class="sim-chip" onclick="simulateT2('11', '?- one_stop_route(london, delhi, Layover), one_stop_duration(london, delhi, TotalTime).', 'Layover = dubai,
-TotalTime = 10.5.')">11. 1-stop London -> Delhi Total Time?</span>
-                  <span class="sim-chip" onclick="simulateT2('13', '?- flight(Num, From, To, Duration), Duration > 5.0.', 'Num = ek303, From = frankfurt, To = dubai, Duration = 6 ;
-Num = ek404, From = london, To = dubai, Duration = 7 ;
-Num = sq606, From = delhi, To = singapore, Duration = 5.5.')">13. Flights > 5 hours?</span>
-                  <span class="sim-chip" onclick="simulateT2('18', '?- flight(FlightNum, _, _, _), sub_atom(FlightNum, 0, 2, _, ek).', 'FlightNum = ek303 ;
-FlightNum = ek404.')">18. Flights starting with 'ek'?</span>
-                  <span class="sim-chip" onclick="simulateT2('19', '?- one_stop_duration(paris, Dest, 7.5).', 'Dest = dubai.')">19. 1-stop from Paris taking 7.5h?</span>
-                </div>
-                <div class="sim-output" id="todaySimOutput2">// Click any flight query above to simulate output</div>
-              </div>
-
-              <!-- Full Flight Table -->
-              <div style="overflow-x: auto; margin-top: 1rem;">
-                <table class="custom-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Exam Question</th>
-                      <th>Exact Prolog Query Code</th>
-                      <th>Expected Output</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>1</td><td>Direct flight from London to Paris?</td><td><code>?- direct_route(london, paris).</code></td><td><code>true.</code></td></tr>
-                    <tr><td>2</td><td>Can I fly directly from Paris to Delhi?</td><td><code>?- direct_route(paris, delhi).</code></td><td><code>false.</code></td></tr>
-                    <tr><td>3</td><td>Possible to travel London &rarr; Singapore eventually?</td><td><code>?- has_route(london, singapore).</code></td><td><code>true.</code></td></tr>
-                    <tr><td>4</td><td>Where can I fly to directly from London?</td><td><code>?- direct_route(london, Destination).</code></td><td><code>Destination = paris ; dubai.</code></td></tr>
-                    <tr><td>5</td><td>Which cities have a direct flight into Dubai?</td><td><code>?- direct_route(Origin, dubai).</code></td><td><code>Origin = frankfurt ; london.</code></td></tr>
-                    <tr><td>6</td><td>Flight number leaving Delhi?</td><td><code>?- flight(FlightNum, delhi, _, _).</code></td><td><code>FlightNum = sq606.</code></td></tr>
-                    <tr><td>7</td><td>1-stop London &rarr; Dubai layover city?</td><td><code>?- one_stop_route(london, dubai, Layover).</code></td><td><code>false.</code> (Only direct or 2-stop!)</td></tr>
-                    <tr><td>8</td><td>Where can I travel from Frankfurt with 1 stop?</td><td><code>?- one_stop_route(frankfurt, Destination, _).</code></td><td><code>Destination = delhi.</code></td></tr>
-                    <tr><td>9</td><td>All direct flight routes and durations:</td><td><code>?- flight(_, Origin, Destination, Duration).</code></td><td>Prints all 6 flights</td></tr>
-                    <tr><td>10</td><td>Flying time London &rarr; Paris &rarr; Frankfurt?</td><td><code>?- one_stop_duration(london, frankfurt, Hours).</code></td><td><code>Hours = 2.5.</code> (1 + 1.5)</td></tr>
-                    <tr><td>11</td><td>1-stop London &rarr; Delhi + total flying time:</td><td><code>?- one_stop_route(london, delhi, Layover), one_stop_duration(london, delhi, TotalTime).</code></td><td><code>Layover = dubai, TotalTime = 10.5.</code> (7 + 3.5)</td></tr>
-                    <tr><td>12</td><td>All pairs connected by 1-stop flight:</td><td><code>?- one_stop_route(CityA, CityB, _).</code></td><td>Prints all connected city pairs</td></tr>
-                    <tr><td>13</td><td>Direct flights taking longer than 5 hours:</td><td><code>?- flight(Num, From, To, Duration), Duration > 5.0.</code></td><td><code>ek303 (6), ek404 (7), sq606 (5.5)</code></td></tr>
-                    <tr><td>14</td><td>Short direct flights (under 2 hours):</td><td><code>?- flight(Num, From, To, Duration), Duration < 2.0.</code></td><td><code>ba101 (1), lh202 (1.5)</code></td></tr>
-                    <tr><td>15</td><td>Any flights with destination country UK?</td><td><code>?- flight(_, _, Dest, _), airport(Dest, uk).</code></td><td><code>false.</code></td></tr>
-                    <tr><td>16</td><td>Flight departing from city in France:</td><td><code>?- airport(City, france), flight(_, City, Dest, _).</code></td><td><code>City = paris, Dest = frankfurt.</code></td></tr>
-                    <tr><td>17</td><td>All destinations reachable from London:</td><td><code>?- has_route(london, Destination).</code></td><td><code>paris, frankfurt, dubai, delhi, singapore</code></td></tr>
-                    <tr><td>18</td><td>Flight number starting with 'ek' (sub_atom):</td><td><code>?- flight(FlightNum, _, _, _), sub_atom(FlightNum, 0, 2, _, ek).</code></td><td><code>ek303 ; ek404.</code></td></tr>
-                    <tr><td>19</td><td>Destination from Paris taking exactly 7.5h (1-stop):</td><td><code>?- one_stop_duration(paris, Dest, 7.5).</code></td><td><code>Dest = dubai.</code> (1.5 + 6.0)</td></tr>
-                    <tr><td>20</td><td>City from London that does NOT connect to Singapore?</td><td><code>?- direct_route(london, NextCity), \+ has_route(NextCity, singapore).</code></td><td><code>false.</code> (Both Paris and Dubai reach Singapore!)</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </article>
-
+      <div class="side-card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+        <h3 style="color: #34d399;">🧠 Top Viva Answers</h3>
+        <div style="font-size: 0.82rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.5rem;">
+          <div><strong>Paradigm:</strong> Declarative (What, not how).</div>
+          <div><strong>Inference:</strong> Backward chaining, SLD-resolution.</div>
+          <div><strong>Search:</strong> DFS with automatic backtracking.</div>
+          <div><strong>Horn Clause:</strong> &le; 1 positive literal.</div>
         </div>
+      </div>
 
+    </aside>
 
-        <!-- =========================================================
-             TAB 2: ALTERNATE PAPER (Cafe & CS Prereqs)
-             ========================================================= -->
-        <div class="tab-pane" id="tab-alternate">
-
-          <h2 class="section-title">☕ Problem 1: Campus Cafe Database & Budget Math (`cafe.pl`)</h2>
-          <p class="section-desc">From `Logic and Prolog copy.docx`: Espresso ($3), Latte ($5), Croissant ($4), Sandwich ($8), Muffin ($3).</p>
-
-          <article class="card open" id="alt-cafe">
-            <div class="card-header" onclick="toggleCard('alt-cafe')">
-              <div>
-                <span class="card-badge green">ALTERNATE PAPER • CAFE PROBLEM</span>
-                <h3 class="card-title">Cafe Facts, Affordable Rule & Meal Deal Combinations</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>cafe.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">% item(Name, Category, PriceInUSD)</span>
-<span class="token-atom">item</span>(<span class="token-atom">espresso</span>, <span class="token-atom">drink</span>, <span class="token-num">3</span>)<span class="token-atom">.</span>
-<span class="token-atom">item</span>(<span class="token-atom">latte</span>, <span class="token-atom">drink</span>, <span class="token-num">5</span>)<span class="token-atom">.</span>
-<span class="token-atom">item</span>(<span class="token-atom">croissant</span>, <span class="token-atom">food</span>, <span class="token-num">4</span>)<span class="token-atom">.</span>
-<span class="token-atom">item</span>(<span class="token-atom">sandwich</span>, <span class="token-atom">food</span>, <span class="token-num">8</span>)<span class="token-atom">.</span>
-<span class="token-atom">item</span>(<span class="token-atom">muffin</span>, <span class="token-atom">food</span>, <span class="token-num">3</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% 1. Affordable (Price =< Budget. Note =< NOT <=)</span>
-<span class="token-atom">affordable</span>(<span class="token-var">Item</span>, <span class="token-var">Budget</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">item</span>(<span class="token-var">Item</span>, <span class="token-var">_</span>, <span class="token-var">Price</span>)<span class="token-atom">,</span> 
-    <span class="token-var">Price</span> <span class="token-rule">=&lt;</span> <span class="token-var">Budget</span><span class="token-atom">.</span>
-
-<span class="token-comment">% 2. Meal Deal: Exactly 1 food + 1 drink (Use 'is' for arithmetic sum)</span>
-<span class="token-atom">meal_deal</span>(<span class="token-var">Food</span>, <span class="token-var">Drink</span>, <span class="token-var">TotalCost</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">item</span>(<span class="token-var">Food</span>, <span class="token-atom">food</span>, <span class="token-var">FoodPrice</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">item</span>(<span class="token-var">Drink</span>, <span class="token-atom">drink</span>, <span class="token-var">DrinkPrice</span>)<span class="token-atom">,</span> 
-    <span class="token-var">TotalCost</span> <span class="token-rule">is</span> <span class="token-var">FoodPrice</span> <span class="token-atom">+</span> <span class="token-var">DrinkPrice</span><span class="token-atom">.</span></code></pre>
-              </div>
-
-              <div class="prompt-box">
-                <strong>Queries they ask:</strong><br>
-                • List all food items: <code>?- item(Food, food, _).</code><br>
-                • What can you buy with $4 or less? <code>?- affordable(X, 4).</code> (espresso, croissant, muffin)<br>
-                • Combos &le; $10: <code>?- meal_deal(Food, Drink, Total), Total =&lt; 10.</code>
-              </div>
-            </div>
-          </article>
-
-
-          <h2 class="section-title" style="margin-top: 2rem;">🎓 Problem 2: Computer Science Course Sequencing (`courses.pl`)</h2>
-          <p class="section-desc">CS101 &rarr; CS102 &rarr; CS201 (plus Math101) &rarr; CS301.</p>
-
-          <article class="card open" id="alt-courses">
-            <div class="card-header" onclick="toggleCard('alt-courses')">
-              <div>
-                <span class="card-badge green">ALTERNATE PAPER • PREREQUISITES</span>
-                <h3 class="card-title">Direct Eligibility vs Transitive Recursive Closure</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>courses.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">% prereq(PrereqCourse, TargetCourse)</span>
-<span class="token-atom">prereq</span>(<span class="token-atom">cs101</span>, <span class="token-atom">cs102</span>)<span class="token-atom">.</span>
-<span class="token-atom">prereq</span>(<span class="token-atom">cs102</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
-<span class="token-atom">prereq</span>(<span class="token-atom">math101</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
-<span class="token-atom">prereq</span>(<span class="token-atom">cs201</span>, <span class="token-atom">cs301</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Direct check</span>
-<span class="token-atom">can_take</span>(<span class="token-var">StudentCourse</span>, <span class="token-var">TargetCourse</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">prereq</span>(<span class="token-var">StudentCourse</span>, <span class="token-var">TargetCourse</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Recursive transitive closure (Foundational course eventually required)</span>
-<span class="token-comment">% Base case</span>
-<span class="token-atom">requires_eventually</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">prereq</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">% Recursive case</span>
-<span class="token-atom">requires_eventually</span>(<span class="token-var">Prereq</span>, <span class="token-var">Target</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">prereq</span>(<span class="token-var">Prereq</span>, <span class="token-var">Intermediate</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">requires_eventually</span>(<span class="token-var">Intermediate</span>, <span class="token-var">Target</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-
-              <div class="prompt-box">
-                <strong>Queries they ask:</strong><br>
-                • What does CS201 directly require? <code>?- prereq(Req, cs201).</code> (cs102 ; math101)<br>
-                • Can jump straight into CS301 from CS101? <code>?- can_take(cs101, cs301).</code> (false)<br>
-                • All foundational courses for CS301? <code>?- requires_eventually(Course, cs301).</code> (cs201, cs101, cs102, math101)
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-
-        <!-- =========================================================
-             TAB 3: COLONEL WEST
-             ========================================================= -->
-        <div class="tab-pane" id="tab-west">
-
-          <h2 class="section-title">🎖️ Colonel West: The Criminal Problem (`criminal.pl`)</h2>
-          <p class="section-desc">The famous First-Order Logic to Horn clause inference proof from Russell & Norvig.</p>
-
-          <article class="card open" id="west-proof">
-            <div class="card-header" onclick="toggleCard('west-proof')">
-              <div>
-                <span class="card-badge">FOL &rarr; HORN CLAUSE TRANSLATION</span>
-                <h3 class="card-title">English Sentences to Prolog Code</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div class="code-container">
-                <div class="code-header"><span>criminal.pl</span><button class="copy-btn" onclick="copySnippet(this)">Copy Code</button></div>
-                <pre><code><span class="token-comment">/* Facts */</span>
-<span class="token-atom">american</span>(<span class="token-atom">west</span>)<span class="token-atom">.</span>
-<span class="token-atom">enemy</span>(<span class="token-atom">nono</span>, <span class="token-atom">america</span>)<span class="token-atom">.</span>
-<span class="token-atom">missile</span>(<span class="token-atom">m1</span>)<span class="token-atom">.</span>
-<span class="token-atom">owns</span>(<span class="token-atom">nono</span>, <span class="token-atom">m1</span>)<span class="token-atom">.</span>
-
-<span class="token-comment">/* Rules */</span>
-<span class="token-atom">weapon</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">missile</span>(<span class="token-var">X</span>)<span class="token-atom">.</span>
-<span class="token-atom">hostile</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> <span class="token-atom">enemy</span>(<span class="token-var">X</span>, <span class="token-atom">america</span>)<span class="token-atom">.</span>
-<span class="token-atom">sells</span>(<span class="token-atom">west</span>, <span class="token-var">X</span>, <span class="token-atom">nono</span>) <span class="token-rule">:-</span> <span class="token-atom">missile</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> <span class="token-atom">owns</span>(<span class="token-atom">nono</span>, <span class="token-var">X</span>)<span class="token-atom">.</span>
-
-<span class="token-atom">criminal</span>(<span class="token-var">X</span>) <span class="token-rule">:-</span> 
-    <span class="token-atom">american</span>(<span class="token-var">X</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">weapon</span>(<span class="token-var">Y</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">sells</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>, <span class="token-var">Z</span>)<span class="token-atom">,</span> 
-    <span class="token-atom">hostile</span>(<span class="token-var">Z</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-
-              <div class="prompt-box">
-                <strong>How to Trace Inference in SWI-Prolog:</strong><br>
-                Type <code>?- trace.</code> then <code>?- criminal(west).</code><br>
-                Prolog walks through the 4 ports:<br>
-                1. <strong>Call:</strong> <code>criminal(west)</code><br>
-                2. <strong>Call:</strong> <code>american(west)</code> &rarr; Exit: true<br>
-                3. <strong>Call:</strong> <code>weapon(Y)</code> &rarr; matches <code>missile(m1)</code> &rarr; Exit: Y = m1<br>
-                4. <strong>Call:</strong> <code>sells(west, m1, Z)</code> &rarr; checks <code>owns(nono, m1)</code> &rarr; Exit: Z = nono<br>
-                5. <strong>Call:</strong> <code>hostile(nono)</code> &rarr; checks <code>enemy(nono, america)</code> &rarr; Exit: true<br>
-                6. <strong>Exit:</strong> <code>criminal(west)</code> &rarr; <strong>true.</strong>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-
-        <!-- =========================================================
-             TAB 4: SYNTAX & VIVA
-             ========================================================= -->
-        <div class="tab-pane" id="tab-syntax">
-
-          <h2 class="section-title">⚠️ The 5 "No Cheat Sheet" Traps to Memorize</h2>
-          <p class="section-desc">Commit these 5 syntax details to memory so you don't lose simple marks:</p>
-
-          <article class="card open" id="syntax-traps">
-            <div class="card-header" onclick="toggleCard('syntax-traps')">
-              <div>
-                <span class="card-badge">SYNTAX MEMORY ANCHOR</span>
-                <h3 class="card-title">Fatal Syntax Traps vs Safe Habits</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div style="overflow-x: auto;">
-                <table class="custom-table">
-                  <thead>
-                    <tr><th>Rule / Concept</th><th>Wrong (Will Fail!)</th><th>Correct Syntax</th><th>Why</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td>Constants / Atoms</td><td><code>John</code>, <code>Paris</code></td><td><code>john</code>, <code>paris</code></td><td>Lowercase = fixed value. Uppercase = variable.</td></tr>
-                    <tr><td>Variables</td><td><code>x</code>, <code>person</code></td><td><code>X</code>, <code>Person</code></td><td>Uppercase = search variable to solve.</td></tr>
-                    <tr><td>Less than or equal</td><td><code>Price &lt;= 10</code></td><td><code>Price =&lt; 10</code></td><td>Prolog only accepts <code>=&lt;</code> (syntax error otherwise).</td></tr>
-                    <tr><td>Math Calculation</td><td><code>Total = A + B</code></td><td><code>Total is A + B</code></td><td><code>=</code> is unification. <code>is</code> evaluates arithmetic.</td></tr>
-                    <tr><td>Inequality / Not Equal</td><td><code>X != Y</code></td><td><code>X \= Y</code></td><td>Prolog uses <code>\=</code> or <code>\==</code>.</td></tr>
-                    <tr><td>Statement End</td><td>No period</td><td>End with <code>.</code></td><td>Every statement MUST end with a period.</td></tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div class="trap-box">
-                <strong>🚨 The Universal 2-Clause Recursion Formula:</strong>
-                All reachability questions (Flight routes, Prerequisites, Ancestors) use the exact same template:<br>
-                <code>reach(A, B) :- step(A, B).</code> (Base case: direct 1 step)<br>
-                <code>reach(A, B) :- step(A, I), reach(I, B).</code> (Recursive case: 1 step to intermediate, then recurse)
-              </div>
-            </div>
-          </article>
-
-          <!-- Top Viva Answers -->
-          <h2 class="section-title" style="margin-top: 2rem;">🧠 Top Viva Questions & Exact Answers</h2>
-          <article class="card open" id="viva-qa">
-            <div class="card-header" onclick="toggleCard('viva-qa')">
-              <div>
-                <span class="card-badge">THEORY & VIVA</span>
-                <h3 class="card-title">Answers to Impress the Professor</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 0.5rem;">
-                <div>
-                  <strong style="color: var(--primary-light);">Q1. What programming paradigm does Prolog use?</strong>
-                  <p style="color: var(--text-muted); font-size: 0.92rem;"><strong>Declarative programming.</strong> You declare truths and relationships (Facts and Rules) rather than step-by-step algorithms.</p>
-                </div>
-                <div>
-                  <strong style="color: var(--primary-light);">Q2. What inference method and search strategy does Prolog employ?</strong>
-                  <p style="color: var(--text-muted); font-size: 0.92rem;"><strong>Backward chaining</strong> with <strong>SLD-resolution</strong> and <strong>unification</strong>, exploring choice points using <strong>Depth-First Search (DFS) with automatic backtracking</strong>.</p>
-                </div>
-                <div>
-                  <strong style="color: var(--primary-light);">Q3. What is a Horn clause?</strong>
-                  <p style="color: var(--text-muted); font-size: 0.92rem;">A logical clause with at most one positive literal. In Prolog: <code>Head :- Body.</code></p>
-                </div>
-                <div>
-                  <strong style="color: var(--primary-light);">Q4. What is Closed World Assumption (CWA) and Negation as Failure (NAF)?</strong>
-                  <p style="color: var(--text-muted); font-size: 0.92rem;">Prolog assumes everything not stated or provable from its database is false. Written as <code>\+ Goal</code>.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-
-        <!-- =========================================================
-             TAB 5: PREDICTED QUESTIONS
-             ========================================================= -->
-        <div class="tab-pane" id="tab-predicted">
-
-          <h2 class="section-title">🔮 Predicted Exam Questions (High Probability)</h2>
-          <p class="section-desc">These are the trick queries and twists examiners love to introduce:</p>
-
-          <article class="card open" id="pred-1">
-            <div class="card-header" onclick="toggleCard('pred-1')">
-              <div>
-                <span class="card-badge">PREDICTED #1 • NEGATION AS FAILURE</span>
-                <h3 class="card-title">"Find anyone who is a parent but does NOT have any grandchildren"</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <p class="explanation-text"><strong>Logic:</strong> A person <code>X</code> has child <code>Y</code>, but <code>Y</code> has NO children (<code>\+ parent_of(Y, _)</code>).</p>
-              <div class="code-container">
-                <pre><code><span class="token-query">?-</span> <span class="token-atom">parent_of</span>(<span class="token-var">X</span>, <span class="token-var">Y</span>)<span class="token-atom">,</span> <span class="token-rule">\+</span> <span class="token-atom">parent_of</span>(<span class="token-var">Y</span>, <span class="token-var">_</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-              <p style="font-size: 0.88rem; color: #a7f3d0;"><strong>Answer in Today's Family Tree:</strong> Ali, Lily, James.</p>
-            </div>
-          </article>
-
-          <article class="card" id="pred-2">
-            <div class="card-header" onclick="toggleCard('pred-2')">
-              <div>
-                <span class="card-badge">PREDICTED #2 • SUBSTRING WILDCARD</span>
-                <h3 class="card-title">"Find any flight whose flight number starts with 'ek'"</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <p class="explanation-text"><strong>Logic:</strong> Uses the built-in predicate <code>sub_atom(Atom, StartIndex, Length, RemainingChars, SubString)</code>.</p>
-              <div class="code-container">
-                <pre><code><span class="token-query">?-</span> <span class="token-atom">flight</span>(<span class="token-var">FlightNum</span>, <span class="token-var">_</span>, <span class="token-var">_</span>, <span class="token-var">_</span>)<span class="token-atom">,</span> <span class="token-atom">sub_atom</span>(<span class="token-var">FlightNum</span>, <span class="token-num">0</span>, <span class="token-num">2</span>, <span class="token-var">_</span>, <span class="token-atom">ek</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-              <p style="font-size: 0.88rem; color: #a7f3d0;"><strong>Answer:</strong> ek303 ; ek404.</p>
-            </div>
-          </article>
-
-          <article class="card" id="pred-3">
-            <div class="card-header" onclick="toggleCard('pred-3')">
-              <div>
-                <span class="card-badge">PREDICTED #3 • EXACT CALCULATION FILTER</span>
-                <h3 class="card-title">"Find a destination from Paris that takes exactly 7.5 hours with 1 stop"</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <p class="explanation-text"><strong>Logic:</strong> Query <code>one_stop_duration(From, Dest, TargetDuration)</code> with 7.5 bound.</p>
-              <div class="code-container">
-                <pre><code><span class="token-query">?-</span> <span class="token-atom">one_stop_duration</span>(<span class="token-atom">paris</span>, <span class="token-var">Dest</span>, <span class="token-num">7.5</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-              <p style="font-size: 0.88rem; color: #a7f3d0;"><strong>Answer:</strong> Dest = dubai (Paris &rarr; Frankfurt is 1.5h + Frankfurt &rarr; Dubai is 6h = 7.5h).</p>
-            </div>
-          </article>
-
-          <article class="card" id="pred-4">
-            <div class="card-header" onclick="toggleCard('pred-4')">
-              <div>
-                <span class="card-badge">PREDICTED #4 • DUAL PREREQUISITE</span>
-                <h3 class="card-title">"How to model that CS201 requires BOTH CS102 and Math101"</h3>
-              </div>
-              <span class="chevron">▼</span>
-            </div>
-            <div class="card-body">
-              <p class="explanation-text">In Prolog facts, declare each prerequisite separately:</p>
-              <div class="code-container">
-                <pre><code><span class="token-atom">prereq</span>(<span class="token-atom">cs102</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span>
-<span class="token-atom">prereq</span>(<span class="token-atom">math101</span>, <span class="token-atom">cs201</span>)<span class="token-atom">.</span></code></pre>
-              </div>
-              <p class="explanation-text">When you query <code>prereq(Req, cs201)</code>, press <code>;</code> to see both <code>cs102</code> and <code>math101</code>!</p>
-            </div>
-          </article>
-
-        </div>
-
-
-        <!-- =========================================================
-             TAB 6: QUIZ
-             ========================================================= -->
-        <div class="tab-pane" id="tab-quiz">
-
-          <h2 class="section-title">🎯 Exam Simulator Quiz</h2>
-          <p class="section-desc">Test your understanding right now with these 5 quick-check questions:</p>
-
-          <div class="quiz-card" id="qz1">
-            <h4 class="quiz-question">1. Which query correctly checks if Jack is Jess's father?</h4>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="submitQuiz(1, 0, true, this)">A) <code>?- father_of(jack, jess).</code></button>
-              <button class="quiz-btn" onclick="submitQuiz(1, 1, false, this)">B) <code>?- father_of(Jack, Jess).</code></button>
-              <button class="quiz-btn" onclick="submitQuiz(1, 2, false, this)">C) <code>?- father_of(jess, jack).</code></button>
-            </div>
-            <div class="quiz-feedback" id="qzf1"><strong>Correct!</strong> Jack is lowercase (atom) and in the first argument position!</div>
-          </div>
-
-          <div class="quiz-card" id="qz2">
-            <h4 class="quiz-question">2. How is 'less than or equal' written in Prolog?</h4>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="submitQuiz(2, 0, false, this)">A) <code>&lt;=</code></button>
-              <button class="quiz-btn" onclick="submitQuiz(2, 1, true, this)">B) <code>=&lt;</code></button>
-              <button class="quiz-btn" onclick="submitQuiz(2, 2, false, this)">C) <code>:=&lt;</code></button>
-            </div>
-            <div class="quiz-feedback" id="qzf2"><strong>Correct!</strong> Prolog syntax uses <code>=&lt;</code>. Typing <code>&lt;=</code> causes a syntax error!</div>
-          </div>
-
-          <div class="quiz-card" id="qz3">
-            <h4 class="quiz-question">3. What does <code>sub_atom(ba101, 0, 2, _, ba)</code> test?</h4>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="submitQuiz(3, 0, true, this)">A) Checks if 'ba101' starts with substring 'ba' at index 0 for length 2</button>
-              <button class="quiz-btn" onclick="submitQuiz(3, 1, false, this)">B) Replaces 'ba' with 101</button>
-              <button class="quiz-btn" onclick="submitQuiz(3, 2, false, this)">C) Deletes 2 characters</button>
-            </div>
-            <div class="quiz-feedback" id="qzf3"><strong>Correct!</strong> <code>sub_atom/5</code> checks substring pattern matches!</div>
-          </div>
-
-          <div class="quiz-card" id="qz4">
-            <h4 class="quiz-question">4. Why must <code>X \= Y</code> be included in the sibling rule?</h4>
-            <div class="quiz-options">
-              <button class="quiz-btn" onclick="submitQuiz(4, 0, false, this)">A) To filter gender</button>
-              <button class="quiz-btn" onclick="submitQuiz(4, 1, true, this)">B) To prevent a person from being their own sibling</button>
-              <button class="quiz-btn" onclick="submitQuiz(4, 2, false, this)">C) To stop recursion</button>
-            </div>
-            <div class="quiz-feedback" id="qzf4"><strong>Correct!</strong> Without <code>X \= Y</code>, Mary would be her own sibling.</div>
-          </div>
-
-        </div>
-
-      </main>
-
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        
-        <div class="widget">
-          <h3 class="widget-title">📋 Exam Hall Checklist</h3>
-          <label class="check-row"><input type="checkbox"> Started all constants with lowercase</label>
-          <label class="check-row"><input type="checkbox"> Started all variables with UPPERCASE</label>
-          <label class="check-row"><input type="checkbox"> Put a period <code>.</code> at end of every line</label>
-          <label class="check-row"><input type="checkbox"> Used <code>=&lt;</code> (NOT <code>&lt;=</code>)</label>
-          <label class="check-row"><input type="checkbox"> Used <code>is</code> for math (NOT <code>=</code>)</label>
-          <label class="check-row"><input type="checkbox"> Added <code>X \= Y</code> to sibling rules</label>
-          <label class="check-row"><input type="checkbox"> Direct step before recursive step</label>
-        </div>
-
-        <div class="widget">
-          <h3 class="widget-title">⚡ Console Shortcuts</h3>
-          <div style="font-size: 0.82rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.4rem;">
-            <div><strong>Consult file:</strong> <code>['family.pl'].</code></div>
-            <div><strong>Next solution:</strong> Press <code>;</code></div>
-            <div><strong>Stop search:</strong> Press <code>Enter</code></div>
-            <div><strong>Clear screen:</strong> <code>write('\[2J').</code></div>
-            <div><strong>Debug trace:</strong> <code>trace.</code></div>
-            <div><strong>Exit Prolog:</strong> <code>halt.</code></div>
-          </div>
-        </div>
-
-      </aside>
-
-    </div>
   </div>
 
-  <!-- Floating back to top -->
-  <div class="floating-tools">
-    <button class="float-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">▲</button>
-  </div>
+  <!-- Back to Top FAB -->
+  <button class="fab-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">▲</button>
 
-  <!-- JavaScript -->
+  <!-- JavaScript App Logic -->
   <script>
-    // Theme logic
+    // Theme Switcher
     function initTheme() {
       const saved = localStorage.getItem('prolog_theme') || 'dark';
       applyTheme(saved);
     }
 
-    function toggleTheme() {
+    function toggleAppTheme() {
       const curr = document.documentElement.getAttribute('data-theme') || 'dark';
       const next = curr === 'dark' ? 'light' : 'dark';
       applyTheme(next);
@@ -1799,80 +1340,37 @@ FlightNum = ek404.')">18. Flights starting with 'ek'?</span>
 
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
-      const icon = document.getElementById('themeIcon');
-      const text = document.getElementById('themeText');
+      const ico = document.getElementById('themeIco');
+      const lbl = document.getElementById('themeLbl');
       if (theme === 'dark') {
-        if (icon) icon.innerText = '☀️';
-        if (text) text.innerText = 'Light';
+        if (ico) ico.innerText = '☀️';
+        if (lbl) lbl.innerText = 'Light';
       } else {
-        if (icon) icon.innerText = '🌙';
-        if (text) text.innerText = 'Dark';
+        if (ico) ico.innerText = '🌙';
+        if (lbl) lbl.innerText = 'Dark';
       }
     }
     initTheme();
 
-    // Tab switching
-    function switchNavTab(tabId, btn) {
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+    // Tab Navigation
+    function showTab(paneId, btn) {
+      document.querySelectorAll('.segmented-nav .nav-item').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      const target = document.getElementById(tabId);
+      document.querySelectorAll('.tab-content').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(paneId);
       if (target) target.classList.add('active');
     }
 
-    // Card toggles
+    // Accordions
     function toggleCard(id) {
       const el = document.getElementById(id);
       if (el) el.classList.toggle('open');
     }
 
-    function expandAll() {
-      document.querySelectorAll('.card').forEach(c => c.classList.add('open'));
-    }
-
-    function collapseAll() {
-      document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
-    }
-
-    // Search filter
-    function filterAllCards() {
-      const q = document.getElementById('searchInput').value.toLowerCase().trim();
-      const cards = document.querySelectorAll('.card');
-
-      cards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-        if (!q || text.includes(q)) {
-          card.style.display = 'block';
-          if (q) card.classList.add('open');
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    // Simulators
-    
-    function simulateEval1(id, query, output) {
-      const box1 = document.getElementById('eval1SimOutput1');
-      const box2 = document.getElementById('eval1SimOutput2');
-      if (box1 && id.length === 1) box1.innerText = query + '\n' + output;
-      if (box2 && id.startsWith('p3')) box2.innerText = query + '\n' + output;
-    }
-
-    function simulateT1(qId, query, output) {
-      const box = document.getElementById('todaySimOutput1');
-      if (box) box.innerText = query + '\n' + output;
-    }
-
-    function simulateT2(qId, query, output) {
-      const box = document.getElementById('todaySimOutput2');
-      if (box) box.innerText = query + '\n' + output;
-    }
-
-    // Copy snippet
+    // Copy Snippet
     function copySnippet(btn) {
-      const code = btn.closest('.code-container').querySelector('code').innerText;
+      const code = btn.closest('.code-box').querySelector('code').innerText;
       navigator.clipboard.writeText(code).then(() => {
         const orig = btn.innerText;
         btn.innerText = 'Copied! ✓';
@@ -1884,30 +1382,23 @@ FlightNum = ek404.')">18. Flights starting with 'ek'?</span>
       });
     }
 
-    // Quiz
-    function submitQuiz(qNum, optIdx, isCorrect, btn) {
-      const parent = document.getElementById('qz' + qNum);
-      const btns = parent.querySelectorAll('.quiz-btn');
-      const fb = document.getElementById('qzf' + qNum);
-
-      btns.forEach(b => b.disabled = true);
-
-      if (isCorrect) {
-        btn.classList.add('correct');
-        fb.style.display = 'block';
-        fb.style.background = 'rgba(16, 185, 129, 0.15)';
-        fb.style.border = '1px solid #10b981';
-        fb.style.color = '#a7f3d0';
-      } else {
-        btn.classList.add('wrong');
-        fb.style.display = 'block';
-        fb.style.background = 'rgba(244, 63, 94, 0.15)';
-        fb.style.border = '1px solid #f43f5e';
-        fb.style.color = '#fecdd3';
-        btns.forEach(b => {
-          if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
-        });
+    // Terminal Simulators
+    function runSim(termId, query, output) {
+      const screen = document.getElementById(termId);
+      if (screen) {
+        screen.innerText = query + '\n' + output;
       }
+    }
+
+    // 4-Color Map Interactive cycle
+    const colorPalette = ['#dc2626', '#2563eb', '#eab308', '#16a34a', '#9333ea'];
+    function cycleColor(regionId) {
+      const el = document.getElementById(regionId);
+      if (!el) return;
+      const cur = el.getAttribute('fill');
+      const idx = colorPalette.indexOf(cur);
+      const nxt = colorPalette[(idx + 1) % colorPalette.length];
+      el.setAttribute('fill', nxt);
     }
   </script>
 </body>
